@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/subscription/subscription.dart';
 
 import '../components/components.dart';
 import '../utils/sizeconfig.dart';
@@ -74,10 +75,11 @@ class Login extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                customField(
-                                    usernameController, "Email address"),
-                                space0(),
-                                customField(usernameController, "Password"),
+                                customField(usernameController, "Email address",
+                                    icon: Icons.mail),
+                                space1(),
+                                customField(passwordController, "Password",
+                                    icon: Icons.lock),
                                 TextButton(
                                     onPressed: () {},
                                     child: Text(
@@ -105,22 +107,31 @@ class Login extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                customField(usernameController2, "Username"),
+                                customField(usernameController2, "Username",
+                                    icon: Icons.account_circle),
                                 space0(),
-                                customField(emailController, "Email"),
+                                customField(emailController, "Email",
+                                    icon: Icons.mail),
                                 space0(),
-                                customField(password1Controller, "Password"),
+                                customField(password1Controller, "Password",
+                                    icon: Icons.lock),
                                 space0(),
                                 customField(
-                                    password2Controller, "Confirm Password"),
+                                  password2Controller,
+                                  "Confirm Password",
+                                  icon: Icons.lock,
+                                )
                               ],
                             ),
                             InkWell(
                                 onTap: () {
-                                  // Get.to(() => Login());
+                                  Get.to(() => Subscribe());
                                 },
-                                child: customButton(context, Colors.white,
-                                    CustomTheme.bgColor, "Sign-up")),
+                                child: customButton(
+                                    context,
+                                    Colors.white,
+                                    CustomTheme.bgColor,
+                                    "Continue to Meal Plan")),
                           ],
                         ),
                       ],

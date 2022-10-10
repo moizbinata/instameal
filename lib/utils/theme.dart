@@ -13,7 +13,7 @@ class CustomTheme {
   static const lightColor = Color(0xffc79937);
   static const darkColor = Color(0xffc79937); //580980
   static const shadowColor = Color(0xff3939391A); //580980
-  static const grey = Colors.grey; //580980
+  static const grey = Color.fromARGB(255, 211, 208, 208); //580980
   static const shadowColor2 = Color.fromARGB(120, 160, 182, 71);
 
   static Widget loader() => Center(
@@ -53,10 +53,13 @@ class CustomTheme {
         color: bgColor,
         letterSpacing: -1.5,
       ),
-      headline6: GoogleFonts.comfortaa(color: Colors.black),
+      headline6: GoogleFonts.comfortaa(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),
       subtitle1: GoogleFonts.comfortaa(
           fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
-      bodyText1: GoogleFonts.rubik(color: Colors.black),
+      bodyText1: GoogleFonts.comfortaa(color: Colors.black),
       // bodyText2: GoogleFonts.rubik(color: Colors.black),
       // bodyLarge:
       //     GoogleFonts.rubik(color: Colors.black, fontWeight: FontWeight.bold),
@@ -79,13 +82,13 @@ class CustomTheme {
       unselectedLabelStyle:
           TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
     ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        minimumSize: const Size(260, 49),
-        primary: Colors.white,
-        backgroundColor: bgColor,
-      ),
-    ),
+    // textButtonTheme: TextButtonThemeData(
+    //   style: TextButton.styleFrom(
+    // minimumSize: const Size(260, 49),
+    // primary: bgColor,
+    // backgroundColor: bgColor,
+    //   ),
+    // ),
     cardTheme: CardTheme(
       elevation: 0.1,
       margin: const EdgeInsets.all(0),

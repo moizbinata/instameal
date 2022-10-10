@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/intro/intro.dart';
 import 'package:instameal/views/login.dart';
 import '../components/components.dart';
 import '../utils/sizeconfig.dart';
@@ -41,7 +42,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () {
-                      Get.to(() => Login());
+                      Get.to(() => const HomeIntro());
                     },
                     child: customButton(context, CustomTheme.bgColor,
                         Colors.white, "Get Started")),

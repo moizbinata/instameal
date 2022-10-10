@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instameal/controllers/buttonController.dart';
 import 'package:instameal/splash/splash.dart';
 
 import 'package:instameal/utils/sizeconfig.dart';
@@ -10,8 +11,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
+  MyApp({Key key}) : super(key: key);
+  final ButtonController buttonController = Get.put(ButtonController());
   @override
   Widget build(BuildContext context) {
     // Get.lazyPut(()=>DataContr)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 
 import '../utils/theme.dart';
@@ -30,38 +31,44 @@ Widget customButton(context, color, bgColor, label) {
   );
 }
 
-Widget customField(textController, _labelText) {
+Widget customField(textController, labelText, {icon}) {
   return TextFormField(
     keyboardType: TextInputType.text,
     autofocus: false,
     textAlign: TextAlign.start,
     textInputAction: TextInputAction.done,
+    obscureText: (labelText == "Password") ? true : false,
     controller: textController,
     style: TextStyle(
-        color: Colors.black87, fontSize: 18, fontWeight: FontWeight.w500),
+        color: Colors.black87,
+        fontSize: SizeConfig.textMultiplier * 1.9,
+        fontWeight: FontWeight.w500),
     decoration: InputDecoration(
-      // border: InputBorder.none,
-      contentPadding: EdgeInsets.symmetric(vertical: 15),
-      labelText: _labelText,
-      // hintText: _labelText,
+      prefixIcon: Icon(
+        icon,
+        color: Colors.black,
+      ),
+      fillColor: CustomTheme.grey,
+      floatingLabelStyle: TextStyle(color: Colors.black),
+      filled: true,
+      labelText: labelText,
       hintStyle: TextStyle(
-          color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
+          color: Colors.grey,
+          fontSize: SizeConfig.textMultiplier * 1.9,
+          fontWeight: FontWeight.w500),
       labelStyle: TextStyle(
-          color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
-      border: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: CustomTheme.grey,
-        ),
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black), //<-- SEE HERE
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black), //<-- SEE HERE
-      ),
-// focusedBorder: InputBorder()
-      // focusedBorder: OutlineInputBorder(
-      //     borderSide: BorderSide(color: Colors.black, )),
+          color: Colors.grey,
+          fontSize: SizeConfig.textMultiplier * 1.9,
+          fontWeight: FontWeight.w500),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
+          borderSide: BorderSide.none),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
+          borderSide: BorderSide.none),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
+          borderSide: BorderSide.none),
     ),
   );
 }
@@ -69,5 +76,23 @@ Widget customField(textController, _labelText) {
 Widget space0() {
   return SizedBox(
     height: SizeConfig.heightMultiplier * 2,
+  );
+}
+
+Widget space3() {
+  return SizedBox(
+    height: SizeConfig.heightMultiplier * 10,
+  );
+}
+
+Widget space2() {
+  return SizedBox(
+    height: SizeConfig.heightMultiplier * 8,
+  );
+}
+
+Widget space1() {
+  return SizedBox(
+    height: SizeConfig.heightMultiplier * 5,
   );
 }
