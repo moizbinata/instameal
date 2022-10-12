@@ -28,14 +28,16 @@ class SplashScreen extends StatelessWidget {
               children: [
                 Text("Food for Everyone",
                     style: Theme.of(context).textTheme.headline3),
-                Container(
-                  width: SizeConfig.screenWidth * 0.5,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Image.asset('assets/images/logo.png',
-                      width: SizeConfig.screenWidth * 0.2),
-                ),
+                Image.asset('assets/images/logoCircle.png',
+                    width: SizeConfig.screenWidth * 0.5),
+                // Container(
+                //   width: SizeConfig.screenWidth * 0.5,
+                //   decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(100)),
+                //   child: Image.asset('assets/images/logo.png',
+                //       width: SizeConfig.screenWidth * 0.2),
+                // ),
                 Image.asset(
                   "assets/images/splash.png",
                   width: SizeConfig.heightMultiplier * 20,

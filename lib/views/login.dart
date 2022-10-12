@@ -32,10 +32,13 @@ class Login extends StatelessWidget {
           child: ListView(
             physics: AlwaysScrollableScrollPhysics(),
             children: [
-              space0(),
-              Image.asset("assets/images/logo.png",
-                  height: SizeConfig.heightMultiplier * 20),
-              space0(),
+              space2(),
+              Image.asset(
+                "assets/images/logo.png",
+                height: SizeConfig.heightMultiplier * 13,
+                fit: BoxFit.contain,
+              ),
+              space3(),
               DefaultTabController(
                 length: 2,
                 child: Column(children: [
@@ -70,29 +73,26 @@ class Login extends StatelessWidget {
                     child: TabBarView(
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                customField(usernameController, "Email address",
-                                    icon: Icons.mail),
-                                space1(),
-                                customField(passwordController, "Password",
-                                    icon: Icons.lock),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Forgot Password",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomTheme.bgColor),
-                                    ))
-                              ],
-                            ),
+                            customField(usernameController, "Email address",
+                                icon: Icons.mail),
+                            space1(),
+                            customField(passwordController, "Password",
+                                icon: Icons.lock),
+                            TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Forgot Password",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: CustomTheme.bgColor),
+                                )),
+                            space1(),
                             InkWell(
                                 onTap: () {
                                   Get.to(() => BottomNavigator());
@@ -102,27 +102,24 @@ class Login extends StatelessWidget {
                           ],
                         ),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                customField(usernameController2, "Username",
-                                    icon: Icons.account_circle),
-                                space0(),
-                                customField(emailController, "Email",
-                                    icon: Icons.mail),
-                                space0(),
-                                customField(password1Controller, "Password",
-                                    icon: Icons.lock),
-                                space0(),
-                                customField(
-                                  password2Controller,
-                                  "Confirm Password",
-                                  icon: Icons.lock,
-                                )
-                              ],
+                            customField(usernameController2, "Username",
+                                icon: Icons.account_circle),
+                            space0(),
+                            customField(emailController, "Email",
+                                icon: Icons.mail),
+                            space0(),
+                            customField(password1Controller, "Password",
+                                icon: Icons.lock),
+                            space0(),
+                            customField(
+                              password2Controller,
+                              "Confirm Password",
+                              icon: Icons.lock,
                             ),
+                            space2(),
                             InkWell(
                                 onTap: () {
                                   Get.to(() => Subscribe());

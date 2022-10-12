@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:instameal/views/nav_screen/history.dart';
-import 'package:instameal/views/nav_screen/profile.dart';
+import 'package:instameal/views/nav_screen/search.dart';
+import 'package:instameal/views/nav_screen/shopping.dart';
+import 'package:instameal/views/nav_screen/favourite.dart';
 
 import '../views/nav_screen/home.dart';
 
@@ -19,14 +20,14 @@ class TabNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child;
-    if (tabItem == "Home") {
+    if (tabItem == "Meal Plans") {
       child = Home();
+    } else if (tabItem == "Shopping List") {
+      child = Shopping();
     } else if (tabItem == "Favourite") {
-      child = Home();
-    } else if (tabItem == "Profile") {
-      child = Home();
-    } else if (tabItem == "History") {
-      child = Home();
+      child = Favourite();
+    } else if (tabItem == "Search") {
+      child = Search();
     } else {
       child = Home();
     }

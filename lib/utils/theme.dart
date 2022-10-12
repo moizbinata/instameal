@@ -13,7 +13,8 @@ class CustomTheme {
   static const lightColor = Color(0xffc79937);
   static const darkColor = Color(0xffc79937); //580980
   static const shadowColor = Color(0xff3939391A); //580980
-  static const grey = Color.fromARGB(255, 211, 208, 208); //580980
+  static const grey = Color.fromARGB(255, 211, 208, 208); //dc281c
+  static const red = Color(0xffdc281c); //dc281c
   static const shadowColor2 = Color.fromARGB(120, 160, 182, 71);
 
   static Widget loader() => Center(
@@ -60,6 +61,7 @@ class CustomTheme {
       subtitle1: GoogleFonts.comfortaa(
           fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
       bodyText1: GoogleFonts.comfortaa(color: Colors.black),
+
       // bodyText2: GoogleFonts.rubik(color: Colors.black),
       // bodyLarge:
       //     GoogleFonts.rubik(color: Colors.black, fontWeight: FontWeight.bold),

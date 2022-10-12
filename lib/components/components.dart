@@ -4,6 +4,21 @@ import 'package:instameal/utils/sizeconfig.dart';
 
 import '../utils/theme.dart';
 
+BoxDecoration bottomBarShadow(index, currentIndex) {
+  return BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: (currentIndex == index)
+            ? CustomTheme.bgColor.withOpacity(0.2)
+            : Colors.transparent,
+        blurRadius: 8.0,
+        spreadRadius: 7,
+        offset: Offset(-4, 3),
+      ),
+    ],
+  );
+}
+
 Widget customButton(context, color, bgColor, label) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 15),
@@ -31,7 +46,7 @@ Widget customButton(context, color, bgColor, label) {
   );
 }
 
-Widget customField(textController, labelText, {icon}) {
+Widget customField(textController, labelText, {icon, bgcolor, iconColor}) {
   return TextFormField(
     keyboardType: TextInputType.text,
     autofocus: false,
@@ -46,9 +61,9 @@ Widget customField(textController, labelText, {icon}) {
     decoration: InputDecoration(
       prefixIcon: Icon(
         icon,
-        color: Colors.black,
+        color: (iconColor.toString().isNotEmpty) ? iconColor : Colors.black,
       ),
-      fillColor: CustomTheme.grey,
+      fillColor: (bgcolor.toString().isNotEmpty) ? bgcolor : CustomTheme.grey,
       floatingLabelStyle: TextStyle(color: Colors.black),
       filled: true,
       labelText: labelText,
@@ -94,5 +109,37 @@ Widget space2() {
 Widget space1() {
   return SizedBox(
     height: SizeConfig.heightMultiplier * 5,
+  );
+}
+
+RoundedRectangleBorder customradius() {
+  return const RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(25),
+      topRight: Radius.circular(10),
+      bottomRight: Radius.circular(25),
+      bottomLeft: Radius.circular(10),
+    ),
+  );
+}
+
+Widget bulletPoints(context, {label}) {
+  return Row(
+    children: [
+      Expanded(
+        flex: 1,
+        child: const Icon(
+          Icons.check_circle_outlined,
+          color: CustomTheme.bgColor,
+        ),
+      ),
+      Expanded(
+        flex: 6,
+        child: Text(label,
+            style: Theme.of(context).textTheme.bodySmall.copyWith(
+                  color: Colors.black,
+                )),
+      )
+    ],
   );
 }

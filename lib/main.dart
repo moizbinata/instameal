@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:instameal/controllers/buttonController.dart';
 import 'package:instameal/splash/splash.dart';
@@ -6,7 +7,13 @@ import 'package:instameal/splash/splash.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // set the publishable key for Stripe - this is mandatory
+  Stripe.publishableKey =
+      "pk_test_51LrfHXLDjGMiS5VVRKgjoWZ8Oe4oMPRPlklTITymbmOOgPqrr9VWUk66JJgdVTRjp2YI4Sa2icu7bQN6Z9B5ZKMr00GnHYyJLN";
+  await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
