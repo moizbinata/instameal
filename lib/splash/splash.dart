@@ -27,6 +27,7 @@ class SplashScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text("Food for Everyone",
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline3),
                 Image.asset('assets/images/logoCircle.png',
                     width: SizeConfig.screenWidth * 0.5),

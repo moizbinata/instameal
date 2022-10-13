@@ -60,7 +60,9 @@ class CustomTheme {
       ),
       subtitle1: GoogleFonts.comfortaa(
           fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
-      bodyText1: GoogleFonts.comfortaa(color: Colors.black),
+      bodyText1: GoogleFonts.comfortaa(
+        color: Colors.black,
+      ),
 
       // bodyText2: GoogleFonts.rubik(color: Colors.black),
       // bodyLarge:
