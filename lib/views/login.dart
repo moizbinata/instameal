@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/subscription/subscription.dart';
+import 'package:instameal/views/subscription/trial_screen.dart';
 
 import '../components/components.dart';
 import '../utils/sizeconfig.dart';
@@ -111,6 +112,9 @@ class Login extends StatelessWidget {
                             customField(emailController, "Email",
                                 icon: Icons.mail),
                             space0(),
+                            customField(emailController, "Phone Number",
+                                icon: Icons.mail),
+                            space0(),
                             customField(password1Controller, "Password",
                                 icon: Icons.lock),
                             space0(),
@@ -122,7 +126,7 @@ class Login extends StatelessWidget {
                             space2(),
                             InkWell(
                                 onTap: () {
-                                  Get.to(() => Subscribe());
+                                  Get.to(() => TrialScreen());
                                 },
                                 child: customButton(
                                     context,
