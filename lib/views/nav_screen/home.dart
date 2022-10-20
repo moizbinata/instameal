@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
+import 'package:instameal/controllers/weeklyController.dart';
 
 import '../../components/drawer.dart';
 import '../../utils/sizeconfig.dart';
@@ -19,7 +21,7 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController passwordController = TextEditingController();
-
+  GetStorage box = GetStorage();
   int selectedTab = 0;
 
   @override
@@ -28,7 +30,7 @@ class _HomeState extends State<Home> {
         key: _scaffoldKey,
         drawer: drawer(context),
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: CustomTheme.bgColor2,
           elevation: 0.0,
           leading: IconButton(
             onPressed: () {
@@ -49,7 +51,11 @@ class _HomeState extends State<Home> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                WeeklyController weeklyController = new WeeklyController();
+                print("weekly");
+                weeklyController.fetchWeekly();
+              },
               icon: FaIcon(
                 FontAwesomeIcons.bell,
                 color: CustomTheme.bgColor,
@@ -66,8 +72,8 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "     Dinner Plans for you",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  "      ${box.read('plantype').toString()} Weekly Plan for you",
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 // Container(
                 //   padding: EdgeInsets.symmetric(
@@ -81,84 +87,100 @@ class _HomeState extends State<Home> {
                 // ),
                 SizedBox(
                   height: SizeConfig.heightMultiplier * 24,
-                  child: ListView.builder(
-                    itemCount: 8,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: "In progress");
-                          // setState(() {
-                          //   selectedTab = index;
-                          // });
-                        },
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          width: SizeConfig.heightMultiplier * 26,
-                          margin: EdgeInsets.all(SizeConfig.heightMultiplier),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                  "https://instamealplans.com/wp-content/uploads/2022/02/pexels-chan-walrus-958545.jpg",
-                                ),
-                                fit: BoxFit.cover),
-                            boxShadow: [
-                              BoxShadow(
-                                color: CustomTheme.grey.withOpacity(0.2),
-                                blurRadius: 6,
-                                spreadRadius: 6,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                bottom: SizeConfig.heightMultiplier,
-                                left: SizeConfig.heightMultiplier,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.heightMultiplier * 1.5,
-                                      vertical:
-                                          SizeConfig.heightMultiplier * 0.5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Text(
-                                    "Week ${index + 1}",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                right: SizeConfig.heightMultiplier,
-                                top: SizeConfig.heightMultiplier,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.heightMultiplier * 1.5,
-                                      vertical:
-                                          SizeConfig.heightMultiplier * 0.5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Text(
-                                    "30 Mins Plan",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  child: GetBuilder<WeeklyController>(
+                      init: WeeklyController(),
+                      builder: (_) {
+                        return (_.listofWeekly.first.data.length == 0)
+                            ? CircularProgressIndicator()
+                            : ListView.builder(
+                                itemCount: 4,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      Fluttertoast.showToast(
+                                          msg: "In progress");
+                                    },
+                                    child: Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      width: SizeConfig.heightMultiplier * 26,
+                                      margin: EdgeInsets.all(
+                                          SizeConfig.heightMultiplier),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                              "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
+                                            ),
+                                            fit: BoxFit.cover),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: CustomTheme.grey
+                                                .withOpacity(0.2),
+                                            blurRadius: 6,
+                                            spreadRadius: 6,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            bottom: SizeConfig.heightMultiplier,
+                                            left: SizeConfig.heightMultiplier,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: SizeConfig
+                                                          .heightMultiplier *
+                                                      1.5,
+                                                  vertical: SizeConfig
+                                                          .heightMultiplier *
+                                                      0.5),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Text(
+                                                "Week ${index + 1}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            right: SizeConfig.heightMultiplier,
+                                            top: SizeConfig.heightMultiplier,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: SizeConfig
+                                                          .heightMultiplier *
+                                                      1.5,
+                                                  vertical: SizeConfig
+                                                          .heightMultiplier *
+                                                      0.5),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Text(
+                                                box.read('plantype').toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                      }),
                 ),
 
                 ListTile(
@@ -177,7 +199,7 @@ class _HomeState extends State<Home> {
                 space0(),
                 Container(
                   color: Colors.white,
-                  height: SizeConfig.heightMultiplier * 30,
+                  height: SizeConfig.heightMultiplier * 35,
                   child: ListView.builder(
                     itemCount: 8,
                     physics: AlwaysScrollableScrollPhysics(),
@@ -288,7 +310,7 @@ class _HomeState extends State<Home> {
                 space0(),
                 Container(
                   color: CustomTheme.bgColor,
-                  height: SizeConfig.heightMultiplier * 30,
+                  height: SizeConfig.heightMultiplier * 35,
                   child: ListView.builder(
                     itemCount: 8,
                     physics: AlwaysScrollableScrollPhysics(),

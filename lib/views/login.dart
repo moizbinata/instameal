@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/subscription/subscription.dart';
@@ -95,11 +96,14 @@ class Login extends StatelessWidget {
                                 )),
                             space1(),
                             InkWell(
-                                onTap: () {
-                                  Get.to(() => BottomNavigator());
-                                },
-                                child: customButton(context, Colors.white,
-                                    CustomTheme.bgColor, "Login")),
+                              onTap: () {
+                                GetStorage box = GetStorage();
+                                box.write('plantype', "Plant-based");
+                                Get.to(() => BottomNavigator());
+                              },
+                              child: customButton(context, Colors.white,
+                                  CustomTheme.bgColor, "Login"),
+                            ),
                           ],
                         ),
                         Column(
@@ -110,9 +114,6 @@ class Login extends StatelessWidget {
                                 icon: Icons.account_circle),
                             space0(),
                             customField(emailController, "Email",
-                                icon: Icons.mail),
-                            space0(),
-                            customField(emailController, "Phone Number",
                                 icon: Icons.mail),
                             space0(),
                             customField(password1Controller, "Password",
