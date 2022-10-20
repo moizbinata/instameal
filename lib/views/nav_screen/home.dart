@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -90,10 +91,16 @@ class _HomeState extends State<Home> {
                   child: GetBuilder<WeeklyController>(
                       init: WeeklyController(),
                       builder: (_) {
-                        return (_.listofWeekly.first.data.length == 0)
-                            ? CircularProgressIndicator()
+                        return (_.listofWeeklyImages?.first?.data?.length ==
+                                    0 ||
+                                _.listofWeeklyImages.length == 0)
+                            ? Text(
+                                "Loading",
+                                textAlign: TextAlign.center,
+                              )
                             : ListView.builder(
-                                itemCount: 4,
+                                itemCount:
+                                    _.listofWeeklyImages?.first?.data?.length,
                                 physics: AlwaysScrollableScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
@@ -109,11 +116,11 @@ class _HomeState extends State<Home> {
                                           SizeConfig.heightMultiplier),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                              "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
-                                            ),
-                                            fit: BoxFit.cover),
+                                        // image: DecorationImage(
+                                        //     image: NetworkImage(
+                                        //       "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
+                                        //     ),
+                                        //     fit: BoxFit.cover),
                                         boxShadow: [
                                           BoxShadow(
                                             color: CustomTheme.grey
@@ -126,6 +133,29 @@ class _HomeState extends State<Home> {
                                       ),
                                       child: Stack(
                                         children: [
+                                          Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: CachedNetworkImage(
+                                              width:
+                                                  SizeConfig.heightMultiplier *
+                                                      26,
+                                              height:
+                                                  SizeConfig.heightMultiplier *
+                                                      24,
+                                              imageUrl: _.listofWeeklyImages
+                                                  ?.first?.data[index].imageUrl,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) => Center(
+                                                  child: Center(
+                                                      child:
+                                                          CircularProgressIndicator())),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Image.asset(
+                                                      "assets/images/breakfast.png"),
+                                            ),
+                                          ),
                                           Positioned(
                                             bottom: SizeConfig.heightMultiplier,
                                             left: SizeConfig.heightMultiplier,
