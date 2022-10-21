@@ -30,6 +30,7 @@ class WeeklyService {
   static Future<ImagesModel> fetchWeeklyImages() async {
     GetStorage box = GetStorage();
     String url = "${Constants.baseUrl}image${box.read('plantype').toString()}";
+    print(url);
     // var payload = {"userid": box.read("userid").toString()};
     var response = await Network.get(url: url).catchError(
       () {

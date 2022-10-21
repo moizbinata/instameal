@@ -1,6 +1,6 @@
 class WeeklyModel {
   bool success;
-  List<Data> data;
+  List<WeeklyRecipe> data;
   String error;
 
   WeeklyModel({this.success, this.data, this.error});
@@ -8,9 +8,9 @@ class WeeklyModel {
   WeeklyModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <WeeklyRecipe>[];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new WeeklyRecipe.fromJson(v));
       });
     }
     error = json['error'];
@@ -27,7 +27,7 @@ class WeeklyModel {
   }
 }
 
-class Data {
+class WeeklyRecipe {
   int recipeid;
   String day;
   int weekNumber;
@@ -45,7 +45,7 @@ class Data {
   String categName;
   String planName;
 
-  Data(
+  WeeklyRecipe(
       {this.recipeid,
       this.day,
       this.weekNumber,
@@ -63,7 +63,7 @@ class Data {
       this.categName,
       this.planName});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  WeeklyRecipe.fromJson(Map<String, dynamic> json) {
     recipeid = json['recipeid'];
     day = json['day'];
     weekNumber = json['weekNumber'];

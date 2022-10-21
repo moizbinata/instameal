@@ -98,7 +98,8 @@ class Login extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 GetStorage box = GetStorage();
-                                box.write('plantype', "Plant-based");
+                                box.write('plantype', "Plant-Based");
+                                box.write('planId', "3");
                                 Get.to(() => BottomNavigator());
                               },
                               child: customButton(context, Colors.white,

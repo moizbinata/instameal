@@ -3,6 +3,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/controllers/buttonController.dart';
+import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/splash/splash.dart';
 
 import 'package:instameal/utils/sizeconfig.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
   final ButtonController buttonController = Get.put(ButtonController());
   final WeeklyController weeklyController = Get.put(WeeklyController());
+  final UniversalController universalController =
+      Get.put(UniversalController());
   @override
   Widget build(BuildContext context) {
     // Get.lazyPut(()=>DataContr)

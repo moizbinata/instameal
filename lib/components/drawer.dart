@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
+
+import '../views/login.dart';
+import '../views/nav_screen/home.dart';
 
 Widget drawer(context) {
   return Drawer(
@@ -197,7 +203,13 @@ Widget drawer(context) {
                 "Logout",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onTap: () {},
+              onTap: () {
+                print("logout");
+                GetStorage box = GetStorage();
+                box.erase();
+                Fluttertoast.showToast(msg: 'Successfully Logout');
+                Get.offAll(Login());
+              },
             ),
           ],
         )

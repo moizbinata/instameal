@@ -91,12 +91,13 @@ class _HomeState extends State<Home> {
                   child: GetBuilder<WeeklyController>(
                       init: WeeklyController(),
                       builder: (_) {
-                        return (_.listofWeeklyImages?.first?.data?.length ==
-                                    0 ||
-                                _.listofWeeklyImages.length == 0)
-                            ? Text(
-                                "Loading",
-                                textAlign: TextAlign.center,
+                        return (_.listofWeeklyImages.length == 0 ||
+                                _.listofWeeklyImages?.first?.data?.length == 0)
+                            ? Center(
+                                child: Text(
+                                  "Loading",
+                                  textAlign: TextAlign.center,
+                                ),
                               )
                             : ListView.builder(
                                 itemCount:
@@ -227,196 +228,479 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 space0(),
+                //top trending
                 Container(
                   color: Colors.white,
-                  height: SizeConfig.heightMultiplier * 35,
-                  child: ListView.builder(
-                    itemCount: 8,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: "In progress");
-                          // setState(() {
-                          //   selectedTab = index;
-                          // });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(SizeConfig.heightMultiplier),
-                          height: SizeConfig.heightMultiplier * 20,
-                          width: SizeConfig.heightMultiplier * 20,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Positioned(
-                                      child: Container(
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(25),
-                                        topRight: Radius.circular(10),
-                                        bottomRight: Radius.circular(25),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      space0(),
+                      Text(
+                        "   Top Trending",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 35,
+                        child: ListView.builder(
+                          itemCount: 8,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: "In progress");
+                                // setState(() {
+                                //   selectedTab = index;
+                                // });
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.all(SizeConfig.heightMultiplier),
+                                height: SizeConfig.heightMultiplier * 20,
+                                width: SizeConfig.heightMultiplier * 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Positioned(
+                                            child: Container(
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(10),
+                                              bottomRight: Radius.circular(25),
+                                              bottomLeft: Radius.circular(10),
+                                            ),
+                                          ),
+                                          child: Image.network(
+                                            "https://instamealplans.com/wp-content/uploads/2022/02/pexels-alleksana-4051762-scaled.jpg",
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )),
+                                        Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: SizeConfig
+                                                        .heightMultiplier *
+                                                    2,
+                                                vertical: SizeConfig
+                                                        .heightMultiplier *
+                                                    1.5),
+                                            decoration: BoxDecoration(
+                                                color: CustomTheme.bgColor,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(15),
+                                                )),
+                                            child: Text(
+                                              "${index + 1}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall
+                                                  .copyWith(
+                                                      color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    child: Image.network(
-                                      "https://instamealplans.com/wp-content/uploads/2022/02/pexels-alleksana-4051762-scaled.jpg",
-                                      height: SizeConfig.heightMultiplier * 20,
-                                      width: SizeConfig.heightMultiplier * 20,
-                                      fit: BoxFit.cover,
+                                    Text(
+                                      "Smoothies",
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
                                     ),
-                                  )),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              SizeConfig.heightMultiplier * 2,
-                                          vertical:
-                                              SizeConfig.heightMultiplier *
-                                                  1.5),
-                                      decoration: BoxDecoration(
-                                          color: CustomTheme.bgColor,
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(15),
-                                          )),
-                                      child: Text(
-                                        "${index + 1}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            .copyWith(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "Smoothies",
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                "Home Style Chicken",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: CustomTheme.bgColor,
-                                    ),
-                              ),
-                              InkWell(
-                                child: Container(
-                                    margin: EdgeInsets.only(
-                                        top: SizeConfig.heightMultiplier),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            SizeConfig.heightMultiplier * 0.5,
-                                        horizontal:
-                                            SizeConfig.heightMultiplier),
-                                    decoration: BoxDecoration(
-                                        color: CustomTheme.red,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Text(
-                                      "Add to List",
+                                    Text(
+                                      "Home Style Chicken",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodySmall
-                                          .copyWith(color: Colors.white),
-                                    )),
-                              )
-                            ],
-                          ),
+                                          .bodyText1
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: CustomTheme.bgColor,
+                                          ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: SizeConfig.heightMultiplier),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.heightMultiplier *
+                                                      0.5,
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          decoration: BoxDecoration(
+                                              color: CustomTheme.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Text(
+                                            "Add to List",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                .copyWith(color: Colors.white),
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
+                  ),
+                ),
+
+                space0(),
+                //special occassion
+                Container(
+                  color: CustomTheme.bgColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 0.5,
+                      ),
+                      Text(
+                        "   Special Occassions",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            .copyWith(color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 35,
+                        child: ListView.builder(
+                          itemCount: 8,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: "In progress");
+                                // setState(() {
+                                //   selectedTab = index;
+                                // });
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.all(SizeConfig.heightMultiplier),
+                                height: SizeConfig.heightMultiplier * 20,
+                                width: SizeConfig.heightMultiplier * 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(10),
+                                          bottomRight: Radius.circular(25),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Image.network(
+                                        "https://instamealplans.com/wp-content/uploads/2022/02/pexels-dzenina-lukac-1583884.jpg",
+                                        height:
+                                            SizeConfig.heightMultiplier * 20,
+                                        width: SizeConfig.heightMultiplier * 20,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Smoothies",
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    Text(
+                                      "Home Style Chicken",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: SizeConfig.heightMultiplier),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.heightMultiplier *
+                                                      0.5,
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Text(
+                                            "Add to List",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 space0(),
+                //colllection
                 Container(
-                  color: CustomTheme.bgColor,
-                  height: SizeConfig.heightMultiplier * 35,
-                  child: ListView.builder(
-                    itemCount: 8,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: "In progress");
-                          // setState(() {
-                          //   selectedTab = index;
-                          // });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(SizeConfig.heightMultiplier),
-                          height: SizeConfig.heightMultiplier * 20,
-                          width: SizeConfig.heightMultiplier * 20,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(25),
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(25),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                ),
-                                child: Image.network(
-                                  "https://instamealplans.com/wp-content/uploads/2022/02/pexels-dzenina-lukac-1583884.jpg",
-                                  height: SizeConfig.heightMultiplier * 20,
-                                  width: SizeConfig.heightMultiplier * 20,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Text(
-                                "Smoothies",
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                "Home Style Chicken",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      space0(),
+                      Text(
+                        "   Collections",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 35,
+                        child: ListView.builder(
+                          itemCount: 8,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: "In progress");
+                                // setState(() {
+                                //   selectedTab = index;
+                                // });
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.all(SizeConfig.heightMultiplier),
+                                height: SizeConfig.heightMultiplier * 20,
+                                width: SizeConfig.heightMultiplier * 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Positioned(
+                                            child: Container(
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(10),
+                                              bottomRight: Radius.circular(25),
+                                              bottomLeft: Radius.circular(10),
+                                            ),
+                                          ),
+                                          child: Image.network(
+                                            "https://instamealplans.com/wp-content/uploads/2022/02/pexels-alleksana-4051762-scaled.jpg",
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )),
+                                        Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: SizeConfig
+                                                        .heightMultiplier *
+                                                    2,
+                                                vertical: SizeConfig
+                                                        .heightMultiplier *
+                                                    1.5),
+                                            decoration: BoxDecoration(
+                                                color: CustomTheme.bgColor,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(15),
+                                                )),
+                                            child: Text(
+                                              "${index + 1}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall
+                                                  .copyWith(
+                                                      color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                              ),
-                              InkWell(
-                                child: Container(
-                                    margin: EdgeInsets.only(
-                                        top: SizeConfig.heightMultiplier),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            SizeConfig.heightMultiplier * 0.5,
-                                        horizontal:
-                                            SizeConfig.heightMultiplier),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Text(
-                                      "Add to List",
+                                    Text(
+                                      "Smoothies",
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
-                                    )),
-                              )
-                            ],
-                          ),
+                                    ),
+                                    Text(
+                                      "Home Style Chicken",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: CustomTheme.bgColor,
+                                          ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: SizeConfig.heightMultiplier),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.heightMultiplier *
+                                                      0.5,
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          decoration: BoxDecoration(
+                                              color: CustomTheme.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Text(
+                                            "Add to List",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                .copyWith(color: Colors.white),
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
+                space0(),
+                //desserts
+                Container(
+                  color: CustomTheme.bgColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 0.5,
+                      ),
+                      Text(
+                        "   Desserts",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            .copyWith(color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.heightMultiplier * 35,
+                        child: ListView.builder(
+                          itemCount: 8,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: "In progress");
+                                // setState(() {
+                                //   selectedTab = index;
+                                // });
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.all(SizeConfig.heightMultiplier),
+                                height: SizeConfig.heightMultiplier * 20,
+                                width: SizeConfig.heightMultiplier * 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(10),
+                                          bottomRight: Radius.circular(25),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Image.network(
+                                        "https://instamealplans.com/wp-content/uploads/2022/02/pexels-dzenina-lukac-1583884.jpg",
+                                        height:
+                                            SizeConfig.heightMultiplier * 20,
+                                        width: SizeConfig.heightMultiplier * 20,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Smoothies",
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    Text(
+                                      "Home Style Chicken",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: SizeConfig.heightMultiplier),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.heightMultiplier *
+                                                      0.5,
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Text(
+                                            "Add to List",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                space0(),
               ],
             ),
           ],
