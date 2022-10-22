@@ -45,7 +45,9 @@ class SplashScreen extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () {
-                      Get.to(() => const HomeIntro());
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => HomeIntro()));
+                      // Get.to(() => const HomeIntro());
                     },
                     child: customButton(context, CustomTheme.bgColor,
                         Colors.white, "Get Started")),

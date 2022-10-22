@@ -100,7 +100,12 @@ class Login extends StatelessWidget {
                                 GetStorage box = GetStorage();
                                 box.write('plantype', "Plant-Based");
                                 box.write('planId', "3");
-                                Get.to(() => BottomNavigator());
+                                // Get.to(() => BottomNavigator());
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottomNavigator()));
                               },
                               child: customButton(context, Colors.white,
                                   CustomTheme.bgColor, "Login"),
@@ -128,7 +133,11 @@ class Login extends StatelessWidget {
                             space2(),
                             InkWell(
                                 onTap: () {
-                                  Get.to(() => TrialScreen());
+                                  // Get.to(() => TrialScreen());
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TrialScreen()));
                                 },
                                 child: customButton(
                                     context,

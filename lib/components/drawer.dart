@@ -60,20 +60,8 @@ Widget drawer(context) {
               selected: true,
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xffe0f3fb),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.user,
-                    color: Color(0xff9fd6e5),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
-              ),
+              leading: iconBox(
+                  Color(0xffe0f3fb), Color(0xff9fd6e5), FontAwesomeIcons.user),
               title: Text(
                 "Account Details",
                 style: Theme.of(context).textTheme.bodyLarge,
@@ -84,19 +72,10 @@ Widget drawer(context) {
               selected: true,
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xfffdeade),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.bookmark,
-                    color: Color(0xfffdd47d),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
+              leading: iconBox(
+                Color(0xfffdeade),
+                Color(0xfffdd47d),
+                FontAwesomeIcons.bookmark,
               ),
               title: Text(
                 "My Subscription",
@@ -112,19 +91,10 @@ Widget drawer(context) {
               selected: true,
               selectedColor: Color(0xfffcedf4),
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xfffcedf4),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.bookmark,
-                    color: Color(0xffffb2d5),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
+              leading: iconBox(
+                Color(0xfffcedf4),
+                Color(0xffffb2d5),
+                FontAwesomeIcons.bookmark,
               ),
               title: Text(
                 "Top Plans",
@@ -136,19 +106,10 @@ Widget drawer(context) {
               selected: true,
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xffc9c4ed),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.handshakeAngle,
-                    color: Color(0xff8b82d0),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
+              leading: iconBox(
+                Color(0xffc9c4ed),
+                Color(0xff8b82d0),
+                FontAwesomeIcons.handshakeAngle,
               ),
               title: Text(
                 "Support Center",
@@ -160,19 +121,10 @@ Widget drawer(context) {
               selected: true,
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xfff6e3bc),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.arrowTrendUp,
-                    color: Color(0xffde9b12),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
+              leading: iconBox(
+                Color(0xfff6e3bc),
+                Color(0xffde9b12),
+                FontAwesomeIcons.arrowTrendUp,
               ),
               title: Text(
                 "Trending Plans",
@@ -185,19 +137,10 @@ Widget drawer(context) {
               selected: true,
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
-              leading: Container(
-                width: SizeConfig.heightMultiplier * 5,
-                height: SizeConfig.heightMultiplier * 5,
-                decoration: BoxDecoration(
-                    color: Color(0xfff6e3bc),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.rightFromBracket,
-                    color: Color(0xffde9b12),
-                    size: SizeConfig.heightMultiplier * 2,
-                  ),
-                ),
+              leading: iconBox(
+                Color(0xfff6e3bc),
+                Color(0xffde9b12),
+                FontAwesomeIcons.rightFromBracket,
               ),
               title: Text(
                 "Logout",

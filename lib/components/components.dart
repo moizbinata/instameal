@@ -19,6 +19,40 @@ BoxDecoration bottomBarShadow(index, currentIndex) {
   );
 }
 
+Widget iconBox(bgColor, iconColor, icon) {
+  return Container(
+    width: SizeConfig.heightMultiplier * 5,
+    height: SizeConfig.heightMultiplier * 5,
+    decoration: BoxDecoration(
+      color: bgColor,
+      borderRadius: BorderRadius.circular(
+        10,
+      ),
+    ),
+    child: Center(
+      child: FaIcon(
+        icon,
+        color: iconColor,
+        size: SizeConfig.heightMultiplier * 2,
+      ),
+    ),
+  );
+}
+
+Widget customButton2(context, color, bgColor, label) {
+  return Container(
+      margin: EdgeInsets.only(top: SizeConfig.heightMultiplier),
+      padding: EdgeInsets.symmetric(
+          vertical: SizeConfig.heightMultiplier * 0.5,
+          horizontal: SizeConfig.heightMultiplier),
+      decoration: BoxDecoration(
+          color: bgColor, borderRadius: BorderRadius.circular(15)),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodySmall.copyWith(color: color),
+      ));
+}
+
 Widget customButton(context, color, bgColor, label) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 15),

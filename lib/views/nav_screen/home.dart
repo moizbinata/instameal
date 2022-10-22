@@ -5,11 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
+import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
+import 'package:instameal/utils/constants.dart';
 
 import '../../components/drawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
+import '../details/recipe.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -27,6 +30,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final universalController = Get.put(UniversalController());
+
     return Scaffold(
         key: _scaffoldKey,
         drawer: drawer(context),
@@ -66,644 +71,855 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: CustomTheme.bgColor2,
         body: SafeArea(
-            child: ListView(
-          children: [
-            space0(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "      ${box.read('plantype').toString()} Weekly Plan for you",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: SizeConfig.heightMultiplier * 2,
-                //     vertical: SizeConfig.heightMultiplier * 0.5,
-                //   ),
-                //   child: customField(passwordController, "Search",
-                //       icon: Icons.search,
-                //       bgcolor: CustomTheme.grey,
-                //       iconColor: Colors.grey),
-                // ),
-                SizedBox(
-                  height: SizeConfig.heightMultiplier * 24,
-                  child: GetBuilder<WeeklyController>(
-                      init: WeeklyController(),
-                      builder: (_) {
-                        return (_.listofWeeklyImages.length == 0 ||
-                                _.listofWeeklyImages?.first?.data?.length == 0)
-                            ? Center(
-                                child: Text(
-                                  "Loading",
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount:
-                                    _.listofWeeklyImages?.first?.data?.length,
-                                physics: AlwaysScrollableScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Fluttertoast.showToast(
-                                          msg: "In progress");
-                                    },
-                                    child: Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      width: SizeConfig.heightMultiplier * 26,
-                                      margin: EdgeInsets.all(
-                                          SizeConfig.heightMultiplier),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        // image: DecorationImage(
-                                        //     image: NetworkImage(
-                                        //       "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
-                                        //     ),
-                                        //     fit: BoxFit.cover),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: CustomTheme.grey
-                                                .withOpacity(0.2),
-                                            blurRadius: 6,
-                                            spreadRadius: 6,
-                                            offset: Offset(0, 0),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            child: CachedNetworkImage(
-                                              width:
-                                                  SizeConfig.heightMultiplier *
-                                                      26,
-                                              height:
-                                                  SizeConfig.heightMultiplier *
-                                                      24,
-                                              imageUrl: _.listofWeeklyImages
-                                                  ?.first?.data[index].imageUrl,
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) => Center(
-                                                  child: Center(
-                                                      child:
-                                                          CircularProgressIndicator())),
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  Image.asset(
-                                                      "assets/images/breakfast.png"),
+            child: RefreshIndicator(
+                onRefresh: universalController.fetchUniversal,
+                child: ListView(
+                  children: [
+                    space0(),
+                    Text(
+                      "      ${box.read('plantype').toString()} Weekly Plan for you",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: SizeConfig.heightMultiplier * 2,
+                    //     vertical: SizeConfig.heightMultiplier * 0.5,
+                    //   ),
+                    //   child: customField(passwordController, "Search",
+                    //       icon: Icons.search,
+                    //       bgcolor: CustomTheme.grey,
+                    //       iconColor: Colors.grey),
+                    // ),
+                    SizedBox(
+                      height: SizeConfig.heightMultiplier * 24,
+                      child: GetBuilder<WeeklyController>(
+                        init: WeeklyController(),
+                        builder: (_) {
+                          return (_.listofWeeklyImages.length == 0 ||
+                                  _.listofWeeklyImages?.first?.data?.length ==
+                                      0)
+                              ? Center(
+                                  child: Text(
+                                    "Loading",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount:
+                                      _.listofWeeklyImages?.first?.data?.length,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        // Get.to(() => RecipeDetail());
+                                      },
+                                      child: Container(
+                                        clipBehavior: Clip.hardEdge,
+                                        width: SizeConfig.heightMultiplier * 26,
+                                        margin: EdgeInsets.all(
+                                            SizeConfig.heightMultiplier),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          // image: DecorationImage(
+                                          //     image: NetworkImage(
+                                          //       "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
+                                          //     ),
+                                          //     fit: BoxFit.cover),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: CustomTheme.grey
+                                                  .withOpacity(0.2),
+                                              blurRadius: 6,
+                                              spreadRadius: 6,
+                                              offset: Offset(0, 0),
                                             ),
-                                          ),
-                                          Positioned(
-                                            bottom: SizeConfig.heightMultiplier,
-                                            left: SizeConfig.heightMultiplier,
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: SizeConfig
-                                                          .heightMultiplier *
-                                                      1.5,
-                                                  vertical: SizeConfig
-                                                          .heightMultiplier *
-                                                      0.5),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: Text(
-                                                "Week ${index + 1}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
+                                          ],
+                                        ),
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              top: 0,
+                                              left: 0,
+                                              child: CachedNetworkImage(
+                                                width: SizeConfig
+                                                        .heightMultiplier *
+                                                    26,
+                                                height: SizeConfig
+                                                        .heightMultiplier *
+                                                    24,
+                                                imageUrl:
+                                                    // "http://192.168.1.113:3000/assets/airfryer-eggplant-sticks.jpg",
+
+                                                    _.listofWeeklyImages?.first
+                                                        ?.data[index].imageUrl,
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                        child: Center(
+                                                            child:
+                                                                CircularProgressIndicator())),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        "assets/images/breakfast.png"),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            right: SizeConfig.heightMultiplier,
-                                            top: SizeConfig.heightMultiplier,
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: SizeConfig
-                                                          .heightMultiplier *
-                                                      1.5,
-                                                  vertical: SizeConfig
-                                                          .heightMultiplier *
-                                                      0.5),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: Text(
-                                                box.read('plantype').toString(),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
+                                            Positioned(
+                                              bottom:
+                                                  SizeConfig.heightMultiplier,
+                                              left: SizeConfig.heightMultiplier,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: SizeConfig
+                                                            .heightMultiplier *
+                                                        1.5,
+                                                    vertical: SizeConfig
+                                                            .heightMultiplier *
+                                                        0.5),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Text(
+                                                  "Week ${index + 1}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            Positioned(
+                                              right:
+                                                  SizeConfig.heightMultiplier,
+                                              top: SizeConfig.heightMultiplier,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: SizeConfig
+                                                            .heightMultiplier *
+                                                        1.5,
+                                                    vertical: SizeConfig
+                                                            .heightMultiplier *
+                                                        0.5),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Text(
+                                                  box
+                                                      .read('plantype')
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              );
-                      }),
-                ),
+                                    );
+                                  },
+                                );
+                        },
+                      ),
+                    ),
 
-                ListTile(
-                  tileColor: CustomTheme.bgColor,
-                  title: Text(
-                    "Explore new plans",
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
-                  subtitle: Text(
-                    "Explore new subscription plans for you",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-                space0(),
-                //top trending
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      space0(),
-                      Text(
-                        "   Top Trending",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                    ListTile(
+                      tileColor: CustomTheme.bgColor,
+                      title: Text(
+                        "Explore new plans",
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: Colors.white,
+                            ),
                       ),
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 35,
-                        child: ListView.builder(
-                          itemCount: 8,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Fluttertoast.showToast(msg: "In progress");
-                                // setState(() {
-                                //   selectedTab = index;
-                                // });
-                              },
-                              child: Container(
-                                margin:
-                                    EdgeInsets.all(SizeConfig.heightMultiplier),
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                            child: Container(
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(10),
-                                              bottomRight: Radius.circular(25),
-                                              bottomLeft: Radius.circular(10),
-                                            ),
-                                          ),
-                                          child: Image.network(
-                                            "https://instamealplans.com/wp-content/uploads/2022/02/pexels-alleksana-4051762-scaled.jpg",
-                                            height:
-                                                SizeConfig.heightMultiplier *
-                                                    20,
-                                            width: SizeConfig.heightMultiplier *
-                                                20,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )),
-                                        Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: SizeConfig
-                                                        .heightMultiplier *
-                                                    2,
-                                                vertical: SizeConfig
-                                                        .heightMultiplier *
-                                                    1.5),
-                                            decoration: BoxDecoration(
-                                                color: CustomTheme.bgColor,
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(15),
-                                                )),
-                                            child: Text(
-                                              "${index + 1}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  .copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "Smoothies",
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      "Home Style Chicken",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: CustomTheme.bgColor,
-                                          ),
-                                    ),
-                                    InkWell(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: SizeConfig.heightMultiplier),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  SizeConfig.heightMultiplier *
-                                                      0.5,
-                                              horizontal:
-                                                  SizeConfig.heightMultiplier),
-                                          decoration: BoxDecoration(
-                                              color: CustomTheme.red,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Text(
-                                            "Add to List",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall
-                                                .copyWith(color: Colors.white),
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                      subtitle: Text(
+                        "Explore new subscription plans for you",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    space0(),
+                    //top trending
+                    GetBuilder<UniversalController>(
+                        init: UniversalController(),
+                        builder: (_) {
+                          return (_.listofFav.length == 0)
+                              ? SizedBox()
+                              : Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      space0(),
+                                      Text(
+                                        "   Top Collections",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            SizeConfig.heightMultiplier * 35,
+                                        child: ListView.builder(
+                                          itemCount: _.listofFav.length,
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RecipeDetail(
+                                                              recipeModel:
+                                                                  _.listofFav[
+                                                                      index],
+                                                            )));
+                                                // Get.to(() => RecipeDetail(
+                                                //       recipeModel:
+                                                //           _.listofFav[index],
+                                                //     ));
 
-                space0(),
-                //special occassion
-                Container(
-                  color: CustomTheme.bgColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 0.5,
-                      ),
-                      Text(
-                        "   Special Occassions",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            .copyWith(color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 35,
-                        child: ListView.builder(
-                          itemCount: 8,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Fluttertoast.showToast(msg: "In progress");
-                                // setState(() {
-                                //   selectedTab = index;
-                                // });
-                              },
-                              child: Container(
-                                margin:
-                                    EdgeInsets.all(SizeConfig.heightMultiplier),
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(25),
-                                          topRight: Radius.circular(10),
-                                          bottomRight: Radius.circular(25),
-                                          bottomLeft: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Image.network(
-                                        "https://instamealplans.com/wp-content/uploads/2022/02/pexels-dzenina-lukac-1583884.jpg",
-                                        height:
-                                            SizeConfig.heightMultiplier * 20,
-                                        width: SizeConfig.heightMultiplier * 20,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Smoothies",
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      "Home Style Chicken",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                    InkWell(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: SizeConfig.heightMultiplier),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  SizeConfig.heightMultiplier *
-                                                      0.5,
-                                              horizontal:
-                                                  SizeConfig.heightMultiplier),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Text(
-                                            "Add to List",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                space0(),
-                //colllection
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      space0(),
-                      Text(
-                        "   Collections",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 35,
-                        child: ListView.builder(
-                          itemCount: 8,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Fluttertoast.showToast(msg: "In progress");
-                                // setState(() {
-                                //   selectedTab = index;
-                                // });
-                              },
-                              child: Container(
-                                margin:
-                                    EdgeInsets.all(SizeConfig.heightMultiplier),
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                            child: Container(
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(10),
-                                              bottomRight: Radius.circular(25),
-                                              bottomLeft: Radius.circular(10),
-                                            ),
-                                          ),
-                                          child: Image.network(
-                                            "https://instamealplans.com/wp-content/uploads/2022/02/pexels-alleksana-4051762-scaled.jpg",
-                                            height:
-                                                SizeConfig.heightMultiplier *
+                                                // setState(() {
+                                                //   selectedTab = index;
+                                                // });
+                                              },
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                                height: SizeConfig
+                                                        .heightMultiplier *
                                                     20,
-                                            width: SizeConfig.heightMultiplier *
-                                                20,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )),
-                                        Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: SizeConfig
+                                                width: SizeConfig
                                                         .heightMultiplier *
-                                                    2,
-                                                vertical: SizeConfig
-                                                        .heightMultiplier *
-                                                    1.5),
-                                            decoration: BoxDecoration(
-                                                color: CustomTheme.bgColor,
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(15),
-                                                )),
-                                            child: Text(
-                                              "${index + 1}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  .copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "Smoothies",
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      "Home Style Chicken",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: CustomTheme.bgColor,
-                                          ),
-                                    ),
-                                    InkWell(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: SizeConfig.heightMultiplier),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  SizeConfig.heightMultiplier *
-                                                      0.5,
-                                              horizontal:
-                                                  SizeConfig.heightMultiplier),
-                                          decoration: BoxDecoration(
-                                              color: CustomTheme.red,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Text(
-                                            "Add to List",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall
-                                                .copyWith(color: Colors.white),
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                space0(),
-                //desserts
-                Container(
-                  color: CustomTheme.bgColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 0.5,
-                      ),
-                      Text(
-                        "   Desserts",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            .copyWith(color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 35,
-                        child: ListView.builder(
-                          itemCount: 8,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Fluttertoast.showToast(msg: "In progress");
-                                // setState(() {
-                                //   selectedTab = index;
-                                // });
-                              },
-                              child: Container(
-                                margin:
-                                    EdgeInsets.all(SizeConfig.heightMultiplier),
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(25),
-                                          topRight: Radius.circular(10),
-                                          bottomRight: Radius.circular(25),
-                                          bottomLeft: Radius.circular(10),
+                                                    20,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      children: [
+                                                        Positioned(
+                                                            child: Container(
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(25),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          25),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            height: SizeConfig
+                                                                    .heightMultiplier *
+                                                                20,
+                                                            width: SizeConfig
+                                                                    .heightMultiplier *
+                                                                20,
+                                                            imageUrl: Constants
+                                                                    .baseImageUrl +
+                                                                _
+                                                                    .listofFav[
+                                                                        index]
+                                                                    .imagesUrl,
+                                                            fit: BoxFit.cover,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child: Center(
+                                                                        child:
+                                                                            CircularProgressIndicator())),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Image.asset(
+                                                                    "assets/images/breakfast.png"),
+                                                          ),
+                                                        )),
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    SizeConfig
+                                                                            .heightMultiplier *
+                                                                        2,
+                                                                vertical: SizeConfig
+                                                                        .heightMultiplier *
+                                                                    1.5),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    color: CustomTheme
+                                                                        .bgColor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .only(
+                                                                      bottomLeft:
+                                                                          Radius.circular(
+                                                                              15),
+                                                                    )),
+                                                            child: Text(
+                                                              "${index + 1}",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .white),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      _.listofFav[index]
+                                                          .planName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall,
+                                                    ),
+                                                    Text(
+                                                      _.listofFav[index]
+                                                          .recipeName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: CustomTheme
+                                                                .bgColor,
+                                                          ),
+                                                    ),
+                                                    InkWell(
+                                                        child: customButton2(
+                                                            context,
+                                                            Colors.white,
+                                                            CustomTheme.red,
+                                                            "Add to List"))
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
-                                      child: Image.network(
-                                        "https://instamealplans.com/wp-content/uploads/2022/02/pexels-dzenina-lukac-1583884.jpg",
+                                    ],
+                                  ),
+                                );
+                        }),
+
+                    space0(),
+                    //special occassion
+                    GetBuilder<UniversalController>(
+                        init: UniversalController(),
+                        builder: (_) {
+                          return (_.listofFestival.length == 0)
+                              ? SizedBox()
+                              : Container(
+                                  color: CustomTheme.bgColor,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
                                         height:
-                                            SizeConfig.heightMultiplier * 20,
-                                        width: SizeConfig.heightMultiplier * 20,
-                                        fit: BoxFit.cover,
+                                            SizeConfig.heightMultiplier * 0.5,
                                       ),
-                                    ),
-                                    Text(
-                                      "Smoothies",
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      "Home Style Chicken",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                    InkWell(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: SizeConfig.heightMultiplier),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  SizeConfig.heightMultiplier *
-                                                      0.5,
-                                              horizontal:
-                                                  SizeConfig.heightMultiplier),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Text(
-                                            "Add to List",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                space0(),
-              ],
-            ),
-          ],
-        )));
+                                      Text(
+                                        "   Special Desserts",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            .copyWith(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            SizeConfig.heightMultiplier * 35,
+                                        child: ListView.builder(
+                                          itemCount: _.listofFestival.length,
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                // Get.to(() => RecipeDetail(
+                                                //       recipeModel:
+                                                //           _.listofFestival[
+                                                //               index],
+                                                //     ));
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RecipeDetail(
+                                                              recipeModel:
+                                                                  _.listofFestival[
+                                                                      index],
+                                                            )));
+
+                                                // setState(() {
+                                                //   selectedTab = index;
+                                                // });
+                                              },
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                                height: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                width: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      clipBehavior:
+                                                          Clip.hardEdge,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  10),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  25),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  10),
+                                                        ),
+                                                      ),
+                                                      child: CachedNetworkImage(
+                                                        height: SizeConfig
+                                                                .heightMultiplier *
+                                                            20,
+                                                        width: SizeConfig
+                                                                .heightMultiplier *
+                                                            20,
+                                                        imageUrl: Constants
+                                                                .baseImageUrl +
+                                                            _
+                                                                .listofFestival[
+                                                                    index]
+                                                                .imagesUrl,
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child: Center(
+                                                                    child:
+                                                                        CircularProgressIndicator())),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Image.asset(
+                                                                "assets/images/breakfast.png"),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _.listofFestival[index]
+                                                          .categName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall,
+                                                    ),
+                                                    Text(
+                                                      _.listofFestival[index]
+                                                          .recipeName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
+                                                    ),
+                                                    InkWell(
+                                                        child: customButton2(
+                                                            context,
+                                                            CustomTheme
+                                                                .secondaryColor,
+                                                            Colors.white,
+                                                            "Add to List")),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                        }),
+
+                    space0(),
+                    //colllection
+                    GetBuilder<UniversalController>(
+                        init: UniversalController(),
+                        builder: (_) {
+                          return (_.listofCollection.length == 0)
+                              ? SizedBox()
+                              : Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      space0(),
+                                      Text(
+                                        "   Top Collections",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            SizeConfig.heightMultiplier * 35,
+                                        child: ListView.builder(
+                                          itemCount: _.listofCollection.length,
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              // Fluttertoast.showToast(
+                                              //     msg: "In progress");
+                                              // onTap: () => Get.to(() =>
+                                              //     RecipeDetail(
+                                              //         recipeModel:
+                                              //             _.listofCollection[
+                                              //                 index])),
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RecipeDetail(
+                                                              recipeModel:
+                                                                  _.listofCollection[
+                                                                      index],
+                                                            )));
+                                              },
+
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                                height: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                width: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      children: [
+                                                        Positioned(
+                                                            child: Container(
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(25),
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          25),
+                                                              bottomLeft: Radius
+                                                                  .circular(10),
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            height: SizeConfig
+                                                                    .heightMultiplier *
+                                                                20,
+                                                            width: SizeConfig
+                                                                    .heightMultiplier *
+                                                                20,
+                                                            imageUrl: Constants
+                                                                    .baseImageUrl +
+                                                                _
+                                                                    .listofCollection[
+                                                                        index]
+                                                                    .imagesUrl,
+                                                            fit: BoxFit.cover,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child: Center(
+                                                                        child:
+                                                                            CircularProgressIndicator())),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Image.asset(
+                                                                    "assets/images/breakfast.png"),
+                                                          ),
+                                                        )),
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    SizeConfig
+                                                                            .heightMultiplier *
+                                                                        2,
+                                                                vertical: SizeConfig
+                                                                        .heightMultiplier *
+                                                                    1.5),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    color: CustomTheme
+                                                                        .bgColor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .only(
+                                                                      bottomLeft:
+                                                                          Radius.circular(
+                                                                              15),
+                                                                    )),
+                                                            child: Text(
+                                                              "${index + 1}",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .white),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      _.listofCollection[index]
+                                                          .planName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall,
+                                                    ),
+                                                    Text(
+                                                      _.listofCollection[index]
+                                                          .recipeName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: CustomTheme
+                                                                .bgColor,
+                                                          ),
+                                                    ),
+                                                    InkWell(
+                                                        child: customButton2(
+                                                            context,
+                                                            Colors.white,
+                                                            CustomTheme.red,
+                                                            "Add to List"))
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                        }),
+
+                    space0(),
+                    //desserts
+                    GetBuilder<UniversalController>(
+                        init: UniversalController(),
+                        builder: (_) {
+                          return (_.listofDesserts.length == 0)
+                              ? SizedBox()
+                              : Container(
+                                  color: CustomTheme.bgColor,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            SizeConfig.heightMultiplier * 0.5,
+                                      ),
+                                      Text(
+                                        "   Special Desserts",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            .copyWith(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            SizeConfig.heightMultiplier * 35,
+                                        child: ListView.builder(
+                                          itemCount: _.listofDesserts.length,
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RecipeDetail(
+                                                              recipeModel:
+                                                                  _.listofDesserts[
+                                                                      index],
+                                                            )));
+                                                // Get.to(() => RecipeDetail(
+                                                //     recipeModel:
+                                                //         _.listofDesserts[
+                                                //             index]));
+                                              },
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                                height: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                width: SizeConfig
+                                                        .heightMultiplier *
+                                                    20,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      clipBehavior:
+                                                          Clip.hardEdge,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  10),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  25),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  10),
+                                                        ),
+                                                      ),
+                                                      child: CachedNetworkImage(
+                                                        height: SizeConfig
+                                                                .heightMultiplier *
+                                                            20,
+                                                        width: SizeConfig
+                                                                .heightMultiplier *
+                                                            20,
+                                                        imageUrl: Constants
+                                                                .baseImageUrl +
+                                                            _
+                                                                .listofDesserts[
+                                                                    index]
+                                                                .imagesUrl,
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child: Center(
+                                                                    child:
+                                                                        CircularProgressIndicator())),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Image.asset(
+                                                                "assets/images/breakfast.png"),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _.listofDesserts[index]
+                                                          .categName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall,
+                                                    ),
+                                                    Text(
+                                                      _.listofDesserts[index]
+                                                          .recipeName,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
+                                                    ),
+                                                    InkWell(
+                                                        child: customButton2(
+                                                            context,
+                                                            CustomTheme
+                                                                .secondaryColor,
+                                                            Colors.white,
+                                                            "Add to List")),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                        }),
+
+                    space0(),
+                  ],
+                ))));
   }
 }

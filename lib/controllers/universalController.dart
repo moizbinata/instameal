@@ -31,17 +31,26 @@ class UniversalController extends GetxController {
     if (universal != null) {
       listofUniversal.add(universal);
       if (listofUniversal.length > 0) {
+        print("moiz");
+        print(listofUniversal.first.collection.first.planName);
+        print(listofUniversal.first.dessert.first.planName);
+        print(listofUniversal.first.festival.first.planName);
         //favourite
-        if (listofUniversal.first.fav.length > 0)
+        if (listofUniversal.first.fav != null ||
+            listofUniversal.first.fav.length > 0)
           listofFav.addAll(listofUniversal.first.fav);
         //festival
-        if (listofUniversal.first.festival.length > 0)
+        if (listofUniversal.first.festival != null ||
+            listofUniversal.first.festival.length > 0) {
           listofFestival.addAll(listofUniversal.first.festival);
+        }
         //collection
-        if (listofUniversal.first.collection.length > 0)
+        if (listofUniversal.first.collection != null ||
+            listofUniversal.first.collection.length > 0)
           listofCollection.addAll(listofUniversal.first.collection);
         //dessert
-        if (listofUniversal.first.dessert.length > 0)
+        if (listofUniversal.first.dessert != null ||
+            listofUniversal.first.dessert.length > 0)
           listofDesserts.addAll(listofUniversal.first.dessert);
       }
       print("moiz");

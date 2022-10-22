@@ -251,7 +251,6 @@ class Collection {
 }
 
 class Dessert {
-  int userId;
   int recipeId;
   String recipeName;
   String whatYouNeed;
@@ -266,8 +265,7 @@ class Dessert {
   String planName;
 
   Dessert(
-      {this.userId,
-      this.recipeId,
+      {this.recipeId,
       this.recipeName,
       this.whatYouNeed,
       this.direction,
@@ -281,7 +279,6 @@ class Dessert {
       this.planName});
 
   Dessert.fromJson(Map<String, dynamic> json) {
-    userId = json['UserId'];
     recipeId = json['RecipeId'];
     recipeName = json['recipeName'];
     whatYouNeed = json['whatYouNeed'];
@@ -298,7 +295,6 @@ class Dessert {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
     data['RecipeId'] = this.recipeId;
     data['recipeName'] = this.recipeName;
     data['whatYouNeed'] = this.whatYouNeed;
