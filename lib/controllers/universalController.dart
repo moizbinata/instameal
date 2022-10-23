@@ -32,7 +32,8 @@ class UniversalController extends GetxController {
       listofUniversal.add(universal);
       if (listofUniversal.length > 0) {
         print("moiz");
-        print(listofUniversal.first.collection.first.planName);
+        print(listofUniversal.first.fav.first.keys.first);
+        print(listofUniversal.first.fav.first.nutritPerServe.first);
         print(listofUniversal.first.dessert.first.planName);
         print(listofUniversal.first.festival.first.planName);
         //favourite
@@ -53,11 +54,11 @@ class UniversalController extends GetxController {
             listofUniversal.first.dessert.length > 0)
           listofDesserts.addAll(listofUniversal.first.dessert);
       }
-      print("moiz");
-      print(listofFav);
-      print(listofFestival);
-      print(listofCollection);
-      print(listofDesserts);
+      // print("moiz");
+      // print(listofFav);
+      // print(listofFestival);
+      // print(listofCollection);
+      // print(listofDesserts);
     } else {
       listofUniversal.length = 0;
     }

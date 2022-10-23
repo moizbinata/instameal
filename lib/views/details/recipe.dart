@@ -91,13 +91,8 @@ class RecipeDetail extends StatelessWidget {
                             recipeModel.planName,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          Text(
-                            recipeModel.categName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                .copyWith(color: CustomTheme.grey),
-                          ),
+                          Text(recipeModel.categName,
+                              style: Theme.of(context).textTheme.bodyMedium),
                         ],
                       ),
                       Row(
@@ -145,42 +140,175 @@ class RecipeDetail extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: SizeConfig.heightMultiplier * 2),
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image.asset(
-                          "assets/images/food.png",
-                          height: SizeConfig.heightMultiplier * 4,
-                          fit: BoxFit.contain,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/food.png",
+                              height: SizeConfig.heightMultiplier * 4,
+                              fit: BoxFit.contain,
+                            ),
+                            Text(recipeModel.prepTime + " Prep Time",
+                                style: Theme.of(context).textTheme.bodySmall),
+                            Text(recipeModel.cookTime + " Cook Time",
+                                style: Theme.of(context).textTheme.bodySmall),
+                          ],
                         ),
-                        Text(recipeModel.prepTime + " Prep Time",
-                            style: Theme.of(context).textTheme.bodySmall),
-                        Text(recipeModel.cookTime + " Cook Time",
-                            style: Theme.of(context).textTheme.bodySmall),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                            child: customButton2(context, Colors.white,
-                                CustomTheme.bgColor, "Add to List")),
-                      ],
-                    ),
-                    Text(
-                      "Ingredients: ",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Text(
-                      "Bali is a province of Indonesia and the westernmost of the Lesser Sunda Islands. East of Java and west of Lombok, the province includes the island of Bali and a few smaller neighbouring islands, notably Nusa Penida, Nusa Lembongan, and Nusa Ceningan." +
-                          "Bali is a province of Indonesia and the westernmost of the Lesser Sunda Islands. East of Java and west of Lombok, the province includes the island of Bali and a few smaller neighbouring islands, notably Nusa Penida, Nusa Lembongan, and Nusa Ceningan." +
-                          "Bali is a province of Indonesia and the westernmost of the Lesser Sunda Islands. East of Java and west of Lombok, the province includes the island of Bali and a few smaller neighbouring islands, notably Nusa Penida, Nusa Lembongan, and Nusa Ceningan.",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ]),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            child: customButton2(
+                              context,
+                              Colors.white,
+                              CustomTheme.bgColor,
+                              "Add to List",
+                            ),
+                          ),
+                        ),
+                        //keys
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 4,
+                          child: ListView.builder(
+                            itemCount: recipeModel.keys.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  height: SizeConfig.heightMultiplier * 4,
+                                  width: SizeConfig.heightMultiplier * 4,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: SizeConfig.heightMultiplier),
+                                  decoration: BoxDecoration(
+                                      color:
+                                          (recipeModel.keys[index].toString() ==
+                                                  "DF")
+                                              ? Color(0xff8b82d0)
+                                              : (recipeModel.keys[index]
+                                                          .toString() ==
+                                                      "MP")
+                                                  ? Color(0xffde9b12)
+                                                  : (recipeModel.keys[index]
+                                                              .toString() ==
+                                                          "V")
+                                                      ? Color(0xffffb2d5)
+                                                      : CustomTheme.bgColor,
+                                      borderRadius: BorderRadius.circular(100)),
+                                  child: Center(
+                                      child: Text(
+                                    recipeModel.keys[index],
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  )));
+                            },
+                          ),
+                        ),
+                        space0(),
+                        Text(
+                          "Ingredients: ",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        space0(),
+                        //ingredients
+                        ConstrainedBox(
+                          constraints:
+                              BoxConstraints(maxHeight: 200, minHeight: 56.0),
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: recipeModel.whatYouNeed.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              print(recipeModel.whatYouNeed.length);
+                              return Text(
+                                (index + 1).toString() +
+                                    ":  " +
+                                    recipeModel.whatYouNeed[index],
+                                style: Theme.of(context).textTheme.bodySmall,
+                              );
+                            },
+                          ),
+                        ),
+                        space0(),
+                        space0(),
+                        Text(
+                          "Directions: ",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        space0(),
+                        //directions
+                        ConstrainedBox(
+                          constraints:
+                              BoxConstraints(maxHeight: 300, minHeight: 56.0),
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: recipeModel.direction.length,
+                            itemBuilder: (context, index) {
+                              print(recipeModel.direction.length);
+                              return Text(
+                                (index + 1).toString() +
+                                    ":  " +
+                                    recipeModel.direction[index],
+                                style: Theme.of(context).textTheme.bodySmall,
+                              );
+                            },
+                          ),
+                        ),
+                        space0(),
+                        space0(),
+                        Text(
+                          "Nutrition Per Serve: ",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        space0(),
+                        Container(
+                          height: SizeConfig.heightMultiplier * 4,
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: recipeModel.nutritPerServe.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              print(recipeModel.nutritPerServe.length);
+                              return Container(
+                                height: SizeConfig.heightMultiplier * 4,
+                                width: SizeConfig.heightMultiplier * 12,
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SizeConfig.heightMultiplier),
+                                decoration: BoxDecoration(
+                                    color: (recipeModel.nutritPerServe[index]
+                                            .toString()
+                                            .contains("Fats"))
+                                        ? Color(0xff8b82d0)
+                                        : (recipeModel.nutritPerServe[index]
+                                                .toString()
+                                                .contains("Fiber"))
+                                            ? Color(0xffde9b12)
+                                            : (recipeModel.nutritPerServe[index]
+                                                    .toString()
+                                                    .contains("Kcal"))
+                                                ? Color(0xffffb2d5)
+                                                : CustomTheme.bgColor,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                  child: Text(
+                                    recipeModel.nutritPerServe[index],
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ]),
                 ),
               ],
             ),

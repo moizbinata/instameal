@@ -5,11 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
 
-import '../../components/drawer.dart';
+import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import '../details/recipe.dart';
@@ -35,40 +36,13 @@ class _HomeState extends State<Home> {
     return Scaffold(
         key: _scaffoldKey,
         drawer: drawer(context),
-        appBar: AppBar(
-          backgroundColor: CustomTheme.bgColor2,
-          elevation: 0.0,
-          leading: IconButton(
-            onPressed: () {
-              if (_scaffoldKey.currentState.isDrawerOpen) {
-                _scaffoldKey.currentState.openEndDrawer();
-              } else {
-                _scaffoldKey.currentState.openDrawer();
-              }
-            },
-            icon: FaIcon(FontAwesomeIcons.barsStaggered,
-                color: CustomTheme.bgColor),
-          ),
-          title: Center(
-            child: Image.asset(
-              "assets/images/logo2.png",
-              height: SizeConfig.heightMultiplier * 5,
-            ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                WeeklyController weeklyController = new WeeklyController();
-                print("weekly");
-                weeklyController.fetchWeekly();
-              },
-              icon: FaIcon(
-                FontAwesomeIcons.bell,
-                color: CustomTheme.bgColor,
-              ),
-            ),
-          ],
-        ),
+        appBar: customAppBar(action: () {
+          if (_scaffoldKey.currentState.isDrawerOpen) {
+            _scaffoldKey.currentState.openEndDrawer();
+          } else {
+            _scaffoldKey.currentState.openDrawer();
+          }
+        }),
         backgroundColor: CustomTheme.bgColor2,
         body: SafeArea(
             child: RefreshIndicator(
@@ -256,7 +230,7 @@ class _HomeState extends State<Home> {
                                     children: [
                                       space0(),
                                       Text(
-                                        "   Top Collections",
+                                        "   Top Trending",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,

@@ -67,14 +67,14 @@ class Fav {
   int userId;
   int recipeId;
   String recipeName;
-  String whatYouNeed;
-  String direction;
-  String nutritPerServe;
+  List<String> whatYouNeed;
+  List<String> direction;
+  List<String> nutritPerServe;
   String imagesUrl;
   int serving;
   String prepTime;
   String cookTime;
-  String keys;
+  List<String> keys;
   String categName;
   String planName;
 
@@ -97,14 +97,30 @@ class Fav {
     userId = json['UserId'];
     recipeId = json['RecipeId'];
     recipeName = json['recipeName'];
-    whatYouNeed = json['whatYouNeed'];
-    direction = json['direction'];
-    nutritPerServe = json['nutritPerServe'];
+    whatYouNeed = json['whatYouNeed'] != null
+        ? json['whatYouNeed'].toString().split('***').toList()
+        : [];
+    direction = json['direction'] != null
+        ? json['direction'].toString().split('***').toList()
+        : [];
+    nutritPerServe = json['nutritPerServe'] != null
+        ? json['nutritPerServe'].toString().split('***').toList()
+        : [];
+// nutritPerServe = json['nutritPerServe'];
+//     if (json['nutritPerServe'] != null) {
+//       nutritPerServe = <String>[];
+//       json['nutritPerServe'].forEach((v) {
+//         nutritPerServe.add(v);
+//       });
+//     }
     imagesUrl = json['imagesUrl'];
     serving = json['serving'];
     prepTime = json['prepTime'];
     cookTime = json['cookTime'];
-    keys = json['keys'];
+    keys = json['keys'] != null
+        ? json['keys'].toString().split('***').toList()
+        : [];
+
     categName = json['categName'];
     planName = json['planName'];
   }
