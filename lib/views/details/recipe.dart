@@ -13,6 +13,7 @@ class RecipeDetail extends StatelessWidget {
   final recipeModel;
   @override
   Widget build(BuildContext context) {
+    print(Constants.baseImageUrl + recipeModel.imagesUrl);
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
       body: CustomScrollView(
