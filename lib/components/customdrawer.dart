@@ -31,11 +31,11 @@ Widget drawer(context) {
                   'assets/images/icons/icon1.png',
                 ),
                 title: Text(
-                  "Patricia Kalara",
+                  "Patricia Kamara",
                   style: Theme.of(context).textTheme.bodyMedium.copyWith(
                       color: CustomTheme.bgColor, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text("patricia.kalara@gmail.com",
+                subtitle: Text("patricia.kamara@gmail.com",
                     style: Theme.of(context).textTheme.bodySmall),
               ),
             ],

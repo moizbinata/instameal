@@ -90,10 +90,10 @@ class RecipeDetail extends StatelessWidget {
                         children: [
                           Text(
                             recipeModel.planName,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Text(recipeModel.categName,
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),
                       Row(
@@ -106,7 +106,7 @@ class RecipeDetail extends StatelessWidget {
                               color: Colors.white,
                             ),
                             label: Text(
-                              "Free",
+                              "Favourite",
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
@@ -171,44 +171,6 @@ class RecipeDetail extends StatelessWidget {
                             ),
                           ),
                         ),
-                        //keys
-                        SizedBox(
-                          height: SizeConfig.heightMultiplier * 4,
-                          child: ListView.builder(
-                            itemCount: recipeModel.keys.length,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  height: SizeConfig.heightMultiplier * 4,
-                                  width: SizeConfig.heightMultiplier * 4,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SizeConfig.heightMultiplier),
-                                  decoration: BoxDecoration(
-                                      color:
-                                          (recipeModel.keys[index].toString() ==
-                                                  "DF")
-                                              ? Color(0xff8b82d0)
-                                              : (recipeModel.keys[index]
-                                                          .toString() ==
-                                                      "MP")
-                                                  ? Color(0xffde9b12)
-                                                  : (recipeModel.keys[index]
-                                                              .toString() ==
-                                                          "V")
-                                                      ? Color(0xffffb2d5)
-                                                      : CustomTheme.bgColor,
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: Center(
-                                      child: Text(
-                                    recipeModel.keys[index],
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  )));
-                            },
-                          ),
-                        ),
                         space0(),
                         Text(
                           "Ingredients: ",
@@ -226,12 +188,23 @@ class RecipeDetail extends StatelessWidget {
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               print(recipeModel.whatYouNeed.length);
-                              return Text(
-                                (index + 1).toString() +
-                                    ":  " +
-                                    recipeModel.whatYouNeed[index],
-                                style: Theme.of(context).textTheme.bodySmall,
-                              );
+                              return RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: (index < 9)
+                                        ? "0" + (index + 1).toString() + ":  "
+                                        : "" + (index + 1).toString() + ":  ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: CustomTheme.bgColor)),
+                                TextSpan(
+                                    text: recipeModel.whatYouNeed[index],
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall)
+                              ]));
                             },
                           ),
                         ),
@@ -253,12 +226,30 @@ class RecipeDetail extends StatelessWidget {
                             itemCount: recipeModel.direction.length,
                             itemBuilder: (context, index) {
                               print(recipeModel.direction.length);
-                              return Text(
-                                (index + 1).toString() +
-                                    ":  " +
-                                    recipeModel.direction[index],
-                                style: Theme.of(context).textTheme.bodySmall,
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: (index + 1).toString() + ":  ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: CustomTheme.bgColor)),
+                                  TextSpan(
+                                      text: recipeModel.direction[index],
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall)
+                                ])),
                               );
+                              // Text(
+                              //   (index + 1).toString() +
+                              //       ":  " +
+                              //       recipeModel.direction[index],
+                              //   style: Theme.of(context).textTheme.bodySmall,
+                              // );
                             },
                           ),
                         ),
@@ -309,6 +300,55 @@ class RecipeDetail extends StatelessWidget {
                             },
                           ),
                         ),
+                        space0(),
+
+                        Text(
+                          "Keys: ",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        //keys
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 4,
+                          child: Center(
+                            child: ListView.builder(
+                              itemCount: recipeModel.keys.length,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    height: SizeConfig.heightMultiplier * 4,
+                                    width: SizeConfig.heightMultiplier * 4,
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal:
+                                            SizeConfig.heightMultiplier),
+                                    decoration: BoxDecoration(
+                                        color: (recipeModel.keys[index]
+                                                    .toString() ==
+                                                "DF")
+                                            ? Color(0xff8b82d0)
+                                            : (recipeModel.keys[index]
+                                                        .toString() ==
+                                                    "MP")
+                                                ? Color(0xffde9b12)
+                                                : (recipeModel.keys[index]
+                                                            .toString() ==
+                                                        "V")
+                                                    ? Color(0xffffb2d5)
+                                                    : CustomTheme.bgColor,
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    child: Center(
+                                        child: Text(
+                                      recipeModel.keys[index],
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    )));
+                              },
+                            ),
+                          ),
+                        ),
+                        space0(),
                       ]),
                 ),
               ],

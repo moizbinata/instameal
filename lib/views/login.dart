@@ -8,6 +8,7 @@ import 'package:instameal/views/subscription/subscription.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 
 import '../components/components.dart';
+import '../controllers/universalController.dart';
 import '../utils/sizeconfig.dart';
 
 class Login extends StatelessWidget {
@@ -23,6 +24,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final universalController = Get.put(UniversalController());
+
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
       body: SafeArea(
@@ -100,6 +103,10 @@ class Login extends StatelessWidget {
                                 GetStorage box = GetStorage();
                                 box.write('plantype', "Plant-Based");
                                 box.write('planId', "3");
+
+                                universalController.mart.value = 'shipt';
+                                box.write('mart', 'shipt');
+
                                 // Get.to(() => BottomNavigator());
                                 Navigator.pushReplacement(
                                     context,

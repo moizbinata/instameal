@@ -11,6 +11,7 @@ class UniversalController extends GetxController {
   RxList<Festival> listofFestival = <Festival>[].obs;
   RxList<Collection> listofCollection = <Collection>[].obs;
   RxList<Dessert> listofDesserts = <Dessert>[].obs;
+  RxString mart = "".obs;
   GetStorage box = GetStorage();
 
   @override
@@ -18,6 +19,7 @@ class UniversalController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     fetchUniversal();
+    mart.value = box.read('mart');
   }
 
   refreshUniversal() async {
@@ -27,6 +29,7 @@ class UniversalController extends GetxController {
   Future<void> fetchUniversal() async {
     await Future.delayed(Duration.zero);
     listofUniversal.clear();
+
     var universal = await UniversalService.fetchUniversal();
     if (universal != null) {
       listofUniversal.add(universal);

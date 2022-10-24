@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:instameal/views/subscription/payment_screen.dart';
 
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
@@ -72,7 +71,7 @@ class TrialScreen extends StatelessWidget {
                           leading: const FaIcon(
                             FontAwesomeIcons.bookmark,
                           ),
-                          title: Text("3150 USD",
+                          title: Text("19.99 USD",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -108,7 +107,7 @@ class TrialScreen extends StatelessWidget {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("6300 USD",
+                            title: Text("199 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6

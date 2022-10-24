@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final universalController = Get.put(UniversalController());
-
+    universalController.fetchUniversal();
     return Scaffold(
         key: _scaffoldKey,
         drawer: drawer(context),
@@ -64,6 +64,7 @@ class _HomeState extends State<Home> {
                     //       bgcolor: CustomTheme.grey,
                     //       iconColor: Colors.grey),
                     // ),
+                    //week banner
                     SizedBox(
                       height: SizeConfig.heightMultiplier * 24,
                       child: GetBuilder<WeeklyController>(
@@ -366,6 +367,10 @@ class _HomeState extends State<Home> {
                                                         ),
                                                       ],
                                                     ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .heightMultiplier,
+                                                    ),
                                                     Text(
                                                       _.listofFav[index]
                                                           .planName,
@@ -422,7 +427,7 @@ class _HomeState extends State<Home> {
                                             SizeConfig.heightMultiplier * 0.5,
                                       ),
                                       Text(
-                                        "   Special Desserts",
+                                        "   Special Occassion",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
@@ -439,11 +444,6 @@ class _HomeState extends State<Home> {
                                           itemBuilder: (context, index) {
                                             return InkWell(
                                               onTap: () {
-                                                // Get.to(() => RecipeDetail(
-                                                //       recipeModel:
-                                                //           _.listofFestival[
-                                                //               index],
-                                                //     ));
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -453,10 +453,6 @@ class _HomeState extends State<Home> {
                                                                   _.listofFestival[
                                                                       index],
                                                             )));
-
-                                                // setState(() {
-                                                //   selectedTab = index;
-                                                // });
                                               },
                                               child: Container(
                                                 margin: EdgeInsets.all(
@@ -518,9 +514,13 @@ class _HomeState extends State<Home> {
                                                                 "assets/images/breakfast.png"),
                                                       ),
                                                     ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .heightMultiplier,
+                                                    ),
                                                     Text(
                                                       _.listofFestival[index]
-                                                          .categName,
+                                                          .planName,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodySmall,
@@ -559,191 +559,192 @@ class _HomeState extends State<Home> {
                     space0(),
                     //colllection
                     GetBuilder<UniversalController>(
-                        init: UniversalController(),
-                        builder: (_) {
-                          return (_.listofCollection.length == 0)
-                              ? SizedBox()
-                              : Container(
-                                  color: Colors.white,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      space0(),
-                                      Text(
-                                        "   Top Collections",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            SizeConfig.heightMultiplier * 35,
-                                        child: ListView.builder(
-                                          itemCount: _.listofCollection.length,
-                                          physics:
-                                              AlwaysScrollableScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, index) {
-                                            return InkWell(
-                                              // Fluttertoast.showToast(
-                                              //     msg: "In progress");
-                                              // onTap: () => Get.to(() =>
-                                              //     RecipeDetail(
-                                              //         recipeModel:
-                                              //             _.listofCollection[
-                                              //                 index])),
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            RecipeDetail(
-                                                              recipeModel:
-                                                                  _.listofCollection[
-                                                                      index],
-                                                            )));
-                                              },
+                      init: UniversalController(),
+                      builder: (_) {
+                        return (_.listofCollection.length == 0)
+                            ? SizedBox()
+                            : Container(
+                                color: Colors.white,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    space0(),
+                                    Text(
+                                      "   Top Collections",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                    SizedBox(
+                                      height: SizeConfig.heightMultiplier * 35,
+                                      child: ListView.builder(
+                                        itemCount: _.listofCollection.length,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                            // Fluttertoast.showToast(
+                                            //     msg: "In progress");
+                                            // onTap: () => Get.to(() =>
+                                            //     RecipeDetail(
+                                            //         recipeModel:
+                                            //             _.listofCollection[
+                                            //                 index])),
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          RecipeDetail(
+                                                            recipeModel:
+                                                                _.listofCollection[
+                                                                    index],
+                                                          )));
+                                            },
 
-                                              child: Container(
-                                                margin: EdgeInsets.all(
-                                                    SizeConfig
-                                                        .heightMultiplier),
-                                                height: SizeConfig
-                                                        .heightMultiplier *
-                                                    20,
-                                                width: SizeConfig
-                                                        .heightMultiplier *
-                                                    20,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Stack(
-                                                      children: [
-                                                        Positioned(
-                                                            child: Container(
-                                                          clipBehavior:
-                                                              Clip.hardEdge,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(10),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          25),
-                                                              bottomLeft: Radius
-                                                                  .circular(10),
-                                                            ),
-                                                          ),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            height: SizeConfig
-                                                                    .heightMultiplier *
-                                                                20,
-                                                            width: SizeConfig
-                                                                    .heightMultiplier *
-                                                                20,
-                                                            imageUrl: Constants
-                                                                    .baseImageUrl +
-                                                                _
-                                                                    .listofCollection[
-                                                                        index]
-                                                                    .imagesUrl,
-                                                            fit: BoxFit.cover,
-                                                            placeholder: (context,
-                                                                    url) =>
-                                                                Center(
-                                                                    child: Center(
-                                                                        child:
-                                                                            CircularProgressIndicator())),
-                                                            errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
-                                                                Image.asset(
-                                                                    "assets/images/breakfast.png"),
-                                                          ),
-                                                        )),
-                                                        Positioned(
-                                                          top: 0,
-                                                          right: 0,
+                                            child: Container(
+                                              margin: EdgeInsets.all(
+                                                  SizeConfig.heightMultiplier),
+                                              height:
+                                                  SizeConfig.heightMultiplier *
+                                                      20,
+                                              width:
+                                                  SizeConfig.heightMultiplier *
+                                                      20,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Stack(
+                                                    children: [
+                                                      Positioned(
                                                           child: Container(
-                                                            padding: EdgeInsets.symmetric(
-                                                                horizontal:
-                                                                    SizeConfig
-                                                                            .heightMultiplier *
-                                                                        2,
-                                                                vertical: SizeConfig
-                                                                        .heightMultiplier *
-                                                                    1.5),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    color: CustomTheme
-                                                                        .bgColor,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .only(
-                                                                      bottomLeft:
-                                                                          Radius.circular(
-                                                                              15),
-                                                                    )),
-                                                            child: Text(
-                                                              "${index + 1}",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodySmall
-                                                                  .copyWith(
-                                                                      color: Colors
-                                                                          .white),
-                                                            ),
+                                                        clipBehavior:
+                                                            Clip.hardEdge,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    25),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    25),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    Text(
-                                                      _.listofCollection[index]
-                                                          .planName,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall,
-                                                    ),
-                                                    Text(
-                                                      _.listofCollection[index]
-                                                          .recipeName,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: CustomTheme
-                                                                .bgColor,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          height: SizeConfig
+                                                                  .heightMultiplier *
+                                                              20,
+                                                          width: SizeConfig
+                                                                  .heightMultiplier *
+                                                              20,
+                                                          imageUrl: Constants
+                                                                  .baseImageUrl +
+                                                              _
+                                                                  .listofCollection[
+                                                                      index]
+                                                                  .imagesUrl,
+                                                          fit: BoxFit.cover,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Center(
+                                                                  child: Center(
+                                                                      child:
+                                                                          CircularProgressIndicator())),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Image.asset(
+                                                                  "assets/images/breakfast.png"),
+                                                        ),
+                                                      )),
+                                                      Positioned(
+                                                        top: 0,
+                                                        right: 0,
+                                                        child: Container(
+                                                          padding: EdgeInsets.symmetric(
+                                                              horizontal: SizeConfig
+                                                                      .heightMultiplier *
+                                                                  2,
+                                                              vertical: SizeConfig
+                                                                      .heightMultiplier *
+                                                                  1.5),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: CustomTheme
+                                                                      .bgColor,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .only(
+                                                                    bottomLeft:
+                                                                        Radius.circular(
+                                                                            15),
+                                                                  )),
+                                                          child: Text(
+                                                            "${index + 1}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .white),
                                                           ),
-                                                    ),
-                                                    InkWell(
-                                                        child: customButton2(
-                                                            context,
-                                                            Colors.white,
-                                                            CustomTheme.red,
-                                                            "Add to List"))
-                                                  ],
-                                                ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: SizeConfig
+                                                        .heightMultiplier,
+                                                  ),
+                                                  Text(
+                                                    _.listofCollection[index]
+                                                        .planName,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  Text(
+                                                    _.listofCollection[index]
+                                                        .recipeName,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: CustomTheme
+                                                              .bgColor,
+                                                        ),
+                                                  ),
+                                                  InkWell(
+                                                      child: customButton2(
+                                                          context,
+                                                          Colors.white,
+                                                          CustomTheme.red,
+                                                          "Add to List"))
+                                                ],
                                               ),
-                                            );
-                                          },
-                                        ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                );
-                        }),
+                                    ),
+                                  ],
+                                ),
+                              );
+                      },
+                    ),
 
                     space0(),
                     //desserts
@@ -854,9 +855,13 @@ class _HomeState extends State<Home> {
                                                                 "assets/images/breakfast.png"),
                                                       ),
                                                     ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .heightMultiplier,
+                                                    ),
                                                     Text(
                                                       _.listofDesserts[index]
-                                                          .categName,
+                                                          .planName,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodySmall,
