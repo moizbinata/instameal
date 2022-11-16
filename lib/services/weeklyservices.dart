@@ -10,17 +10,17 @@ import '../utils/network.dart';
 
 class WeeklyService {
   // static var client = http.Client();
-
-  static Future<WeeklyModel> fetchWeekly() async {
-    String url = "${Constants.baseUrl}weekly";
-    // var payload = {"userid": box.read("userid").toString()};
+  static Future<WeeklyModel> fetchWeeklyRecipes(plan, week) async {
+    String url = "${Constants.baseUrl}weeklyplanrecipe$plan&$week";
+    print(url);
     var response = await Network.get(url: url).catchError(
       () {
         Fluttertoast.showToast(msg: "Server is not responding");
       },
     );
     if (response != null) {
-      var jsonString = jsonDecode(response.toString());
+      var jsonString = jsonDecode(response);
+      print(response);
       return WeeklyModel.fromJson(jsonString);
     } else {
       return null;
@@ -31,7 +31,6 @@ class WeeklyService {
     GetStorage box = GetStorage();
     String url = "${Constants.baseUrl}image${box.read('plantype').toString()}";
     print(url);
-    // var payload = {"userid": box.read("userid").toString()};
     var response = await Network.get(url: url).catchError(
       () {
         Fluttertoast.showToast(msg: "Server is not responding");

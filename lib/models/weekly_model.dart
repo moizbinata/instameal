@@ -1,36 +1,81 @@
+// To parse this JSON data, do
+//
+//     final weeklyModel = weeklyModelFromJson(jsonString);
+
+import 'dart:convert';
+
+WeeklyModel weeklyModelFromJson(String str) =>
+    WeeklyModel.fromJson(json.decode(str));
+
+String weeklyModelToJson(WeeklyModel data) => json.encode(data.toJson());
+
 class WeeklyModel {
+  WeeklyModel({
+    this.success,
+    this.breakfast,
+    this.lunch,
+    this.snack,
+    this.dinner,
+    this.error,
+  });
+
   bool success;
-  List<WeeklyRecipe> data;
+  List<List<Breakfast>> breakfast;
+  List<List<Breakfast>> lunch;
+  List<List<Breakfast>> snack;
+  List<List<Breakfast>> dinner;
   String error;
 
-  WeeklyModel({this.success, this.data, this.error});
+  factory WeeklyModel.fromJson(Map<String, dynamic> json) => WeeklyModel(
+        success: json["success"],
+        breakfast: List<List<Breakfast>>.from(json["breakfast"].map(
+            (x) => List<Breakfast>.from(x.map((x) => Breakfast.fromJson(x))))),
+        lunch: List<List<Breakfast>>.from(json["lunch"].map(
+            (x) => List<Breakfast>.from(x.map((x) => Breakfast.fromJson(x))))),
+        snack: List<List<Breakfast>>.from(json["snack"].map(
+            (x) => List<Breakfast>.from(x.map((x) => Breakfast.fromJson(x))))),
+        dinner: List<List<Breakfast>>.from(json["dinner"].map(
+            (x) => List<Breakfast>.from(x.map((x) => Breakfast.fromJson(x))))),
+        error: json["error"],
+      );
 
-  WeeklyModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = <WeeklyRecipe>[];
-      json['data'].forEach((v) {
-        data.add(new WeeklyRecipe.fromJson(v));
-      });
-    }
-    error = json['error'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    data['error'] = this.error;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "success": success,
+        "breakfast": List<dynamic>.from(
+            breakfast.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+        "lunch": List<dynamic>.from(
+            lunch.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+        "snack": List<dynamic>.from(
+            snack.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+        "dinner": List<dynamic>.from(
+            dinner.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+        "error": error,
+      };
 }
 
-class WeeklyRecipe {
+class Breakfast {
+  Breakfast({
+    this.recipeid,
+    this.day,
+    this.weeknumber,
+    this.categoryId,
+    this.planId,
+    this.recipeName,
+    this.whatYouNeed,
+    this.direction,
+    this.nutritPerServe,
+    this.imagesUrl,
+    this.serving,
+    this.prepTime,
+    this.cookTime,
+    this.keys,
+    this.categname,
+    this.planname,
+  });
+
   int recipeid;
-  String day;
-  int weekNumber;
+  int day;
+  int weeknumber;
   int categoryId;
   int planId;
   String recipeName;
@@ -42,64 +87,44 @@ class WeeklyRecipe {
   String prepTime;
   String cookTime;
   String keys;
-  String categName;
-  String planName;
+  String categname;
+  String planname;
 
-  WeeklyRecipe(
-      {this.recipeid,
-      this.day,
-      this.weekNumber,
-      this.categoryId,
-      this.planId,
-      this.recipeName,
-      this.whatYouNeed,
-      this.direction,
-      this.nutritPerServe,
-      this.imagesUrl,
-      this.serving,
-      this.prepTime,
-      this.cookTime,
-      this.keys,
-      this.categName,
-      this.planName});
+  factory Breakfast.fromJson(Map<String, dynamic> json) => Breakfast(
+        recipeid: json["recipeid"],
+        day: json["day"],
+        weeknumber: json["weeknumber"],
+        categoryId: json["categoryId"],
+        planId: json["planId"],
+        recipeName: json["recipeName"],
+        whatYouNeed: json["whatYouNeed"],
+        direction: json["direction"],
+        nutritPerServe: json["nutritPerServe"],
+        imagesUrl: json["imagesUrl"],
+        serving: json["serving"],
+        prepTime: json["prepTime"],
+        cookTime: json["cookTime"],
+        keys: json["keys"],
+        categname: json["categname"],
+        planname: json["planname"],
+      );
 
-  WeeklyRecipe.fromJson(Map<String, dynamic> json) {
-    recipeid = json['recipeid'];
-    day = json['day'];
-    weekNumber = json['weekNumber'];
-    categoryId = json['categoryId'];
-    planId = json['planId'];
-    recipeName = json['recipeName'];
-    whatYouNeed = json['whatYouNeed'];
-    direction = json['direction'];
-    nutritPerServe = json['nutritPerServe'];
-    imagesUrl = json['imagesUrl'];
-    serving = json['serving'];
-    prepTime = json['prepTime'];
-    cookTime = json['cookTime'];
-    keys = json['keys'];
-    categName = json['categName'];
-    planName = json['planName'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['recipeid'] = this.recipeid;
-    data['day'] = this.day;
-    data['weekNumber'] = this.weekNumber;
-    data['categoryId'] = this.categoryId;
-    data['planId'] = this.planId;
-    data['recipeName'] = this.recipeName;
-    data['whatYouNeed'] = this.whatYouNeed;
-    data['direction'] = this.direction;
-    data['nutritPerServe'] = this.nutritPerServe;
-    data['imagesUrl'] = this.imagesUrl;
-    data['serving'] = this.serving;
-    data['prepTime'] = this.prepTime;
-    data['cookTime'] = this.cookTime;
-    data['keys'] = this.keys;
-    data['categName'] = this.categName;
-    data['planName'] = this.planName;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "recipeid": recipeid,
+        "day": day,
+        "weeknumber": weeknumber,
+        "categoryId": categoryId,
+        "planId": planId,
+        "recipeName": recipeName,
+        "whatYouNeed": whatYouNeed,
+        "direction": direction,
+        "nutritPerServe": nutritPerServe,
+        "imagesUrl": imagesUrl,
+        "serving": serving,
+        "prepTime": prepTime,
+        "cookTime": cookTime,
+        "keys": keys,
+        "categname": categname,
+        "planname": planname,
+      };
 }

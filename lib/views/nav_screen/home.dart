@@ -9,11 +9,11 @@ import 'package:instameal/components/customappbar.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
-
 import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import '../details/recipe.dart';
+import '../details/weektable.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -32,6 +32,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final universalController = Get.put(UniversalController());
+    final weeklyController = Get.put(WeeklyController());
     universalController.fetchUniversal();
     return Scaffold(
         key: _scaffoldKey,
@@ -71,8 +72,7 @@ class _HomeState extends State<Home> {
                         init: WeeklyController(),
                         builder: (_) {
                           return (_.listofWeeklyImages.length == 0 ||
-                                  _.listofWeeklyImages?.first?.data?.length ==
-                                      0)
+                                  _.listcurrWeekImg?.length == 0)
                               ? Center(
                                   child: Text(
                                     "Loading",
@@ -80,14 +80,24 @@ class _HomeState extends State<Home> {
                                   ),
                                 )
                               : ListView.builder(
-                                  itemCount:
-                                      _.listofWeeklyImages?.first?.data?.length,
+                                  itemCount: _.listcurrWeekImg?.length,
                                   physics: AlwaysScrollableScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
-                                      onTap: () {
+                                      onTap: () async {
                                         // Get.to(() => RecipeDetail());
+                                        await weeklyController.fetchWeekly(
+                                            box.read('planId').toString(),
+                                            (index == 0)
+                                                ? _.currentRxWeek - 1
+                                                : _.currentRxWeek);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WeekTable()),
+                                        );
                                       },
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,
@@ -127,8 +137,8 @@ class _HomeState extends State<Home> {
                                                 imageUrl:
                                                     // "http://192.168.1.113:3000/assets/airfryer-eggplant-sticks.jpg",
 
-                                                    _.listofWeeklyImages?.first
-                                                        ?.data[index].imageUrl,
+                                                    _.listcurrWeekImg[index]
+                                                        .imageUrl,
                                                 fit: BoxFit.cover,
                                                 placeholder: (context, url) =>
                                                     Center(
@@ -159,7 +169,9 @@ class _HomeState extends State<Home> {
                                                         BorderRadius.circular(
                                                             20)),
                                                 child: Text(
-                                                  "Week ${index + 1}",
+                                                  (index == 0)
+                                                      ? "Previous Week "
+                                                      : "This Week",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodySmall,

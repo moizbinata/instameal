@@ -14,8 +14,6 @@ import 'controllers/weeklyController.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
-  // set the publishable key for Stripe - this is mandatory
   Stripe.publishableKey =
       "pk_test_51LrfHXLDjGMiS5VVRKgjoWZ8Oe4oMPRPlklTITymbmOOgPqrr9VWUk66JJgdVTRjp2YI4Sa2icu7bQN6Z9B5ZKMr00GnHYyJLN";
   await Stripe.instance.applySettings();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 
+import '../utils/constants.dart';
 import '../utils/theme.dart';
 
 BoxDecoration bottomBarShadow(index, currentIndex) {
@@ -125,6 +126,37 @@ Widget customField(textController, labelText, {icon, bgcolor, iconColor}) {
 Widget space0() {
   return SizedBox(
     height: SizeConfig.heightMultiplier * 2,
+  );
+}
+
+Widget recipeBox(context, imgUrl, recipeName) {
+  return SizedBox(
+    height: SizeConfig.heightMultiplier * 13,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: SizeConfig.heightMultiplier * 8,
+          height: SizeConfig.heightMultiplier * 8,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(Constants.baseImageUrl + imgUrl, scale: 1.0),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Text(
+          recipeName,
+          maxLines: 2,
+          style: Theme.of(context).textTheme.bodyMedium.copyWith(
+                overflow: TextOverflow.ellipsis,
+                fontWeight: FontWeight.bold,
+                color: CustomTheme.bgColor,
+              ),
+        ),
+      ],
+    ),
   );
 }
 

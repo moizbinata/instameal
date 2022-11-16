@@ -2,117 +2,96 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/models/images_model.dart';
 import 'package:instameal/models/weekly_model.dart';
-
+import 'package:intl/intl.dart';
 import '../services/weeklyservices.dart';
 
 class WeeklyController extends GetxController {
-  RxList<WeeklyModel> listofWeekly = <WeeklyModel>[].obs;
-  RxList<WeeklyRecipe> listofPlanWeekly = <WeeklyRecipe>[].obs;
   RxList<ImagesModel> listofWeeklyImages = <ImagesModel>[].obs;
-
-  RxList<WeeklyRecipe> week1Recipe2d = <WeeklyRecipe>[].obs;
-  RxList<WeeklyRecipe> week2Recipe2d = <WeeklyRecipe>[].obs;
-  RxList<WeeklyRecipe> week3Recipe2d = <WeeklyRecipe>[].obs;
-  RxList<WeeklyRecipe> week4Recipe2d = <WeeklyRecipe>[].obs;
+  RxList<ImgData> listcurrWeekImg = <ImgData>[].obs;
+  RxInt currentRxWeek = 0.obs;
   GetStorage box = GetStorage();
-
+  RxList<WeeklyModel> listofWeekly = <WeeklyModel>[].obs;
+  RxList<Breakfast> listofWeeklyBfast = <Breakfast>[].obs;
+  RxList<Breakfast> listofWeeklyLunch = <Breakfast>[].obs;
+  RxList<Breakfast> listofWeeklySnack = <Breakfast>[].obs;
+  RxList<Breakfast> listofWeeklyDinner = <Breakfast>[].obs;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     fetchWeeklyImage();
-    fetchWeekly();
   }
 
-  refreshProdandWeekly() async {
-    await fetchWeekly();
+  /// Calculates number of weeks for a given year as per
+  int numOfWeeks(int year) {
+    DateTime dec28 = DateTime(year, 12, 28);
+    int dayOfDec28 = int.parse(DateFormat("D").format(dec28));
+    return ((dayOfDec28 - dec28.weekday + 10) / 7).floor();
   }
 
-// static const extension ListFiller<T> on List<T> {
-//   void fillAndSet(int index, T value) {
-//     if (index >= this.length) {
-//       this.addAll(List<T>.filled(index - this.length + 1, null));
-//     }
-//     this[index] = value;
-//   }
-// }
+  /// Calculates week number from a date as per
+  int weekNumber(DateTime date) {
+    int dayOfYear = int.parse(DateFormat("D").format(date));
+    int woy = ((dayOfYear - date.weekday + 10) / 7).floor();
+    if (woy < 1) {
+      woy = numOfWeeks(date.year - 1);
+    } else if (woy > numOfWeeks(date.year)) {
+      woy = 1;
+    }
+    return woy;
+  }
+
+  Future<void> fetchWeekly(plan, week) async {
+    await Future.delayed(Duration.zero);
+    listofWeekly.clear();
+    var weekly = await WeeklyService.fetchWeeklyRecipes(plan, week);
+    if (weekly != null && !weekly.isBlank) {
+      listofWeekly.add(weekly);
+      print(listofWeekly.first.breakfast.first);
+      if (listofWeekly.first.breakfast != null) {
+        listofWeeklyBfast.assignAll(listofWeekly.first.breakfast.first);
+        print("breakfast");
+        print(listofWeekly.first.breakfast[0].first.recipeName);
+        print(listofWeekly.first.breakfast[0].first.categname);
+        print(listofWeekly.first.breakfast[0].first.planname);
+        print(listofWeekly.first.breakfast[0].first.planId.toString());
+      } else {
+        listofWeeklyBfast.length = 0;
+      }
+
+      if (listofWeekly.first.lunch != null) {
+        listofWeeklyLunch.assignAll(listofWeekly.first.lunch.first);
+      } else {
+        listofWeeklyLunch.length = 0;
+      }
+      if (listofWeekly.first.snack != null) {
+        listofWeeklySnack.assignAll(listofWeekly.first.snack.first);
+      } else {
+        listofWeeklySnack.length = 0;
+      }
+      if (listofWeekly.first.dinner != null) {
+        listofWeeklyDinner.assignAll(listofWeekly.first.dinner.first);
+      } else {
+        listofWeeklyDinner.length = 0;
+      }
+    } else {
+      listofWeekly.length = 0;
+    }
+    update();
+  }
+
   Future<void> fetchWeeklyImage() async {
     await Future.delayed(Duration.zero);
+    int currentWeek = weekNumber(DateTime.now());
+    currentRxWeek.value = currentWeek;
     listofWeeklyImages.clear();
     var weekly = await WeeklyService.fetchWeeklyImages();
     if (weekly != null) {
       listofWeeklyImages.add(weekly);
-      print("moiz");
-      print(listofWeeklyImages.first.data.first.imageCateg);
-      print(listofWeeklyImages.first.data.first.imageUrl);
+      listcurrWeekImg.add(listofWeeklyImages.first.data[currentWeek - 1]);
+      listcurrWeekImg.add(listofWeeklyImages.first.data[currentWeek]);
     } else {
       listofWeeklyImages.length = 0;
-    }
-    print(listofWeeklyImages);
-
-    update();
-  }
-
-  Future<void> fetchWeekly() async {
-    await Future.delayed(Duration.zero);
-    listofWeekly.clear();
-    int planId = int.tryParse(box.read('planId').toString());
-    var weekly = await WeeklyService.fetchWeekly();
-    if (weekly != null) {
-      listofWeekly.add(weekly);
-      for (var element in listofWeekly.first.data) {
-        if (element.planName == box.read('plantype').toString()) {
-          listofPlanWeekly.add(element);
-        }
-      }
-      for (int a = 0; a < 4; a++) {
-        for (var element in listofPlanWeekly) {
-          if (element.planId == planId && element.weekNumber == 1) {
-            week1Recipe2d.add(element);
-          }
-          if (element.planId == planId && element.weekNumber == 2) {
-            week2Recipe2d.add(element);
-          }
-          if (element.planId == planId && element.weekNumber == 3) {
-            week3Recipe2d.add(element);
-          }
-          if (element.planId == planId && element.weekNumber == 4) {
-            week4Recipe2d.add(element);
-          }
-          // for (int i = 0; i < 7; i++) {
-          //   for (int j = 0; j < 4; j++) {
-          //     if (int.tryParse(element.day) == i + 1 &&
-          //         element.categoryId == j + 1 &&
-          //         element.weekNumber == a + 1) {
-          //       week1Recipe2d[i].add(element);
-          //       print(week1Recipe2d[i][j]);
-          //     } else if (int.tryParse(element.day) == i + 1 &&
-          //         element.categoryId == j + 1 &&
-          //         element.weekNumber == a + 2) {
-          //       week2Recipe2d[i].add(element);
-          //     } else if (int.tryParse(element.day) == i + 1 &&
-          //         element.categoryId == j + 1 &&
-          //         element.weekNumber == a + 3) {
-          //       week3Recipe2d[i].add(element);
-          //     } else if (int.tryParse(element.day) == i + 1 &&
-          //         element.categoryId == j + 1 &&
-          //         element.weekNumber == a + 4) {
-          //       week4Recipe2d[i].add(element);
-          //     }
-          //   }
-          // }
-        }
-      }
-      print("weeklyrecipe1");
-      for (int i = 0; i < week1Recipe2d.length; i++) {
-        print(week1Recipe2d.length);
-      }
-      print(week1Recipe2d);
-      print(week2Recipe2d);
-      print(week3Recipe2d);
-      print(week4Recipe2d);
-    } else {
-      listofWeekly.length = 0;
     }
     update();
   }
