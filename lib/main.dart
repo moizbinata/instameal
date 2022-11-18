@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   Stripe.publishableKey =
-      "pk_test_51LrfHXLDjGMiS5VVRKgjoWZ8Oe4oMPRPlklTITymbmOOgPqrr9VWUk66JJgdVTRjp2YI4Sa2icu7bQN6Z9B5ZKMr00GnHYyJLN";
+      "pk_test_51M5RsSAWiGvBL24r3ciLB2N7cawdGDI3W7noy5fRvyqA8KQcO8c92uKE1Xpp2RloqJkgTafnuK4qN8oRsAozkNY400tVMtqji8";
   await Stripe.instance.applySettings();
   runApp(MyApp());
 }
@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Instameal',
           theme: CustomTheme.themedata,
-          // initialRoute: RouteClass.getHomeRoute(),
           home: SplashScreen(),
         );
       });

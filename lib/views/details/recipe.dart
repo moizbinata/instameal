@@ -108,17 +108,17 @@ class RecipeDetail extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          // TextButton.icon(
-                          //   onPressed: () {},
-                          //   icon: FaIcon(
-                          //     FontAwesomeIcons.heart,
-                          //     color: Colors.white,
-                          //   ),
-                          //   label: Text(
-                          //     "Favourite",
-                          //     style: Theme.of(context).textTheme.bodySmall,
-                          //   ),
-                          // ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: FaIcon(
+                              FontAwesomeIcons.heart,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              "Favourite",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
                           TextButton.icon(
                             onPressed: () {
                               Navigator.push(

@@ -33,8 +33,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final universalController = Get.put(UniversalController());
     final weeklyController = Get.put(WeeklyController());
-    // universalController.fetchUniversal();
-    // weeklyController.fetchWeeklyImage();
+    universalController.fetchUniversal();
+    weeklyController.fetchWeeklyImage();
     return Scaffold(
         key: _scaffoldKey,
         drawer: drawer(context),
@@ -88,11 +88,10 @@ class _HomeState extends State<Home> {
                                     return InkWell(
                                       onTap: () async {
                                         // Get.to(() => RecipeDetail());
+                                        int week = _.currentRxWeek.value;
                                         await weeklyController.fetchWeekly(
                                             box.read('planId').toString(),
-                                            (index == 0)
-                                                ? _.currentRxWeek - 1
-                                                : _.currentRxWeek);
+                                            (index == 0) ? week - 1 : week);
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -108,11 +107,6 @@ class _HomeState extends State<Home> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(20),
-                                          // image: DecorationImage(
-                                          //     image: NetworkImage(
-                                          //       "https://thumbs.dreamstime.com/b/healthy-food-selection-healthy-food-selection-fruits-vegetables-seeds-superfood-cereals-gray-background-121936825.jpg",
-                                          //     ),
-                                          //     fit: BoxFit.cover),
                                           boxShadow: [
                                             BoxShadow(
                                               color: CustomTheme.grey
@@ -339,7 +333,7 @@ class _HomeState extends State<Home> {
                                                 context,
                                                 _.listofFestival[index]
                                                     .imagesUrl,
-                                                index,
+                                                index + 1,
                                                 _.listofFestival[index]
                                                     .planName,
                                                 _.listofFestival[index]
@@ -493,7 +487,7 @@ class _HomeState extends State<Home> {
                                               context,
                                               _.listofCollection[index]
                                                   .imagesUrl,
-                                              index,
+                                              index + 1,
                                               _.listofCollection[index]
                                                   .planName,
                                               _.listofCollection[index]
@@ -562,7 +556,7 @@ class _HomeState extends State<Home> {
                                                 context,
                                                 _.listofDesserts[index]
                                                     .imagesUrl,
-                                                index,
+                                                index + 1,
                                                 _.listofDesserts[index]
                                                     .planName,
                                                 _.listofDesserts[index]

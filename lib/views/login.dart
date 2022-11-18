@@ -112,7 +112,7 @@ class Login extends StatelessWidget {
                                 box.write('plantype', "Plant-Based");
                                 box.write('planId', "3");
                                 universalController.mart.value = 'shipt';
-                                box.write('mart', 'shipt');
+                                box.write('mart', 'amazonfresh');
                                 box.write('amazonfresh',
                                     'https://www.amazon.com/s?k=');
                                 box.write('walmart',
@@ -120,6 +120,8 @@ class Login extends StatelessWidget {
                                 box.write('instacart',
                                     'https://www.instacart.com/store/s?k=');
                                 box.write('kroger',
+                                    'https: //kroger.com/search?query=');
+                                box.write('shipt',
                                     'https: //kroger.com/search?query=');
                                 loginService(context);
                               },

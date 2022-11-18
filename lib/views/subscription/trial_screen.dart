@@ -171,7 +171,8 @@ class TrialScreen extends StatelessWidget {
 
   Future<void> makePayment(context) async {
     try {
-      paymentIntent = await createPaymentIntent('10', 'USD');
+      paymentIntent = await createPaymentIntent('19.99', 'USD');
+      paymentIntent = await createPaymentIntent('199', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
@@ -245,7 +246,7 @@ class TrialScreen extends StatelessWidget {
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
           'Authorization':
-              'Bearer sk_test_51LrfHXLDjGMiS5VVWaaQxctmXOqT7vAa0kEEIhq3cAEjynRrQ9ZNrYTZddG83XBNakq4drdtYVjDDN61dRuc1IaM00mQ2rKfDM',
+              'Bearer sk_test_51M5RsSAWiGvBL24rh6iQCT9UiPDQi4QSbAYRSrgPSZCGS5O5SQivNZmD7BlmJtR3tmaaODMhogmvVYiSlMErL1GO00LE6F5ubi',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,

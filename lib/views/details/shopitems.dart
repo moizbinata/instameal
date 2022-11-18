@@ -28,7 +28,7 @@ class _ShopItemsState extends State<ShopItems> {
     if (Platform.isAndroid) {
       WebView.platform = AndroidWebView();
     }
-    var abc = box.read('mart') ?? 'https://www.amazon.com/s?k=';
+    var abc = box.read('mart').toString() ?? 'walmart';
     setState(() {
       martUrl = box.read(abc);
     });
@@ -55,40 +55,99 @@ class _ShopItemsState extends State<ShopItems> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: SizeConfig.heightMultiplier * 5,
-                width: SizeConfig.screenWidth,
-                child: ListView.builder(
-                    itemCount: widget.itemList.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedItem = widget.itemList[index].toString();
-                          });
-                        },
-                        child: customButton2(
-                          context,
-                          CustomTheme.bgColor,
-                          CustomTheme.bgColor,
-                          widget.itemList[index].toString() ?? "",
+              DefaultTabController(
+                length: widget.itemList.length,
+                child: Column(
+                  children: [
+                    Container(
+                      height: SizeConfig.heightMultiplier * 5,
+                      width: SizeConfig.screenWidth,
+                      child: TabBar(
+                        isScrollable: true,
+                        indicatorColor: CustomTheme.bgColor,
+                        tabs: List.generate(
+                          widget.itemList.length,
+                          (index) {
+                            return Text(
+                              widget.itemList[index].toString().toUpperCase(),
+                              style: TextStyle(color: Colors.black),
+                            );
+                          },
                         ),
-                      );
-                    }),
-              ),
-              space0(),
-              SizedBox(
-                height: SizeConfig.screenHeight,
-                child: (martUrl == "")
-                    ? Center(child: Text("Select shop first"))
-                    : WebView(
-                        zoomEnabled: true,
-                        javascriptMode: JavascriptMode.unrestricted,
-                        initialUrl: martUrl + selectedItem,
                       ),
+                    ),
+                    space0(),
+                    Container(
+                      height: SizeConfig.screenHeight,
+                      child: TabBarView(
+                        children: List.generate(
+                          widget.itemList.length,
+                          (index) {
+                            print("tabview");
+                            print(martUrl + selectedItem);
+                            return (martUrl == "")
+                                ? Center(child: Text("Select shop first"))
+                                : WebView(
+                                    zoomEnabled: true,
+                                    javascriptMode: JavascriptMode.unrestricted,
+                                    initialUrl: martUrl +
+                                        widget.itemList[index].toString(),
+                                  );
+                          },
+                        ),
+                        // ListView.builder(
+                        //   itemCount: widget.itemList.length,
+                        //   physics: AlwaysScrollableScrollPhysics(),
+                        //   itemBuilder: (context, index) {
+                        //     return (martUrl == "")
+                        //         ? Center(child: Text("Select shop first"))
+                        //         : WebView(
+                        //             zoomEnabled: true,
+                        //             javascriptMode:
+                        //                 JavascriptMode.unrestricted,
+                        //             initialUrl: martUrl + selectedItem,
+                        //           );
+                        //   },
+                        // ),
+                      ),
+                    )
+                  ],
+                ),
               ),
+              // SizedBox(
+              //   height: SizeConfig.heightMultiplier * 5,
+              //   width: SizeConfig.screenWidth,
+              //   child: ListView.builder(
+              //       itemCount: widget.itemList.length,
+              //       scrollDirection: Axis.horizontal,
+              //       physics: AlwaysScrollableScrollPhysics(),
+              //       itemBuilder: (context, index) {
+              //         return InkWell(
+              //           onTap: () {
+              //             setState(() {
+              //               selectedItem = widget.itemList[index].toString();
+              //             });
+              //           },
+              //           child: customButton2(
+              //             context,
+              //             CustomTheme.bgColor,
+              //             CustomTheme.bgColor,
+              //             widget.itemList[index].toString() ?? "",
+              //           ),
+              //         );
+              //       }),
+              // ),
+              // space0(),
+              // SizedBox(
+              //   height: SizeConfig.screenHeight,
+              //   child: (martUrl == "")
+              //       ? Center(child: Text("Select shop first"))
+              //       : WebView(
+              //           zoomEnabled: true,
+              //           javascriptMode: JavascriptMode.unrestricted,
+              //           initialUrl: martUrl + selectedItem,
+              //         ),
+              // ),
             ],
           ),
         ),

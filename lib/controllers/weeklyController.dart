@@ -64,7 +64,7 @@ class WeeklyController extends GetxController {
     listofWeekly.clear();
     var weekly = await WeeklyService.fetchWeeklyRecipes(plan, week);
     if (weekly != null && !weekly.isBlank) {
-      listofWeekly.add(weekly);
+      listofWeekly.assign(weekly);
       print(listofWeekly.first.breakfast.first);
       if (listofWeekly.first.breakfast != null) {
         listofWeeklyBfast.assignAll(listofWeekly.first.breakfast.first);
@@ -97,10 +97,11 @@ class WeeklyController extends GetxController {
     await Future.delayed(Duration.zero);
     int currentWeek = weekNumber(DateTime.now());
     currentRxWeek.value = currentWeek;
+    print(currentWeek.toString());
     listofWeeklyImages.clear();
     var weekly = await WeeklyService.fetchWeeklyImages();
     if (weekly != null) {
-      listofWeeklyImages.add(weekly);
+      listofWeeklyImages.assign(weekly);
       listcurrWeekImg.assignAll({
         listofWeeklyImages.first.data[currentWeek - 1],
         listofWeeklyImages.first.data[currentWeek]

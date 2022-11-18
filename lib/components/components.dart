@@ -173,10 +173,11 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
                     horizontal: SizeConfig.heightMultiplier * 2,
                     vertical: SizeConfig.heightMultiplier * 1.5),
                 decoration: BoxDecoration(
-                    color: CustomTheme.bgColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                    )),
+                  color: CustomTheme.bgColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
                 child: Text(
                   day.toString(),
                   style: Theme.of(context)
@@ -191,9 +192,14 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
         SizedBox(
           height: SizeConfig.heightMultiplier,
         ),
-        Text(
-          recipeName,
-          style: Theme.of(context).textTheme.bodySmall,
+        Flexible(
+          child: Text(
+            recipeName,
+            maxLines: 2,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ),
         Text(
           dayName.toString(),
