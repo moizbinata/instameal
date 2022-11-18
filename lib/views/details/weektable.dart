@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/recipe.dart';
 import '../../components/components.dart';
 import '../../components/customdrawer.dart';
+import '../../controllers/universalController.dart';
 import '../../utils/sizeconfig.dart';
 import 'package:instameal/components/customappbar.dart';
 
@@ -34,6 +37,7 @@ class _WeekTableState extends State<WeekTable> {
   Widget build(BuildContext context) {
     final weeklyController = Get.put(WeeklyController());
     return Scaffold(
+      backgroundColor: CustomTheme.bgColor2,
       key: _scaffoldKey,
       drawer: drawer(context),
       appBar: customAppBar(action: () {
@@ -43,180 +47,223 @@ class _WeekTableState extends State<WeekTable> {
           _scaffoldKey.currentState.openDrawer();
         }
       }),
-      body: SingleChildScrollView(
-        child: Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
-          height: SizeConfig.screenHeight,
-          width: double.infinity,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
+        height: SizeConfig.screenHeight,
+        width: double.infinity,
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(children: [
-                      space1(),
-                      Column(
-                        children: List.generate(
-                          weekDays.length,
-                          ((index) {
-                            return Container(
-                              width: SizeConfig.heightMultiplier * 3,
-                              height: SizeConfig.heightMultiplier * 13,
-                              color: (index % 2 == 0)
-                                  ? Colors.blue
-                                  : CustomTheme.bgColor,
-                              child: RotatedBox(
-                                quarterTurns: 3,
-                                child: Center(
-                                  child: Text(
-                                    weekDays[index],
-                                    textAlign: TextAlign.center,
-                                  ),
+              //Breakfast
+              GetBuilder<WeeklyController>(
+                init: WeeklyController(),
+                builder: (_) {
+                  return (_.listofWeeklyBfast.isEmpty)
+                      ? Text("No recipe added")
+                      : Container(
+                          // color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              space0(),
+                              Text(
+                                "   For ${_.listofWeeklyBfast.first.categName}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.heightMultiplier * 35,
+                                child: ListView.builder(
+                                  itemCount: _.listofWeeklyBfast.length,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RecipeDetail(
+                                                      modelType: "breakfast",
+                                                      recipeModel:
+                                                          _.listofWeeklyBfast[
+                                                              index],
+                                                    )));
+                                      },
+                                      child: recipeBox2(
+                                        context,
+                                        _.listofWeeklyBfast[index].imagesUrl,
+                                        _.listofWeeklyBfast[index].day,
+                                        _.listofWeeklyBfast[index].recipeName,
+                                        _.listofWeeklyBfast[index].dayName,
+                                        CustomTheme.bgColor,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
-                            );
-                          }),
-                        ),
-                      )
-                    ]),
-                  ),
-                  Expanded(
-                    flex: 12,
-                    child: GetBuilder<WeeklyController>(
-                      init: WeeklyController(),
-                      builder: (_) {
-                        return Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: (_.listofWeeklyBfast.isNotEmpty)
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          _.listofWeeklyBfast[0].categname,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.heightMultiplier * 4,
-                                        ),
-                                        Column(
-                                            children: List.generate(
-                                                _.listofWeeklyBfast.length,
-                                                (indexi) {
-                                          return InkWell(
-                                              onTap: () {},
-                                              child: recipeBox(
-                                                  context,
-                                                  _.listofWeeklyBfast[indexi]
-                                                      .imagesUrl,
-                                                  _.listofWeeklyBfast[indexi]
-                                                      .recipeName));
-                                        })),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: (_.listofWeeklyLunch.isNotEmpty)
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          _.listofWeeklyLunch[0].categname,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.heightMultiplier * 4,
-                                        ),
-                                        Column(
-                                            children: List.generate(
-                                                _.listofWeeklyLunch.length,
-                                                (indexi) {
-                                          return InkWell(
-                                              onTap: () {},
-                                              child: recipeBox(
-                                                  context,
-                                                  _.listofWeeklyLunch[indexi]
-                                                      .imagesUrl,
-                                                  _.listofWeeklyLunch[indexi]
-                                                      .recipeName));
-                                        })),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: (_.listofWeeklySnack.isNotEmpty)
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          _.listofWeeklySnack[0].categname,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.heightMultiplier * 4,
-                                        ),
-                                        Column(
-                                            children: List.generate(
-                                                _.listofWeeklySnack.length,
-                                                (indexi) {
-                                          return InkWell(
-                                              onTap: () {},
-                                              child: recipeBox(
-                                                  context,
-                                                  _.listofWeeklySnack[indexi]
-                                                      .imagesUrl,
-                                                  _.listofWeeklySnack[indexi]
-                                                      .recipeName));
-                                        })),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: (_.listofWeeklyDinner.isNotEmpty)
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          _.listofWeeklyDinner[0].categname,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.heightMultiplier * 4,
-                                        ),
-                                        Column(
-                                            children: List.generate(
-                                                _.listofWeeklyDinner.length,
-                                                (indexi) {
-                                          return InkWell(
-                                              onTap: () {},
-                                              child: recipeBox(
-                                                  context,
-                                                  _.listofWeeklyDinner[indexi]
-                                                      .imagesUrl,
-                                                  _.listofWeeklyDinner[indexi]
-                                                      .recipeName));
-                                        })),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ),
-                          ],
+                            ],
+                          ),
                         );
-                      },
-                    ),
-                  ),
-                ],
+                },
+              ),
+              //Lunch
+              GetBuilder<WeeklyController>(
+                init: WeeklyController(),
+                builder: (_) {
+                  return (_.listofWeeklyLunch.isEmpty)
+                      ? Text("No recipe added")
+                      : Container(
+                          // color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              space0(),
+                              Text(
+                                "   For ${_.listofWeeklyLunch.first.categName}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.heightMultiplier * 35,
+                                child: ListView.builder(
+                                  itemCount: _.listofWeeklyLunch.length,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RecipeDetail(
+                                                        modelType: "breakfast",
+                                                        recipeModel:
+                                                            _.listofWeeklyLunch[
+                                                                index],
+                                                      )));
+                                        },
+                                        child: recipeBox2(
+                                          context,
+                                          _.listofWeeklyLunch[index].imagesUrl,
+                                          _.listofWeeklyLunch[index].day,
+                                          _.listofWeeklyLunch[index].recipeName,
+                                          _.listofWeeklyLunch[index].dayName,
+                                          CustomTheme.bgColor,
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                },
+              ),
+              //Snack
+              GetBuilder<WeeklyController>(
+                init: WeeklyController(),
+                builder: (_) {
+                  return (_.listofWeeklySnack.isEmpty)
+                      ? Text("No recipe added")
+                      : Container(
+                          // color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              space0(),
+                              Text(
+                                "   For ${_.listofWeeklySnack.first.categName}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.heightMultiplier * 35,
+                                child: ListView.builder(
+                                  itemCount: _.listofWeeklySnack.length,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RecipeDetail(
+                                                        modelType: "breakfast",
+                                                        recipeModel:
+                                                            _.listofWeeklySnack[
+                                                                index],
+                                                      )));
+                                        },
+                                        child: recipeBox2(
+                                          context,
+                                          _.listofWeeklySnack[index].imagesUrl,
+                                          _.listofWeeklySnack[index].day,
+                                          _.listofWeeklySnack[index].recipeName,
+                                          _.listofWeeklySnack[index].dayName,
+                                          CustomTheme.bgColor,
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                },
+              ),
+              //Dinner
+              GetBuilder<WeeklyController>(
+                init: WeeklyController(),
+                builder: (_) {
+                  return (_.listofWeeklyDinner.isEmpty)
+                      ? Text("No recipe added")
+                      : Container(
+                          // color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              space0(),
+                              Text(
+                                "   For ${_.listofWeeklyDinner.first.categName}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.heightMultiplier * 35,
+                                child: ListView.builder(
+                                  itemCount: _.listofWeeklyDinner.length,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RecipeDetail(
+                                                        modelType: "breakfast",
+                                                        recipeModel:
+                                                            _.listofWeeklyDinner[
+                                                                index],
+                                                      )));
+                                        },
+                                        child: recipeBox2(
+                                          context,
+                                          _.listofWeeklyDinner[index].imagesUrl,
+                                          _.listofWeeklyDinner[index].day,
+                                          _.listofWeeklyDinner[index]
+                                              .recipeName,
+                                          _.listofWeeklyDinner[index].dayName,
+                                          CustomTheme.bgColor,
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                },
               ),
             ],
           ),

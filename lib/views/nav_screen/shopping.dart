@@ -3,12 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/views/details/cartrecipes.dart';
 
 import '../../components/components.dart';
 import '../../components/customDialogue.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../controllers/universalController.dart';
+import '../../controllers/weeklyController.dart';
 import '../../utils/theme.dart';
 
 class Shopping extends StatelessWidget {
@@ -18,7 +20,8 @@ class Shopping extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final universalController = Get.put(UniversalController());
-
+    // final weeklyController = Get.put(WeeklyController());
+    // weeklyController.getCartRecipe();
     return Scaffold(
       key: _scaffoldKey,
       drawer: drawer(context),
@@ -58,22 +61,20 @@ class Shopping extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline6),
           ),
           ListTile(
-            title: Text(
-              "Current Added Meals",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              "contains 0 meal",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
+            title: Text("Current Added Meals",
+                style: Theme.of(context).textTheme.bodyLarge),
+            // subtitle: Text("contains 0 meal",
+            //     style: Theme.of(context).textTheme.bodyLarge),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CartRecipes(
+                            cartType: "collection",
+                          )));
+            },
             tileColor: Colors.white,
             leading: iconBox(
               Color(0xfffcedf4),
@@ -87,6 +88,14 @@ class Shopping extends StatelessWidget {
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CartRecipes(
+                            cartType: "breakfast",
+                          )));
+            },
             tileColor: Colors.white,
             leading: iconBox(
               Color(0xffe0f3fb),
@@ -94,26 +103,16 @@ class Shopping extends StatelessWidget {
               FontAwesomeIcons.bookmark,
             ),
             title: Text(
-              "Selected Instameal Recipe",
+              "Weekly Recipe in cart",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
           ListTile(
-            title: Text(
-              "Meals History",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              "contains 0 meal",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
+            title: Text("Current added ingredients",
+                style: Theme.of(context).textTheme.bodyLarge),
+            subtitle: Text("shop these ingredients",
+                style: Theme.of(context).textTheme.bodyLarge),
           ),
           ListTile(
             tileColor: Colors.white,
@@ -123,7 +122,7 @@ class Shopping extends StatelessWidget {
               FontAwesomeIcons.clockRotateLeft,
             ),
             title: Text(
-              "Items/Ingredients History",
+              "Recipe ingredients in cart",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
@@ -136,7 +135,7 @@ class Shopping extends StatelessWidget {
               FontAwesomeIcons.cookieBite,
             ),
             title: Text(
-              "Recipes you have enjoyed",
+              "Weekly ingredients in cart",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),

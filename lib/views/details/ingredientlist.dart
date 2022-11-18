@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
@@ -13,9 +11,8 @@ import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import '../details/recipe.dart';
 
-class Favourite extends StatelessWidget {
-  Favourite({Key key}) : super(key: key);
-
+class IngredientList extends StatelessWidget {
+  IngredientList({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   GetStorage box = GetStorage();
   @override
@@ -151,11 +148,13 @@ class Favourite extends StatelessWidget {
                                                         ),
                                                   ),
                                                   InkWell(
-                                                      child: customButton2(
-                                                          context,
-                                                          Colors.white,
-                                                          Colors.white,
-                                                          "Add to List")),
+                                                    child: customButton2(
+                                                      context,
+                                                      Colors.white,
+                                                      Colors.white,
+                                                      "Add to List",
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),

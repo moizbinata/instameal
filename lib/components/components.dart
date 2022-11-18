@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/utils/sizeconfig.dart';
@@ -40,14 +41,17 @@ Widget iconBox(bgColor, iconColor, icon) {
   );
 }
 
-Widget customButton2(context, color, bgColor, label) {
+Widget customButton2(context, color, bgColor, label, {bg}) {
   return Container(
-      margin: EdgeInsets.only(top: SizeConfig.heightMultiplier),
+      margin: EdgeInsets.only(
+          top: SizeConfig.heightMultiplier, right: SizeConfig.heightMultiplier),
       padding: EdgeInsets.symmetric(
           vertical: SizeConfig.heightMultiplier * 0.5,
           horizontal: SizeConfig.heightMultiplier),
       decoration: BoxDecoration(
-          color: bgColor, borderRadius: BorderRadius.circular(15)),
+          color: bg ?? Colors.transparent,
+          border: Border.all(color: bgColor),
+          borderRadius: BorderRadius.circular(15)),
       child: Text(
         label,
         style: Theme.of(context).textTheme.bodySmall.copyWith(color: color),
@@ -126,6 +130,81 @@ Widget customField(textController, labelText, {icon, bgcolor, iconColor}) {
 Widget space0() {
   return SizedBox(
     height: SizeConfig.heightMultiplier * 2,
+  );
+}
+
+Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
+  return Container(
+    margin: EdgeInsets.all(SizeConfig.heightMultiplier),
+    height: SizeConfig.heightMultiplier * 20,
+    width: SizeConfig.heightMultiplier * 20,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            Positioned(
+                child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              child: CachedNetworkImage(
+                height: SizeConfig.heightMultiplier * 20,
+                width: SizeConfig.heightMultiplier * 20,
+                imageUrl: Constants.baseImageUrl + imagesUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Center(child: Center(child: CircularProgressIndicator())),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/breakfast.png"),
+              ),
+            )),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.heightMultiplier * 2,
+                    vertical: SizeConfig.heightMultiplier * 1.5),
+                decoration: BoxDecoration(
+                    color: CustomTheme.bgColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                    )),
+                child: Text(
+                  day.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      .copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: SizeConfig.heightMultiplier,
+        ),
+        Text(
+          recipeName,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        Text(
+          dayName.toString(),
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+        ),
+        InkWell(child: customButton2(context, color, color, "Add to List"))
+      ],
+    ),
   );
 }
 

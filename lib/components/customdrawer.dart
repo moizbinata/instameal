@@ -147,7 +147,6 @@ Widget drawer(context) {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
-                print("logout");
                 GetStorage box = GetStorage();
                 box.erase();
                 Fluttertoast.showToast(msg: 'Successfully Logout');

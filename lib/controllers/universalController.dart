@@ -37,26 +37,26 @@ class UniversalController extends GetxController {
         //favourite
         if (listofUniversal.first.fav != null ||
             listofUniversal.first.fav.length > 0) {
-          listofFav.addAll(listofUniversal.first.fav.first);
+          listofFav.assignAll(listofUniversal.first.fav.first);
         }
         //festival
         if (listofUniversal.first.festival != null ||
             listofUniversal.first.festival.length > 0) {
           {
-            listofFestival.addAll(listofUniversal.first.festival.first);
+            listofFestival.assignAll(listofUniversal.first.festival.first);
           }
         }
         //collection
         if (listofUniversal.first.collection != null ||
             listofUniversal.first.collection.length > 0) {
           {
-            listofCollection.addAll(listofUniversal.first.collection.first);
+            listofCollection.assignAll(listofUniversal.first.collection.first);
           }
         }
         //dessert
         if (listofUniversal.first.dessert != null ||
             listofUniversal.first.dessert.length > 0) {
-          listofDesserts.addAll(listofUniversal.first.dessert.first);
+          listofDesserts.assignAll(listofUniversal.first.dessert.first);
         }
       }
     } else {

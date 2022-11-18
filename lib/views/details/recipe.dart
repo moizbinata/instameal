@@ -1,19 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/howtocook.dart';
+import 'package:instameal/views/details/shopitems.dart';
 
 import '../../components/components.dart';
+import '../../controllers/weeklyController.dart';
 import '../../utils/constants.dart';
 
 class RecipeDetail extends StatelessWidget {
-  const RecipeDetail({Key key, this.recipeModel}) : super(key: key);
+  RecipeDetail({Key key, this.recipeModel, this.modelType}) : super(key: key);
   final recipeModel;
+  final modelType;
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
-    print(Constants.baseImageUrl + recipeModel.imagesUrl);
+    final weeklyController = Get.put(WeeklyController());
+
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
       body: CustomScrollView(
@@ -99,19 +108,28 @@ class RecipeDetail extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          // TextButton.icon(
+                          //   onPressed: () {},
+                          //   icon: FaIcon(
+                          //     FontAwesomeIcons.heart,
+                          //     color: Colors.white,
+                          //   ),
+                          //   label: Text(
+                          //     "Favourite",
+                          //     style: Theme.of(context).textTheme.bodySmall,
+                          //   ),
+                          // ),
                           TextButton.icon(
-                            onPressed: () {},
-                            icon: FaIcon(
-                              FontAwesomeIcons.heart,
-                              color: Colors.white,
-                            ),
-                            label: Text(
-                              "Favourite",
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ),
-                          TextButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HowtoCook(
+                                    directionsList: recipeModel.direction,
+                                  ),
+                                ),
+                              );
+                            },
                             icon: FaIcon(
                               FontAwesomeIcons.kitchenSet,
                               color: Colors.white,
@@ -122,7 +140,12 @@ class RecipeDetail extends StatelessWidget {
                             ),
                           ),
                           TextButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(
+                                  text: recipeModel.recipeName +
+                                      '\n' +
+                                      recipeModel.whatYouNeed.toString()));
+                            },
                             icon: FaIcon(
                               FontAwesomeIcons.share,
                               color: Colors.white,
@@ -160,16 +183,57 @@ class RecipeDetail extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            child: customButton2(
-                              context,
-                              Colors.white,
-                              CustomTheme.bgColor,
-                              "Add to List",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShopItems(
+                                              itemList: recipeModel.items,
+                                            )));
+                              },
+                              child: customButton2(context, Colors.white,
+                                  CustomTheme.bgColor, "Order items",
+                                  bg: CustomTheme.bgColor),
                             ),
-                          ),
+                            SizedBox(
+                              width: SizeConfig.heightMultiplier * 2,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (modelType == "collection") {
+                                  weeklyController.listCartRecipe2
+                                      .add(recipeModel);
+                                  box.write('collection',
+                                      weeklyController.listCartRecipe2);
+                                  print(weeklyController
+                                      .listCartRecipe2.first.categName);
+                                  Fluttertoast.showToast(msg: 'Added to cart');
+                                } else {
+                                  weeklyController.listCartRecipe1
+                                      .add(recipeModel);
+                                  box.write('breakfast',
+                                      weeklyController.listCartRecipe1);
+                                  print(weeklyController
+                                      .listCartRecipe1.first.categName);
+                                  Fluttertoast.showToast(msg: 'Added to cart');
+                                }
+                              },
+                              child: customButton2(
+                                context,
+                                CustomTheme.bgColor,
+                                CustomTheme.bgColor,
+                                "Add to List",
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "Servings: " + recipeModel.serving.toString(),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                         space0(),
                         Text(

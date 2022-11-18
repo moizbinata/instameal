@@ -1,21 +1,29 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
+import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/subscription/subscription.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 
 import '../components/components.dart';
 import '../controllers/universalController.dart';
+import '../models/loginmodel.dart';
+import '../utils/network.dart';
 import '../utils/sizeconfig.dart';
 
 class Login extends StatelessWidget {
   Login({Key key}) : super(key: key);
   //login
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController usernameController =
+      TextEditingController(text: 'decrs@gmail.com');
+  TextEditingController passwordController =
+      TextEditingController(text: 'abc123');
   //signup
   TextEditingController usernameController2 = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -103,16 +111,17 @@ class Login extends StatelessWidget {
                                 GetStorage box = GetStorage();
                                 box.write('plantype', "Plant-Based");
                                 box.write('planId', "3");
-
                                 universalController.mart.value = 'shipt';
                                 box.write('mart', 'shipt');
-
-                                // Get.to(() => BottomNavigator());
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            BottomNavigator()));
+                                box.write('amazonfresh',
+                                    'https://www.amazon.com/s?k=');
+                                box.write('walmart',
+                                    'https://www.walmart.com/search?q=');
+                                box.write('instacart',
+                                    'https://www.instacart.com/store/s?k=');
+                                box.write('kroger',
+                                    'https: //kroger.com/search?query=');
+                                loginService(context);
                               },
                               child: customButton(context, Colors.white,
                                   CustomTheme.bgColor, "Login"),
@@ -140,7 +149,6 @@ class Login extends StatelessWidget {
                             space2(),
                             InkWell(
                                 onTap: () {
-                                  // Get.to(() => TrialScreen());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -164,5 +172,45 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> loginService(context) async {
+    GetStorage box = GetStorage();
+    String url =
+        "${Constants.baseUrl}login/Email/${usernameController.text.toString()}/Password/${passwordController.text.toString()}";
+    // var payload = {"userid": box.read("userid").toString()};
+
+    var response = await Network.get(url: url).catchError(
+      () {
+        Fluttertoast.showToast(msg: "Server is not responding");
+      },
+    );
+    print(url);
+    print(response.toString());
+    if (response != null) {
+      var jsonString = jsonDecode(response.toString());
+      var loginModel = LoginModel.fromJson(jsonString);
+      if (loginModel != null && loginModel.data.isNotEmpty) {
+        Fluttertoast.showToast(msg: "Login Successfully");
+        box.write('userid', loginModel.data[0].userid);
+        box.write('username', loginModel.data[0].username);
+        box.write('email', loginModel.data[0].email);
+        box.write('subscriptionStart', loginModel.data[0].subscriptionStart);
+        box.write('subscriptionEnd', loginModel.data[0].subscriptionEnd);
+        box.write('membershipType', loginModel.data[0].membershipType);
+        box.write('trialStatus', loginModel.data[0].trialStatus);
+        box.write('paymentStatus', loginModel.data[0].paymentStatus);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BottomNavigator(),
+          ),
+        );
+      } else {
+        Fluttertoast.showToast(msg: "Incorrect Credentials");
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong");
+    }
   }
 }

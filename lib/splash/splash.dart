@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/intro/intro.dart';
 import 'package:instameal/views/login.dart';
+import 'package:instameal/views/nav_screen/home.dart';
 import '../components/components.dart';
 import '../utils/sizeconfig.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key key}) : super(key: key);
-
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,13 +47,30 @@ class SplashScreen extends StatelessWidget {
                   width: SizeConfig.heightMultiplier * 20,
                 ),
                 InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => HomeIntro()));
-                      // Get.to(() => const HomeIntro());
-                    },
-                    child: customButton(context, CustomTheme.bgColor,
-                        Colors.white, "Get Started")),
+                  onTap: () {
+                    if (box.read('username') == null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeIntro(),
+                        ),
+                      );
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavigator(),
+                        ),
+                      );
+                    }
+                  },
+                  child: customButton(
+                    context,
+                    CustomTheme.bgColor,
+                    Colors.white,
+                    "Get Started",
+                  ),
+                ),
               ],
             ),
           ),

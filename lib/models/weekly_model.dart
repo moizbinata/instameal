@@ -69,8 +69,10 @@ class Breakfast {
     this.prepTime,
     this.cookTime,
     this.keys,
-    this.categname,
-    this.planname,
+    this.categName,
+    this.planName,
+    this.dayName,
+    this.items,
   });
 
   int recipeid;
@@ -79,16 +81,18 @@ class Breakfast {
   int categoryId;
   int planId;
   String recipeName;
-  String whatYouNeed;
-  String direction;
-  String nutritPerServe;
+  List<String> whatYouNeed;
+  List<String> direction;
+  List<String> nutritPerServe;
   String imagesUrl;
   int serving;
   String prepTime;
   String cookTime;
-  String keys;
-  String categname;
-  String planname;
+  List<String> keys;
+  String categName;
+  String planName;
+  String dayName;
+  List<String> items;
 
   factory Breakfast.fromJson(Map<String, dynamic> json) => Breakfast(
         recipeid: json["recipeid"],
@@ -97,16 +101,40 @@ class Breakfast {
         categoryId: json["categoryId"],
         planId: json["planId"],
         recipeName: json["recipeName"],
-        whatYouNeed: json["whatYouNeed"],
-        direction: json["direction"],
-        nutritPerServe: json["nutritPerServe"],
+        whatYouNeed: json["whatYouNeed"] != null
+            ? json['whatYouNeed'].toString().split('***').toList()
+            : [],
+        direction: json["direction"] != null
+            ? json['direction'].toString().split('***').toList()
+            : [],
+        nutritPerServe: json["nutritPerServe"] != null
+            ? json['nutritPerServe'].toString().split('***').toList()
+            : [],
         imagesUrl: json["imagesUrl"],
         serving: json["serving"],
         prepTime: json["prepTime"],
         cookTime: json["cookTime"],
-        keys: json["keys"],
-        categname: json["categname"],
-        planname: json["planname"],
+        keys: json["keys"] != null
+            ? json['keys'].toString().split('***').toList()
+            : [],
+        categName: json["categName"],
+        planName: json["planName"],
+        dayName: (json["day"] == 1)
+            ? "Monday"
+            : (json["day"] == 2)
+                ? "Tuesday"
+                : (json["day"] == 3)
+                    ? "Wednesday"
+                    : (json["day"] == 4)
+                        ? "Thursday"
+                        : (json["day"] == 5)
+                            ? "Friday"
+                            : (json["day"] == 6)
+                                ? "Saturday"
+                                : "Sunday",
+        items: json["items"] != null
+            ? json['items'].toString().split('***').toList()
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -124,7 +152,21 @@ class Breakfast {
         "prepTime": prepTime,
         "cookTime": cookTime,
         "keys": keys,
-        "categname": categname,
-        "planname": planname,
+        "categName": categName,
+        "planName": planName,
+        "dayName": (day == 1)
+            ? "Monday"
+            : (day == 2)
+                ? "Tuesday"
+                : (day == 3)
+                    ? "Wednesday"
+                    : (day == 4)
+                        ? "Thursday"
+                        : (day == 5)
+                            ? "Friday"
+                            : (day == 6)
+                                ? "Saturday"
+                                : "Sunday",
+        "items": items,
       };
 }

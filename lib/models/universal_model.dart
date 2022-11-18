@@ -68,6 +68,7 @@ class Collection {
     this.categName,
     this.planName,
     this.userid,
+    this.items,
   });
 
   int recipeid;
@@ -83,6 +84,7 @@ class Collection {
   String categName;
   String planName;
   int userid;
+  List<String> items;
 
   factory Collection.fromJson(Map<String, dynamic> json) => Collection(
         recipeid: json["recipeid"],
@@ -106,6 +108,9 @@ class Collection {
         categName: json["categName"],
         planName: json["planName"],
         userid: json["userid"] == null ? null : json["userid"],
+        items: json["items"] != null
+            ? json['items'].toString().split('***').toList()
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -122,5 +127,6 @@ class Collection {
         "categName": categName,
         "planName": planName,
         "userid": userid == null ? null : userid,
+        "items": items,
       };
 }

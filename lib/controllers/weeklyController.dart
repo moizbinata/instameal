@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/models/images_model.dart';
+import 'package:instameal/models/universal_model.dart';
 import 'package:instameal/models/weekly_model.dart';
 import 'package:intl/intl.dart';
 import '../services/weeklyservices.dart';
@@ -15,11 +16,28 @@ class WeeklyController extends GetxController {
   RxList<Breakfast> listofWeeklyLunch = <Breakfast>[].obs;
   RxList<Breakfast> listofWeeklySnack = <Breakfast>[].obs;
   RxList<Breakfast> listofWeeklyDinner = <Breakfast>[].obs;
+  RxList<Breakfast> listCartRecipe1 = <Breakfast>[].obs;
+  RxList<Collection> listCartRecipe2 = <Collection>[].obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     fetchWeeklyImage();
+    // getCartRecipe();
+  }
+
+  getCartRecipe() {
+    if (box.read('collection') != null) {
+      List<Collection> abc = [];
+      abc = List<Collection>.from(box.read('collection'));
+      print(abc);
+    }
+    if (box.read('breakfast') != null) {
+      List<Breakfast> abc = [];
+      abc = List<Breakfast>.from(box.read('breakfast'));
+      print(abc);
+    }
   }
 
   /// Calculates number of weeks for a given year as per
@@ -50,11 +68,6 @@ class WeeklyController extends GetxController {
       print(listofWeekly.first.breakfast.first);
       if (listofWeekly.first.breakfast != null) {
         listofWeeklyBfast.assignAll(listofWeekly.first.breakfast.first);
-        print("breakfast");
-        print(listofWeekly.first.breakfast[0].first.recipeName);
-        print(listofWeekly.first.breakfast[0].first.categname);
-        print(listofWeekly.first.breakfast[0].first.planname);
-        print(listofWeekly.first.breakfast[0].first.planId.toString());
       } else {
         listofWeeklyBfast.length = 0;
       }
@@ -88,8 +101,10 @@ class WeeklyController extends GetxController {
     var weekly = await WeeklyService.fetchWeeklyImages();
     if (weekly != null) {
       listofWeeklyImages.add(weekly);
-      listcurrWeekImg.add(listofWeeklyImages.first.data[currentWeek - 1]);
-      listcurrWeekImg.add(listofWeeklyImages.first.data[currentWeek]);
+      listcurrWeekImg.assignAll({
+        listofWeeklyImages.first.data[currentWeek - 1],
+        listofWeeklyImages.first.data[currentWeek]
+      });
     } else {
       listofWeeklyImages.length = 0;
     }
