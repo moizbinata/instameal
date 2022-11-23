@@ -34,7 +34,7 @@ class Favourite extends StatelessWidget {
       body: ListView(
         children: [
           Text(
-            "   My Favourite Meals",
+            "   Top trending meals",
             style: Theme.of(context)
                 .textTheme
                 .headline6
