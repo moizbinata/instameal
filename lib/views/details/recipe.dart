@@ -98,10 +98,10 @@ class RecipeDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            recipeModel.planName,
+                            recipeModel.planName ?? "",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text(recipeModel.categName,
+                          Text(recipeModel.categName ?? "",
                               style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),

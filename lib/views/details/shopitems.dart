@@ -114,40 +114,6 @@ class _ShopItemsState extends State<ShopItems> {
                   ],
                 ),
               ),
-              // SizedBox(
-              //   height: SizeConfig.heightMultiplier * 5,
-              //   width: SizeConfig.screenWidth,
-              //   child: ListView.builder(
-              //       itemCount: widget.itemList.length,
-              //       scrollDirection: Axis.horizontal,
-              //       physics: AlwaysScrollableScrollPhysics(),
-              //       itemBuilder: (context, index) {
-              //         return InkWell(
-              //           onTap: () {
-              //             setState(() {
-              //               selectedItem = widget.itemList[index].toString();
-              //             });
-              //           },
-              //           child: customButton2(
-              //             context,
-              //             CustomTheme.bgColor,
-              //             CustomTheme.bgColor,
-              //             widget.itemList[index].toString() ?? "",
-              //           ),
-              //         );
-              //       }),
-              // ),
-              // space0(),
-              // SizedBox(
-              //   height: SizeConfig.screenHeight,
-              //   child: (martUrl == "")
-              //       ? Center(child: Text("Select shop first"))
-              //       : WebView(
-              //           zoomEnabled: true,
-              //           javascriptMode: JavascriptMode.unrestricted,
-              //           initialUrl: martUrl + selectedItem,
-              //         ),
-              // ),
             ],
           ),
         ),

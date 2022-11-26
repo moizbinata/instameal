@@ -58,6 +58,23 @@ Widget customButton2(context, color, bgColor, label, {bg}) {
       ));
 }
 
+Widget floatButton(context) {
+  return Container(
+    decoration: BoxDecoration(
+        color: CustomTheme.bgColor,
+        borderRadius: BorderRadius.circular(
+          100,
+        )),
+    child: IconButton(
+      icon: Icon(Icons.chevron_left),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      color: Colors.white,
+    ),
+  );
+}
+
 Widget customButton(context, color, bgColor, label) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 15),
@@ -133,13 +150,15 @@ Widget space0() {
   );
 }
 
-Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
+Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color,
+    {btn = false}) {
   return Container(
     margin: EdgeInsets.all(SizeConfig.heightMultiplier),
     height: SizeConfig.heightMultiplier * 20,
     width: SizeConfig.heightMultiplier * 20,
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          (btn == true) ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Stack(
           children: [
@@ -147,6 +166,7 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
                 child: Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
+                color: CustomTheme.bgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25),
                   topRight: Radius.circular(10),
@@ -155,8 +175,12 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
                 ),
               ),
               child: CachedNetworkImage(
-                height: SizeConfig.heightMultiplier * 20,
-                width: SizeConfig.heightMultiplier * 20,
+                height: (btn == true)
+                    ? SizeConfig.heightMultiplier * 12
+                    : SizeConfig.heightMultiplier * 20,
+                width: (btn == true)
+                    ? SizeConfig.heightMultiplier * 12
+                    : SizeConfig.heightMultiplier * 20,
                 imageUrl: Constants.baseImageUrl + imagesUrl,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
@@ -192,23 +216,34 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color) {
         SizedBox(
           height: SizeConfig.heightMultiplier,
         ),
-        Flexible(
-          child: Text(
-            recipeName,
-            maxLines: 2,
-            softWrap: false,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
+        (btn == false)
+            ? Flexible(
+                child: Text(
+                  recipeName,
+                  maxLines: 2,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              )
+            : SizedBox(),
         Text(
           dayName.toString(),
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
+          overflow: TextOverflow.ellipsis,
+          style: (btn == false)
+              ? Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  )
+              : Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  .copyWith(color: CustomTheme.bgColor),
         ),
-        InkWell(child: customButton2(context, color, color, "Add to List"))
+        (btn == false)
+            ? InkWell(
+                child: customButton2(context, color, color, "Add to List"))
+            : SizedBox()
       ],
     ),
   );

@@ -52,9 +52,11 @@ class _HomeState extends State<Home> {
                 child: ListView(
                   children: [
                     space0(),
-                    Text(
-                      "      ${box.read('plantype').toString()} Weekly Plan for you",
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    Obx(
+                      () => Text(
+                        "      ${universalController.plan.toString()} Weekly Plan for you",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                     ),
                     // Container(
                     //   padding: EdgeInsets.symmetric(
@@ -90,7 +92,7 @@ class _HomeState extends State<Home> {
                                         // Get.to(() => RecipeDetail());
                                         int week = _.currentRxWeek.value;
                                         await weeklyController.fetchWeekly(
-                                            box.read('planId').toString(),
+                                            box.read('planid').toString(),
                                             (index == 0) ? week - 1 : week);
                                         Navigator.push(
                                           context,

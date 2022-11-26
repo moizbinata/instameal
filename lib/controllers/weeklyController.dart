@@ -99,13 +99,16 @@ class WeeklyController extends GetxController {
     currentRxWeek.value = currentWeek;
     print(currentWeek.toString());
     listofWeeklyImages.clear();
+    print(currentWeek);
     var weekly = await WeeklyService.fetchWeeklyImages();
     if (weekly != null) {
       listofWeeklyImages.assign(weekly);
-      listcurrWeekImg.assignAll({
-        listofWeeklyImages.first.data[currentWeek - 1],
-        listofWeeklyImages.first.data[currentWeek]
-      });
+      listcurrWeekImg.assignAll(
+        {
+          listofWeeklyImages.first.data[currentWeek - 1],
+          listofWeeklyImages.first.data[currentWeek]
+        },
+      );
     } else {
       listofWeeklyImages.length = 0;
     }

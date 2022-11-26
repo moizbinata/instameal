@@ -110,8 +110,11 @@ class Login extends StatelessWidget {
                               onTap: () {
                                 GetStorage box = GetStorage();
                                 box.write('plantype', "Plant-Based");
-                                box.write('planId', "3");
+                                box.write('planid', "3");
+                                print("planid ${box.read('planid')}");
                                 universalController.mart.value = 'shipt';
+                                universalController.plan.value = "Plant-Based";
+                                universalController.planid.value = 3;
                                 box.write('mart', 'amazonfresh');
                                 box.write('amazonfresh',
                                     'https://www.amazon.com/s?k=');
@@ -180,7 +183,6 @@ class Login extends StatelessWidget {
     GetStorage box = GetStorage();
     String url =
         "${Constants.baseUrl}login/Email/${usernameController.text.toString()}/Password/${passwordController.text.toString()}";
-    // var payload = {"userid": box.read("userid").toString()};
 
     var response = await Network.get(url: url).catchError(
       () {
@@ -212,7 +214,7 @@ class Login extends StatelessWidget {
         Fluttertoast.showToast(msg: "Incorrect Credentials");
       }
     } else {
-      Fluttertoast.showToast(msg: "Something went wrong");
+      Fluttertoast.showToast(msg: "Incorrect Credentials");
     }
   }
 }

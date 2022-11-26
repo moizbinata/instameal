@@ -6,6 +6,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/profile.dart';
+import 'package:instameal/views/nav_screen/favourite.dart';
+import 'package:instameal/views/nav_screen/shopping.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../views/login.dart';
 import '../views/nav_screen/home.dart';
@@ -66,7 +70,12 @@ Widget drawer(context) {
                 "Account Details",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile()),
+                );
+              },
             ),
             ListTile(
               selected: true,
@@ -81,27 +90,17 @@ Widget drawer(context) {
                 "My Subscription",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Shopping()),
+                );
+              },
             ),
             space1(),
             Text("    Others",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall),
-            ListTile(
-              selected: true,
-              selectedColor: Color(0xfffcedf4),
-              tileColor: Colors.white,
-              leading: iconBox(
-                Color(0xfffcedf4),
-                Color(0xffffb2d5),
-                FontAwesomeIcons.bookmark,
-              ),
-              title: Text(
-                "Top Plans",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              onTap: () {},
-            ),
             ListTile(
               selected: true,
               selectedColor: CustomTheme.bgColor,
@@ -115,7 +114,9 @@ Widget drawer(context) {
                 "Support Center",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onTap: () {},
+              onTap: () {
+                launchEmailSubmission();
+              },
             ),
             ListTile(
               selected: true,
@@ -130,7 +131,12 @@ Widget drawer(context) {
                 "Trending Plans",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Favourite()),
+                );
+              },
             ),
             space1(),
             ListTile(
@@ -158,4 +164,17 @@ Widget drawer(context) {
       ],
     ),
   );
+}
+
+void launchEmailSubmission() async {
+  GetStorage box = GetStorage();
+  final Uri params = Uri(
+      scheme: 'mailto',
+      path: 'mailto:jawad2114@gmail.com',
+      queryParameters: {
+        'subject': 'Instameal User ID ${box.read('userid')}',
+        'body': ''
+      });
+  String url = params.toString();
+  await launchUrl(Uri.parse(url));
 }

@@ -57,14 +57,25 @@ class Shopping extends StatelessWidget {
                 ),
               )),
           ListTile(
+            onTap: () => planDialogue(context),
+            title: Text("Plan subscribed",
+                style: Theme.of(context).textTheme.headline6),
+            subtitle: Text(
+              "Change",
+              style: Theme.of(context).textTheme.bodySmall.copyWith(
+                    decoration: TextDecoration.underline,
+                  ),
+            ),
+          ),
+          Obx(() => Center(
+              child: Text(universalController.plan.value,
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: CustomTheme.bgColor,
+                        decoration: TextDecoration.underline,
+                      )))),
+          ListTile(
             title: Text("My Instameal Meals List",
                 style: Theme.of(context).textTheme.headline6),
-          ),
-          ListTile(
-            title: Text("Current Added Meals",
-                style: Theme.of(context).textTheme.bodyLarge),
-            // subtitle: Text("contains 0 meal",
-            //     style: Theme.of(context).textTheme.bodyLarge),
           ),
           ListTile(
             onTap: () {
@@ -82,47 +93,7 @@ class Shopping extends StatelessWidget {
               FontAwesomeIcons.opencart,
             ),
             title: Text(
-              "Instameal Recipe in Cart",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            trailing: FaIcon(FontAwesomeIcons.chevronRight),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CartRecipes(
-                            cartType: "breakfast",
-                          )));
-            },
-            tileColor: Colors.white,
-            leading: iconBox(
-              Color(0xffe0f3fb),
-              Color(0xff9fd6e5),
-              FontAwesomeIcons.bookmark,
-            ),
-            title: Text(
-              "Weekly Recipe in cart",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            trailing: FaIcon(FontAwesomeIcons.chevronRight),
-          ),
-          ListTile(
-            title: Text("Current added ingredients",
-                style: Theme.of(context).textTheme.bodyLarge),
-            subtitle: Text("shop these ingredients",
-                style: Theme.of(context).textTheme.bodyLarge),
-          ),
-          ListTile(
-            tileColor: Colors.white,
-            leading: iconBox(
-              Color(0xfffdeade),
-              Color(0xfffdd47d),
-              FontAwesomeIcons.clockRotateLeft,
-            ),
-            title: Text(
-              "Recipe ingredients in cart",
+              "Recipes added in Cart",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),

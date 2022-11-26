@@ -37,6 +37,7 @@ class _WeekTableState extends State<WeekTable> {
   Widget build(BuildContext context) {
     final weeklyController = Get.put(WeeklyController());
     return Scaffold(
+      floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
       key: _scaffoldKey,
       drawer: drawer(context),

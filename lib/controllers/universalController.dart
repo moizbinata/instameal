@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/models/planmodel.dart';
 import 'package:instameal/services/universalservices.dart';
 
 import '../models/universal_model.dart';
@@ -7,11 +8,14 @@ import '../services/weeklyservices.dart';
 
 class UniversalController extends GetxController {
   RxList<UniversalModel> listofUniversal = <UniversalModel>[].obs;
+  RxList<PModel> listofPlans = <PModel>[].obs;
   RxList<Collection> listofFav = <Collection>[].obs;
   RxList<Collection> listofFestival = <Collection>[].obs;
   RxList<Collection> listofCollection = <Collection>[].obs;
   RxList<Collection> listofDesserts = <Collection>[].obs;
   RxString mart = "".obs;
+  RxString plan = "".obs;
+  RxInt planid = 0.obs;
   GetStorage box = GetStorage();
 
   @override
@@ -19,11 +23,26 @@ class UniversalController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     fetchUniversal();
+    fetchPlans();
     mart.value = box.read('mart');
+    plan.value = box.read('plantype') ?? "";
   }
 
   refreshUniversal() async {
     await fetchUniversal();
+  }
+
+  int getPlanIdbyName(planname) {
+    print("getPlanIdbyName");
+    print(planname);
+    int planid = 0;
+    listofPlans.forEach((element) {
+      if (element.planName == planname) {
+        planid = element.planId;
+      }
+    });
+    print(planid);
+    return planid;
   }
 
   Future<void> fetchUniversal() async {
@@ -61,6 +80,17 @@ class UniversalController extends GetxController {
       }
     } else {
       listofUniversal.length = 0;
+    }
+    update();
+  }
+
+  Future<void> fetchPlans() async {
+    await Future.delayed(Duration.zero);
+    var plans = await UniversalService.fetchPlans();
+    if (plans.data.isNotEmpty) {
+      listofPlans.assignAll(plans.data);
+    } else {
+      listofPlans.length = 0;
     }
     update();
   }

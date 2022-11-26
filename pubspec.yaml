@@ -46,6 +46,7 @@ dependencies:
   get_storage: ^2.0.3
   intl: ^0.17.0
   webview_flutter: ^3.0.4
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:

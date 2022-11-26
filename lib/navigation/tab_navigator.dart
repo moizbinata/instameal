@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:instameal/views/nav_screen/search.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
 import 'package:instameal/views/nav_screen/favourite.dart';
 
 import '../views/nav_screen/home.dart';
+import '../views/searchcateg/searchcateg.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
@@ -27,7 +27,7 @@ class TabNavigator extends StatelessWidget {
     } else if (tabItem == "Favourite") {
       child = Favourite();
     } else if (tabItem == "Search") {
-      child = Search();
+      child = SearchCategories();
     } else {
       child = Home();
     }

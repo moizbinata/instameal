@@ -176,12 +176,16 @@ class TrialScreen extends StatelessWidget {
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
-                  paymentIntentClientSecret: paymentIntent['client_secret'],
-                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
-                  style: ThemeMode.dark,
-                  merchantDisplayName: 'Adnan'))
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent['client_secret'],
+          allowsDelayedPaymentMethods: true,
+
+          // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
+          // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
+          style: ThemeMode.dark,
+          merchantDisplayName: 'Adnan',
+        ),
+      )
           .then((value) {
         print("moiz");
         print(Stripe.instance.isApplePaySupported);
