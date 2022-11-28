@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
@@ -170,6 +171,8 @@ class TrialScreen extends StatelessWidget {
   }
 
   Future<void> makePayment(context) async {
+    // await launchUrl(
+    //     Uri.parse('https://buy.stripe.com/test_9AQ5ojaIYbMG1JScMN'));
     try {
       paymentIntent = await createPaymentIntent('19.99', 'USD');
       paymentIntent = await createPaymentIntent('199', 'USD');
@@ -178,8 +181,8 @@ class TrialScreen extends StatelessWidget {
           .initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent['client_secret'],
-          allowsDelayedPaymentMethods: true,
 
+          allowsDelayedPaymentMethods: true,
           // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
           // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
           style: ThemeMode.dark,
