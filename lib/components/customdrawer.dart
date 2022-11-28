@@ -26,7 +26,6 @@ Widget drawer(context) {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              space0(),
               Image.asset('assets/images/logo.png',
                   width: SizeConfig.heightMultiplier * 11),
               ListTile(

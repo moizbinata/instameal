@@ -61,72 +61,101 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                 init: SearchCategController(),
                 builder: (_) {
                   print(_.filteredSCRecipe.length);
-                  return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _.filteredSCRecipe.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: SizeConfig.heightMultiplier,
-                      mainAxisSpacing: SizeConfig.heightMultiplier,
-                      childAspectRatio: 1,
-                    ),
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecipeDetail(
-                              modelType: "breakfast",
-                              recipeModel: _.filteredSCRecipe[index],
+                  return (_.filteredSCRecipe.length < 1)
+                      ? SizedBox(
+                          height: SizeConfig.screenHeight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "No meals",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    .copyWith(
+                                      color: CustomTheme.bgColor,
+                                    ),
+                              ),
+                              space0(),
+                              Image.asset(
+                                "assets/images/norecord.png",
+                                width: SizeConfig.screenWidth * 0.7,
+                              ),
+                            ],
+                          ),
+                        )
+                      : GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: _.filteredSCRecipe.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: SizeConfig.heightMultiplier,
+                            mainAxisSpacing: SizeConfig.heightMultiplier,
+                            childAspectRatio: 1,
+                          ),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RecipeDetail(
+                                    modelType: "breakfast",
+                                    recipeModel: _.filteredSCRecipe[index],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  space0(),
+                                  Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                        color: CustomTheme.bgColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: CustomTheme.grey
+                                                .withOpacity(0.5),
+                                            blurRadius: 6,
+                                            spreadRadius: 6,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: CachedNetworkImage(
+                                      height: SizeConfig.heightMultiplier * 15,
+                                      width: SizeConfig.heightMultiplier * 15,
+                                      imageUrl: Constants.baseImageUrl +
+                                          _.filteredSCRecipe[index].imagesUrl,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/breakfast.png"),
+                                    ),
+                                  ),
+                                  space0(),
+                                  Text(
+                                    _.filteredSCRecipe[index].recipeName
+                                        .toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        .copyWith(color: CustomTheme.bgColor),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
-                      },
-                      child: Container(
-                        child: Column(
-                          children: [
-                            space0(),
-                            Container(
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                  color: CustomTheme.bgColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: CustomTheme.grey.withOpacity(0.5),
-                                      blurRadius: 6,
-                                      spreadRadius: 6,
-                                      offset: Offset(0, 0),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: CachedNetworkImage(
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
-                                imageUrl: Constants.baseImageUrl +
-                                    _.filteredSCRecipe[index].imagesUrl,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => Center(
-                                    child: Center(
-                                        child: CircularProgressIndicator())),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset("assets/images/breakfast.png"),
-                              ),
-                            ),
-                            space0(),
-                            Text(
-                              _.filteredSCRecipe[index].recipeName.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  .copyWith(color: CustomTheme.bgColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
                 },
               )
             ],

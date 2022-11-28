@@ -85,8 +85,8 @@ class SearchCategories extends StatelessWidget {
                                   ],
                                   borderRadius: BorderRadius.circular(10)),
                               child: CachedNetworkImage(
-                                height: SizeConfig.heightMultiplier * 20,
-                                width: SizeConfig.heightMultiplier * 20,
+                                height: SizeConfig.heightMultiplier * 15,
+                                width: SizeConfig.heightMultiplier * 15,
                                 imageUrl: Constants.baseImageUrl +
                                     _.listofSCateg[index].scategimg,
                                 fit: BoxFit.cover,

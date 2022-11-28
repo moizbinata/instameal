@@ -106,7 +106,7 @@ class Shopping extends StatelessWidget {
               FontAwesomeIcons.cookieBite,
             ),
             title: Text(
-              "Weekly ingredients in cart",
+              "Weekly shopping ingredients in cart",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
