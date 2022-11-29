@@ -121,14 +121,20 @@ class RecipeDetail extends StatelessWidget {
                           ),
                           TextButton.icon(
                             onPressed: () {
-                              Navigator.push(
+                              Constants.navigatepush(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => HowtoCook(
-                                    directionsList: recipeModel.direction,
-                                  ),
+                                HowtoCook(
+                                  directionsList: recipeModel.direction,
                                 ),
                               );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => HowtoCook(
+                              //       directionsList: recipeModel.direction,
+                              //     ),
+                              //   ),
+                              // );
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.kitchenSet,
@@ -188,12 +194,17 @@ class RecipeDetail extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.push(
+                                Constants.navigatepush(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ShopItems(
-                                              itemList: recipeModel.items,
-                                            )));
+                                    ShopItems(
+                                      itemList: recipeModel.items,
+                                    ));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => ShopItems(
+                                //               itemList: recipeModel.items,
+                                //             )));
                               },
                               child: customButton2(context, Colors.white,
                                   CustomTheme.bgColor, "Order items",

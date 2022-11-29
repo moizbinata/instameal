@@ -64,15 +64,22 @@ class Favourite extends StatelessWidget {
                                   )
                                 : InkWell(
                                     onTap: () {
-                                      Navigator.push(
+                                      Constants.navigatepush(
                                           context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RecipeDetail(
-                                                    modelType: "collection",
-                                                    recipeModel:
-                                                        _.listofFav[index],
-                                                  )));
+                                          RecipeDetail(
+                                            modelType: "collection",
+                                            recipeModel: _.listofFav[index],
+                                          ));
+
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             RecipeDetail(
+                                      //               modelType: "collection",
+                                      //               recipeModel:
+                                      //                   _.listofFav[index],
+                                      //             )));
                                     },
                                     child: Container(
                                       clipBehavior: Clip.hardEdge,

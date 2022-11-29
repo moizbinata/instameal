@@ -66,17 +66,25 @@ class CartRecipes extends StatelessWidget {
                                         )
                                       : InkWell(
                                           onTap: () {
-                                            Navigator.push(
+                                            Constants.navigatepush(
                                                 context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RecipeDetail(
-                                                          modelType:
-                                                              "collection",
-                                                          recipeModel:
-                                                              _.listCartRecipe2[
-                                                                  index],
-                                                        )));
+                                                RecipeDetail(
+                                                  modelType: "collection",
+                                                  recipeModel:
+                                                      _.listCartRecipe2[index],
+                                                ));
+
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             RecipeDetail(
+                                            //               modelType:
+                                            //                   "collection",
+                                            //               recipeModel:
+                                            //                   _.listCartRecipe2[
+                                            //                       index],
+                                            //             )));
                                           },
                                           child: Container(
                                             clipBehavior: Clip.hardEdge,
@@ -211,17 +219,25 @@ class CartRecipes extends StatelessWidget {
                                         )
                                       : InkWell(
                                           onTap: () {
-                                            Navigator.push(
+                                            Constants.navigatepush(
                                                 context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RecipeDetail(
-                                                          modelType:
-                                                              "collection",
-                                                          recipeModel:
-                                                              _.listCartRecipe1[
-                                                                  index],
-                                                        )));
+                                                RecipeDetail(
+                                                  modelType: "collection",
+                                                  recipeModel:
+                                                      _.listCartRecipe1[index],
+                                                ));
+
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             RecipeDetail(
+                                            //               modelType:
+                                            //                   "collection",
+                                            //               recipeModel:
+                                            //                   _.listCartRecipe1[
+                                            //                       index],
+                                            //             )));
                                           },
                                           child: Container(
                                             clipBehavior: Clip.hardEdge,

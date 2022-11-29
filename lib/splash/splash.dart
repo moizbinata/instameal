@@ -9,6 +9,7 @@ import 'package:instameal/views/intro/intro.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/home.dart';
 import '../components/components.dart';
+import '../utils/constants.dart';
 import '../utils/sizeconfig.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -49,19 +50,23 @@ class SplashScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     if (box.read('username') == null) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeIntro(),
-                        ),
-                      );
+                      Constants.navigatepushreplac(context, HomeIntro());
+
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomeIntro(),
+                      //   ),
+                      // );
                     } else {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BottomNavigator(),
-                        ),
-                      );
+                      Constants.navigatepushreplac(context, BottomNavigator());
+
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => BottomNavigator(),
+                      //   ),
+                      // );
                     }
                   },
                   child: customButton(

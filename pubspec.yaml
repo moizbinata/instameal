@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   webview_flutter: ^3.0.4
   url_launcher: ^6.1.7
+  page_transition: ^2.0.9
 
 dev_dependencies:
   flutter_test:

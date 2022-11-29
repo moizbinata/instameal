@@ -10,6 +10,7 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/subscription/subscription.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../components/components.dart';
 import '../controllers/universalController.dart';
@@ -154,10 +155,17 @@ class Login extends StatelessWidget {
                             space2(),
                             InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => TrialScreen()));
+                                  Constants.navigatepush(
+                                      context, TrialScreen());
+                                  // Navigator.push(
+                                  //   context,
+                                  //   PageTransition(
+                                  //     type: PageTransitionType.fade,
+                                  //     child: TrialScreen(),
+                                  //     isIos: true,
+                                  //     duration: Duration(milliseconds: 400),
+                                  //   ),
+                                  // );
                                 },
                                 child: customButton(
                                     context,
@@ -204,12 +212,14 @@ class Login extends StatelessWidget {
         box.write('membershipType', loginModel.data[0].membershipType);
         box.write('trialStatus', loginModel.data[0].trialStatus);
         box.write('paymentStatus', loginModel.data[0].paymentStatus);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BottomNavigator(),
-          ),
-        );
+        Constants.navigatepushreplac(context, BottomNavigator());
+
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => BottomNavigator(),
+        //   ),
+        // );
       } else {
         Fluttertoast.showToast(msg: "Incorrect Credentials");
       }

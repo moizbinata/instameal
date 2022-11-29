@@ -4,6 +4,7 @@ import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 
+import '../../utils/constants.dart';
 import '../login.dart';
 
 class HomeIntro extends StatefulWidget {
@@ -21,8 +22,9 @@ class Home_IntroState extends State<HomeIntro> {
       body: OnBoardingSlider(
         finishButtonText: 'Start your Free 14-Day Trial',
         onFinish: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login()));
+          Constants.navigatepushreplac(context, Login());
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (context) => Login()));
         },
         finishButtonColor: kDarkBlueColor,
         finishButtonTextStyle: Theme.of(context).textTheme.bodyText1.copyWith(
@@ -45,8 +47,9 @@ class Home_IntroState extends State<HomeIntro> {
           ),
         ),
         trailingFunction: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login()));
+          Constants.navigatepushreplac(context, Login());
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (context) => Login()));
         },
         controllerColor: kDarkBlueColor,
         totalPage: 3,

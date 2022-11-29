@@ -5,6 +5,7 @@ import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/recipe.dart';
 import '../../components/components.dart';
 import '../../components/customdrawer.dart';
+import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import 'package:instameal/components/customappbar.dart';
 
@@ -76,16 +77,23 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(
+                                        Constants.navigatepush(
                                             context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RecipeDetail(
-                                                      modelType: "breakfast",
-                                                      recipeModel:
-                                                          _.listofWeeklyBfast[
-                                                              index],
-                                                    )));
+                                            RecipeDetail(
+                                              modelType: "breakfast",
+                                              recipeModel:
+                                                  _.listofWeeklyBfast[index],
+                                            ));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             RecipeDetail(
+                                        //               modelType: "breakfast",
+                                        //               recipeModel:
+                                        //                   _.listofWeeklyBfast[
+                                        //                       index],
+                                        //             )));
                                       },
                                       child: recipeBox2(
                                         context,
@@ -129,16 +137,23 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                         onTap: () {
-                                          Navigator.push(
+                                          Constants.navigatepush(
                                               context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RecipeDetail(
-                                                        modelType: "breakfast",
-                                                        recipeModel:
-                                                            _.listofWeeklyLunch[
-                                                                index],
-                                                      )));
+                                              RecipeDetail(
+                                                modelType: "breakfast",
+                                                recipeModel:
+                                                    _.listofWeeklyLunch[index],
+                                              ));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             RecipeDetail(
+                                          //               modelType: "breakfast",
+                                          //               recipeModel:
+                                          //                   _.listofWeeklyLunch[
+                                          //                       index],
+                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,
@@ -181,16 +196,23 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                         onTap: () {
-                                          Navigator.push(
+                                          Constants.navigatepush(
                                               context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RecipeDetail(
-                                                        modelType: "breakfast",
-                                                        recipeModel:
-                                                            _.listofWeeklySnack[
-                                                                index],
-                                                      )));
+                                              RecipeDetail(
+                                                modelType: "breakfast",
+                                                recipeModel:
+                                                    _.listofWeeklySnack[index],
+                                              ));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             RecipeDetail(
+                                          //               modelType: "breakfast",
+                                          //               recipeModel:
+                                          //                   _.listofWeeklySnack[
+                                          //                       index],
+                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,
@@ -233,16 +255,23 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                         onTap: () {
-                                          Navigator.push(
+                                          Constants.navigatepush(
                                               context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RecipeDetail(
-                                                        modelType: "breakfast",
-                                                        recipeModel:
-                                                            _.listofWeeklyDinner[
-                                                                index],
-                                                      )));
+                                              RecipeDetail(
+                                                modelType: "breakfast",
+                                                recipeModel:
+                                                    _.listofWeeklyDinner[index],
+                                              ));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             RecipeDetail(
+                                          //               modelType: "breakfast",
+                                          //               recipeModel:
+                                          //                   _.listofWeeklyDinner[
+                                          //                       index],
+                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,

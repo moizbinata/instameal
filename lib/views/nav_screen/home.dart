@@ -94,12 +94,14 @@ class _HomeState extends State<Home> {
                                         await weeklyController.fetchWeekly(
                                             box.read('planid').toString(),
                                             (index == 0) ? week - 1 : week);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  WeekTable()),
-                                        );
+                                        Constants.navigatepush(
+                                            context, WeekTable());
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           WeekTable()),
+                                        // );
                                       },
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,
@@ -254,17 +256,25 @@ class _HomeState extends State<Home> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              Navigator.push(
+                                              Constants.navigatepush(
                                                 context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RecipeDetail(
-                                                    modelType: "collection",
-                                                    recipeModel:
-                                                        _.listofFav[index],
-                                                  ),
+                                                RecipeDetail(
+                                                  modelType: "collection",
+                                                  recipeModel:
+                                                      _.listofFav[index],
                                                 ),
                                               );
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         RecipeDetail(
+                                              //       modelType: "collection",
+                                              //       recipeModel:
+                                              //           _.listofFav[index],
+                                              //     ),
+                                              //   ),
+                                              // );
                                             },
                                             child: recipeBox2(
                                               context,
@@ -319,17 +329,25 @@ class _HomeState extends State<Home> {
                                           itemBuilder: (context, index) {
                                             return InkWell(
                                               onTap: () {
-                                                Navigator.push(
+                                                Constants.navigatepush(
                                                     context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            RecipeDetail(
-                                                              modelType:
-                                                                  "collection",
-                                                              recipeModel:
-                                                                  _.listofFestival[
-                                                                      index],
-                                                            )));
+                                                    RecipeDetail(
+                                                      modelType: "collection",
+                                                      recipeModel:
+                                                          _.listofFestival[
+                                                              index],
+                                                    ));
+                                                // Navigator.push(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //         builder: (context) =>
+                                                //             RecipeDetail(
+                                                //               modelType:
+                                                //                   "collection",
+                                                //               recipeModel:
+                                                //                   _.listofFestival[
+                                                //                       index],
+                                                //             )));
                                               },
                                               child: recipeBox2(
                                                 context,
@@ -473,17 +491,25 @@ class _HomeState extends State<Home> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              Navigator.push(
+                                              Constants.navigatepush(
                                                   context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          RecipeDetail(
-                                                            modelType:
-                                                                "collection",
-                                                            recipeModel:
-                                                                _.listofCollection[
-                                                                    index],
-                                                          )));
+                                                  RecipeDetail(
+                                                    modelType: "collection",
+                                                    recipeModel:
+                                                        _.listofCollection[
+                                                            index],
+                                                  ));
+                                              // Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             RecipeDetail(
+                                              //               modelType:
+                                              //                   "collection",
+                                              //               recipeModel:
+                                              //                   _.listofCollection[
+                                              //                       index],
+                                              //             )));
                                             },
                                             child: recipeBox2(
                                               context,
@@ -541,18 +567,26 @@ class _HomeState extends State<Home> {
                                           itemBuilder: (context, index) {
                                             return InkWell(
                                               onTap: () {
-                                                Navigator.push(
+                                                Constants.navigatepush(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RecipeDetail(
-                                                      modelType: "collection",
-                                                      recipeModel:
-                                                          _.listofDesserts[
-                                                              index],
-                                                    ),
+                                                  RecipeDetail(
+                                                    modelType: "collection",
+                                                    recipeModel:
+                                                        _.listofDesserts[index],
                                                   ),
                                                 );
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         RecipeDetail(
+                                                //       modelType: "collection",
+                                                //       recipeModel:
+                                                //           _.listofDesserts[
+                                                //               index],
+                                                //     ),
+                                                //   ),
+                                                // );
                                               },
                                               child: recipeBox2(
                                                 context,

@@ -57,15 +57,22 @@ class SearchCategories extends StatelessWidget {
                             Get.put(SearchCategController());
                         await searchCategContr.filterSCategRecipe(
                             _.listofSCateg[index].searchcategid);
-                        Navigator.push(
+                        Constants.navigatepush(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => SearchCategRecipe(
-                              scategId: _.listofSCateg[index].searchcategid,
-                              scategName: _.listofSCateg[index].searchcategname,
-                            ),
+                          SearchCategRecipe(
+                            scategId: _.listofSCateg[index].searchcategid,
+                            scategName: _.listofSCateg[index].searchcategname,
                           ),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => SearchCategRecipe(
+                        //       scategId: _.listofSCateg[index].searchcategid,
+                        //       scategName: _.listofSCateg[index].searchcategname,
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Container(
                         child: Column(

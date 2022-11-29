@@ -6,6 +6,7 @@ import 'package:instameal/views/details/changepassword.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 
 class Profile extends StatelessWidget {
@@ -147,10 +148,12 @@ class Profile extends StatelessWidget {
             ),
             subtitle: Text("Password"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChangePass()),
-              );
+              Constants.navigatepush(context, ChangePass());
+
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => ChangePass()),
+              // );
             },
           ),
         ],

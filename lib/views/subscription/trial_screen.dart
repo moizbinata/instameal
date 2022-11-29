@@ -138,6 +138,17 @@ class TrialScreen extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () async {
+                          // DateTime now = DateTime.now();
+                          // DateTime startDate =
+                          //     DateTime.utc(now.year, now.month, now.day);
+                          // DateTime endDate =
+                          //     DateTime.utc(now.year, now.month, now.day + 14);
+                          // int startTrial =
+                          //     startDate.millisecondsSinceEpoch ~/ 1000;
+                          // int endtrial = endDate.millisecondsSinceEpoch ~/ 1000;
+
+                          // print(startTrial);
+                          // print(endtrial);
                           await makePayment(context);
                         },
                         child: customButton(context, Colors.white,
@@ -191,7 +202,7 @@ class TrialScreen extends StatelessWidget {
       )
           .then((value) {
         print("moiz");
-        print(Stripe.instance.isApplePaySupported);
+        // print(Stripe.instance.isApplePaySupported);
       });
 
       ///now finally display payment sheeet
@@ -219,10 +230,14 @@ class TrialScreen extends StatelessWidget {
                           Text("Payment Successfull"),
                         ],
                       ),
+                      Text("")
                     ],
                   ),
                 ));
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("paid successfully")));
+        print("succesful");
+
+        // ScaffoldMessenger.of(context)
+        //     .showSnackBar(const SnackBar(content: Text("paid successfully")));
 
         paymentIntent = null;
       }).onError((error, stackTrace) {
@@ -246,7 +261,9 @@ class TrialScreen extends StatelessWidget {
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
-        'payment_method_types[]': 'card'
+        'payment_method_types[]': 'card',
+        // 'trial_end': '1669680000',
+        // 'trial_start': '1670889600'
       };
 
       var response = await http.post(

@@ -6,6 +6,7 @@ import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/login.dart';
 
 import '../components/components.dart';
+import '../utils/constants.dart';
 import '../utils/sizeconfig.dart';
 import '../views/nav_screen/home.dart';
 
@@ -39,22 +40,20 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
 //toLoginBack not used
   toLoginBack() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login()));
+    Constants.navigatepushreplac(context, Login());
+
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => Login()));
   }
 
   toHome() {
     // _selectTab('Home', 0);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Home()));
+    Constants.navigatepushreplac(context, Home());
+
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   Future<bool> onWilPop(home) async {

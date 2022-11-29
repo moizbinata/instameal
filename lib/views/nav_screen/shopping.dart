@@ -11,6 +11,7 @@ import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../controllers/universalController.dart';
 import '../../controllers/weeklyController.dart';
+import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 
 class Shopping extends StatelessWidget {
@@ -79,12 +80,17 @@ class Shopping extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.push(
+              Constants.navigatepush(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => CartRecipes(
-                            cartType: "collection",
-                          )));
+                  CartRecipes(
+                    cartType: "collection",
+                  ));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => CartRecipes(
+              //               cartType: "collection",
+              //             )));
             },
             tileColor: Colors.white,
             leading: iconBox(

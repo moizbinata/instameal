@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:instameal/views/nav_screen/home.dart';
 
+import 'constants.dart';
+
 class CustomTheme {
   static double borderRadius = 20;
 
@@ -23,8 +25,10 @@ class CustomTheme {
         color: primaryColor,
       ));
   logout(context) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Home()));
+    Constants.navigatepushreplac(context, Home());
+
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => Home()));
   }
   // _______________________
 

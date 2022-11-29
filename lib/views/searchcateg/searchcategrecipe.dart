@@ -97,15 +97,22 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                           ),
                           itemBuilder: (context, index) => InkWell(
                             onTap: () {
-                              Navigator.push(
+                              Constants.navigatepush(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => RecipeDetail(
-                                    modelType: "breakfast",
-                                    recipeModel: _.filteredSCRecipe[index],
-                                  ),
+                                RecipeDetail(
+                                  modelType: "breakfast",
+                                  recipeModel: _.filteredSCRecipe[index],
                                 ),
                               );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => RecipeDetail(
+                              //       modelType: "breakfast",
+                              //       recipeModel: _.filteredSCRecipe[index],
+                              //     ),
+                              //   ),
+                              // );
                             },
                             child: Container(
                               child: Column(
