@@ -8,6 +8,18 @@ class Constants {
   // static final baseImageUrl = "http://192.168.18.168:3000/assets/";
   static final baseUrl = "https://paaocenter.com/";
   static final baseImageUrl = "https://paaocenter.com/assets/";
+  static final colorList = [
+    Color(0xff9fd6e5),
+    Color(0xfffdd47d),
+    Color(0xff8b82d0),
+    Color(0xffde9b12),
+  ];
+  static final categList = [
+    "Breakfast",
+    "Lunch",
+    "Snacks",
+    "Dinner",
+  ];
   static Future navigatepush(context, screen) {
     return Navigator.push(
       context,

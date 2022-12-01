@@ -10,14 +10,14 @@ import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/theme.dart';
 
-class ShopItems extends StatefulWidget {
-  ShopItems({Key key, this.itemList}) : super(key: key);
+class ShopItems2 extends StatefulWidget {
+  ShopItems2({Key key, this.itemList}) : super(key: key);
   final itemList;
   @override
-  State<ShopItems> createState() => _ShopItemsState();
+  State<ShopItems2> createState() => _ShopItems2State();
 }
 
-class _ShopItemsState extends State<ShopItems> {
+class _ShopItems2State extends State<ShopItems2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String selectedItem = "";
   String martUrl = "";
@@ -57,7 +57,7 @@ class _ShopItemsState extends State<ShopItems> {
           child: Column(
             children: [
               DefaultTabController(
-                length: widget.itemList.items.length,
+                length: widget.itemList.length,
                 child: Column(
                   children: [
                     Container(
@@ -67,7 +67,7 @@ class _ShopItemsState extends State<ShopItems> {
                         isScrollable: true,
                         indicatorColor: CustomTheme.bgColor,
                         tabs: List.generate(
-                          widget.itemList.items.length,
+                          widget.itemList.length,
                           (index) {
                             return Column(
                               children: [

@@ -197,7 +197,7 @@ class RecipeDetail extends StatelessWidget {
                                 Constants.navigatepush(
                                     context,
                                     ShopItems(
-                                      itemList: recipeModel.items,
+                                      itemList: recipeModel,
                                     ));
                                 // Navigator.push(
                                 //     context,
