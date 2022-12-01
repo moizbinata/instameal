@@ -266,16 +266,6 @@ class _WeekTableState extends State<WeekTable> {
                                                 recipeModel:
                                                     _.listofWeeklyDinner[index],
                                               ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklyDinner[
-                                          //                       index],
-                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,

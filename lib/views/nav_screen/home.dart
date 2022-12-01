@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
@@ -89,19 +87,12 @@ class _HomeState extends State<Home> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: () async {
-                                        // Get.to(() => RecipeDetail());
                                         int week = _.currentRxWeek.value;
                                         await weeklyController.fetchWeekly(
                                             box.read('planid').toString(),
                                             (index == 0) ? week - 1 : week);
                                         Constants.navigatepush(
                                             context, WeekTable());
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //       builder: (context) =>
-                                        //           WeekTable()),
-                                        // );
                                       },
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,

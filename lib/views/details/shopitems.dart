@@ -37,6 +37,7 @@ class _ShopItemsState extends State<ShopItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
       key: _scaffoldKey,
       drawer: drawer(context),

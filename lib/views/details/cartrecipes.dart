@@ -21,6 +21,7 @@ class CartRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: floatButton(context),
       key: _scaffoldKey,
       drawer: drawer(context),
       appBar: customAppBar(action: () {

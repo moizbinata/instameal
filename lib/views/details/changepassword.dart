@@ -22,6 +22,7 @@ class _ChangePassState extends State<ChangePass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
       body: SingleChildScrollView(
         child: Container(
@@ -31,6 +32,7 @@ class _ChangePassState extends State<ChangePass> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // TextButton(onPressed: () => sendOTP(), child: Text("sdf")),
               Image.asset(
                 "assets/mealimg/forgot.webp",
                 width: SizeConfig.screenWidth * 0.5,

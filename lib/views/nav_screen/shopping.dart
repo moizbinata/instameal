@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/views/details/cartrecipes.dart';
+import 'package:instameal/views/details/weekingredients.dart';
 
 import '../../components/components.dart';
 import '../../components/customDialogue.dart';
@@ -13,6 +14,7 @@ import '../../controllers/universalController.dart';
 import '../../controllers/weeklyController.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
+import '../details/weektable.dart';
 
 class Shopping extends StatelessWidget {
   Shopping({Key key}) : super(key: key);
@@ -105,6 +107,13 @@ class Shopping extends StatelessWidget {
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
           ListTile(
+            onTap: () async {
+              final weeklyController = Get.put(WeeklyController());
+              int week = weeklyController.currentRxWeek.value;
+              await weeklyController.fetchWeekly(
+                  box.read('planid').toString(), week);
+              Constants.navigatepush(context, WeeklyIngred());
+            },
             tileColor: Colors.white,
             leading: iconBox(
               Color(0xfff6e3bc),

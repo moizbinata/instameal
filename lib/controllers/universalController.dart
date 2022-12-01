@@ -17,7 +17,6 @@ class UniversalController extends GetxController {
   RxString plan = "".obs;
   RxInt planid = 0.obs;
   GetStorage box = GetStorage();
-
   @override
   void onInit() {
     // TODO: implement onInit

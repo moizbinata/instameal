@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/ingredientlist.dart';
 import 'package:instameal/views/details/recipe.dart';
+import 'package:instameal/views/details/shopitems.dart';
 import '../../components/components.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/constants.dart';
@@ -52,21 +54,46 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Divider(),
+
               //Breakfast
               GetBuilder<WeeklyController>(
                 init: WeeklyController(),
                 builder: (_) {
                   return (_.listofWeeklyBfast.isEmpty)
-                      ? Text("No Ingredients added")
+                      ? Text("No recipe added")
                       : Container(
                           // color: Colors.white,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               space0(),
-                              Text(
-                                "   For ${_.listofWeeklyBfast.first.categName}",
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "   For ${_.listofWeeklyBfast.first.categName}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Constants.navigatepush(
+                                      //     context,
+                                      //     IngredientList(
+                                      //       recipeModel: recipe,
+                                      //     ));
+                                    },
+                                    child: Text("Order all",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.underline)),
+                                  )
+                                ],
                               ),
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
@@ -76,33 +103,9 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
-                                      onTap: () {
-                                        Constants.navigatepush(
-                                            context,
-                                            RecipeDetail(
-                                              modelType: "breakfast",
-                                              recipeModel:
-                                                  _.listofWeeklyBfast[index],
-                                            ));
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             RecipeDetail(
-                                        //               modelType: "breakfast",
-                                        //               recipeModel:
-                                        //                   _.listofWeeklyBfast[
-                                        //                       index],
-                                        //             )));
-                                      },
-                                      child: recipeBox2(
-                                        context,
-                                        _.listofWeeklyBfast[index].imagesUrl,
-                                        _.listofWeeklyBfast[index].day,
-                                        _.listofWeeklyBfast[index].recipeName,
-                                        _.listofWeeklyBfast[index].dayName,
-                                        CustomTheme.bgColor,
-                                      ),
+                                      onTap: () {},
+                                      child: ingredientList(
+                                          _.listofWeeklyBfast[index]),
                                     );
                                   },
                                 ),
@@ -112,21 +115,46 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                         );
                 },
               ),
+              Divider(),
+              Divider(),
               //Lunch
               GetBuilder<WeeklyController>(
                 init: WeeklyController(),
                 builder: (_) {
                   return (_.listofWeeklyLunch.isEmpty)
-                      ? Text("No Ingredients added")
+                      ? Text("No recipe added")
                       : Container(
                           // color: Colors.white,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               space0(),
-                              Text(
-                                "   For ${_.listofWeeklyLunch.first.categName}",
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "   For ${_.listofWeeklyLunch.first.categName}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Constants.navigatepush(
+                                      //     context,
+                                      //     IngredientList(
+                                      //       recipeModel: recipe,
+                                      //     ));
+                                    },
+                                    child: Text("Order all",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.underline)),
+                                  )
+                                ],
                               ),
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
@@ -136,33 +164,10 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
-                                        onTap: () {
-                                          Constants.navigatepush(
-                                              context,
-                                              RecipeDetail(
-                                                modelType: "breakfast",
-                                                recipeModel:
-                                                    _.listofWeeklyLunch[index],
-                                              ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklyLunch[
-                                          //                       index],
-                                          //             )));
-                                        },
-                                        child: recipeBox2(
-                                          context,
-                                          _.listofWeeklyLunch[index].imagesUrl,
-                                          _.listofWeeklyLunch[index].day,
-                                          _.listofWeeklyLunch[index].recipeName,
-                                          _.listofWeeklyLunch[index].dayName,
-                                          CustomTheme.bgColor,
-                                        ));
+                                      onTap: () {},
+                                      child: ingredientList(
+                                          _.listofWeeklyLunch[index]),
+                                    );
                                   },
                                 ),
                               ),
@@ -171,21 +176,46 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                         );
                 },
               ),
+              Divider(),
+              Divider(),
               //Snack
               GetBuilder<WeeklyController>(
                 init: WeeklyController(),
                 builder: (_) {
                   return (_.listofWeeklySnack.isEmpty)
-                      ? Text("No Ingredients added")
+                      ? Text("No recipe added")
                       : Container(
                           // color: Colors.white,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               space0(),
-                              Text(
-                                "   For ${_.listofWeeklySnack.first.categName}",
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "   For ${_.listofWeeklySnack.first.categName}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Constants.navigatepush(
+                                      //     context,
+                                      //     IngredientList(
+                                      //       recipeModel: recipe,
+                                      //     ));
+                                    },
+                                    child: Text("Order all",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.underline)),
+                                  )
+                                ],
                               ),
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
@@ -195,33 +225,10 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
-                                        onTap: () {
-                                          Constants.navigatepush(
-                                              context,
-                                              RecipeDetail(
-                                                modelType: "breakfast",
-                                                recipeModel:
-                                                    _.listofWeeklySnack[index],
-                                              ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklySnack[
-                                          //                       index],
-                                          //             )));
-                                        },
-                                        child: recipeBox2(
-                                          context,
-                                          _.listofWeeklySnack[index].imagesUrl,
-                                          _.listofWeeklySnack[index].day,
-                                          _.listofWeeklySnack[index].recipeName,
-                                          _.listofWeeklySnack[index].dayName,
-                                          CustomTheme.bgColor,
-                                        ));
+                                      onTap: () {},
+                                      child: ingredientList(
+                                          _.listofWeeklySnack[index]),
+                                    );
                                   },
                                 ),
                               ),
@@ -230,21 +237,46 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                         );
                 },
               ),
+              Divider(),
+              Divider(),
               //Dinner
               GetBuilder<WeeklyController>(
                 init: WeeklyController(),
                 builder: (_) {
                   return (_.listofWeeklyDinner.isEmpty)
-                      ? Text("No Ingredients added")
+                      ? Text("No recipe added")
                       : Container(
                           // color: Colors.white,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               space0(),
-                              Text(
-                                "   For ${_.listofWeeklyDinner.first.categName}",
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "   For ${_.listofWeeklyDinner.first.categName}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Constants.navigatepush(
+                                      //     context,
+                                      //     ShopItems(
+                                      //       itemList: recipeModel,
+                                      //     ));
+                                    },
+                                    child: Text("Order all",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.underline)),
+                                  )
+                                ],
                               ),
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
@@ -254,34 +286,10 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
-                                        onTap: () {
-                                          Constants.navigatepush(
-                                              context,
-                                              RecipeDetail(
-                                                modelType: "breakfast",
-                                                recipeModel:
-                                                    _.listofWeeklyDinner[index],
-                                              ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklyDinner[
-                                          //                       index],
-                                          //             )));
-                                        },
-                                        child: recipeBox2(
-                                          context,
-                                          _.listofWeeklyDinner[index].imagesUrl,
-                                          _.listofWeeklyDinner[index].day,
-                                          _.listofWeeklyDinner[index]
-                                              .recipeName,
-                                          _.listofWeeklyDinner[index].dayName,
-                                          CustomTheme.bgColor,
-                                        ));
+                                      onTap: () {},
+                                      child: ingredientList(
+                                          _.listofWeeklyDinner[index]),
+                                    );
                                   },
                                 ),
                               ),
@@ -290,10 +298,65 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                         );
                 },
               ),
+              Divider(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  ingredientList(recipe) {
+    return Container(
+        margin: EdgeInsets.all(SizeConfig.heightMultiplier),
+        height: SizeConfig.heightMultiplier * 20,
+        width: SizeConfig.heightMultiplier * 20,
+        child: ListView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(recipe.dayName.toString(),
+                    style: Theme.of(context).textTheme.bodySmall),
+                TextButton(
+                  onPressed: () {
+                    Constants.navigatepush(
+                        context,
+                        IngredientList(
+                          recipeModel: recipe,
+                        ));
+                  },
+                  child: Text("Show all",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          .copyWith(decoration: TextDecoration.underline)),
+                )
+              ],
+            ),
+            Text(
+              recipe.recipeName,
+              maxLines: 2,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyMedium.copyWith(
+                  decoration: TextDecoration.underline,
+                  color: CustomTheme.bgColor),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                recipe.items.length,
+                (index) {
+                  return Text(
+                    recipe.items[index].toString().capitalizeFirst,
+                    style: TextStyle(color: Colors.black),
+                  );
+                },
+              ),
+            ),
+          ],
+        ));
   }
 }

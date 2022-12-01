@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 
 import '../utils/constants.dart';
@@ -102,14 +103,16 @@ Widget customButton(context, color, bgColor, label) {
   );
 }
 
-Widget customField(textController, labelText, {icon, bgcolor, iconColor}) {
+Widget customField(textController, labelText,
+    {icon, bgcolor, iconColor, eye = false}) {
   return TextFormField(
     keyboardType: TextInputType.text,
     autofocus: false,
     textAlign: TextAlign.start,
     textInputAction: TextInputAction.done,
-    obscureText: (labelText == "Password") ? true : false,
+    obscureText: (eye) ? true : false,
     controller: textController,
+    validator: RequiredValidator(errorText: '$labelText required'),
     style: TextStyle(
         color: Colors.black87,
         fontSize: SizeConfig.textMultiplier * 1.9,

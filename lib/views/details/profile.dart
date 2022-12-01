@@ -19,13 +19,15 @@ class Profile extends StatelessWidget {
       floatingActionButton: floatButton(context),
       key: _scaffoldKey,
       drawer: drawer(context),
-      appBar: customAppBar(action: () {
-        if (_scaffoldKey.currentState.isDrawerOpen) {
-          _scaffoldKey.currentState.openEndDrawer();
-        } else {
-          _scaffoldKey.currentState.openDrawer();
-        }
-      }),
+      appBar: customAppBar(
+        action: () {
+          if (_scaffoldKey.currentState.isDrawerOpen) {
+            _scaffoldKey.currentState.openEndDrawer();
+          } else {
+            _scaffoldKey.currentState.openDrawer();
+          }
+        },
+      ),
       backgroundColor: CustomTheme.bgColor2,
       body: ListView(
         children: [

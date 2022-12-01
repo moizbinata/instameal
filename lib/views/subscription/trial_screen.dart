@@ -2,182 +2,202 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
+import '../../utils/constants.dart';
+import '../../utils/network.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
 
-class TrialScreen extends StatelessWidget {
-  TrialScreen({Key key}) : super(key: key);
-  Map<String, dynamic> paymentIntent;
+import '../login.dart';
 
+class TrialScreen extends StatefulWidget {
+  TrialScreen({Key key}) : super(key: key);
+
+  @override
+  State<TrialScreen> createState() => _TrialScreenState();
+}
+
+class _TrialScreenState extends State<TrialScreen> {
+  Map<String, dynamic> paymentIntent;
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     final buttonController = Get.put(ButtonController());
 
     return Scaffold(
         backgroundColor: CustomTheme.bgColor2,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const FaIcon(
-              FontAwesomeIcons.chevronLeft,
-              color: CustomTheme.bgColor,
-            ),
-          ),
-        ),
         body: SingleChildScrollView(
-          child: Container(
-              height: SizeConfig.screenHeight,
-              padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Pay 0 USD today - 14 Day free trial.",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(color: CustomTheme.bgColor),
-                    ),
-                    bulletPoints(context,
-                        label: "Every day solutions for healthy, home cooked."),
-                    bulletPoints(
-                      context,
-                      label:
-                          "Unlimited switching between all of our meal plans.",
-                    ),
-                    bulletPoints(context,
-                        label: "Upto 50% savings per saving vs Blue Apron."),
-                    bulletPoints(
-                      context,
-                      label: "Optionally send your shopping list to instacart.",
-                    ),
-                    Obx((() => ListTile(
-                          onTap: (() =>
-                              buttonController.selectedPlan.value = 0),
-                          tileColor: (buttonController.selectedPlan == 0)
-                              ? CustomTheme.bgColor
-                              : CustomTheme.grey,
-                          shape: customradius(),
-                          leading: const FaIcon(
-                            FontAwesomeIcons.bookmark,
+          child: SafeArea(
+            child: Container(
+                height: SizeConfig.screenHeight,
+                padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Constants.navigatepushreplac(context, Login());
+                            },
+                            icon: const FaIcon(
+                              FontAwesomeIcons.rightToBracket,
+                              color: CustomTheme.bgColor,
+                            ),
                           ),
-                          title: Text("19.99 USD",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                    color: (buttonController.selectedPlan == 0)
-                                        ? Colors.white
-                                        : Colors.black,
-                                  )),
-                          subtitle: Text("Every Month",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .copyWith(
-                                    color: (buttonController.selectedPlan == 0)
-                                        ? Colors.white
-                                        : Colors.black,
-                                  )),
-                          trailing: Icon(
-                            Icons.check_circle_outlined,
-                            color: (buttonController.selectedPlan == 0)
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ))),
-                    Obx(
-                      (() => ListTile(
+                        ],
+                      ),
+                      Text(
+                        "Enjoy Instameal for 14 day extra for free",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(color: CustomTheme.bgColor),
+                      ),
+                      bulletPoints(context,
+                          label:
+                              "Every day solutions for healthy, home cooked."),
+                      bulletPoints(
+                        context,
+                        label:
+                            "Unlimited switching between all of our meal plans.",
+                      ),
+                      bulletPoints(context,
+                          label: "Upto 50% savings per saving vs Blue Apron."),
+                      bulletPoints(
+                        context,
+                        label:
+                            "Optionally send your shopping list to instacart.",
+                      ),
+                      Obx((() => ListTile(
                             onTap: (() =>
-                                buttonController.selectedPlan.value = 1),
-                            tileColor: (buttonController.selectedPlan == 1)
+                                buttonController.selectedPlan.value = 0),
+                            tileColor: (buttonController.selectedPlan == 0)
                                 ? CustomTheme.bgColor
                                 : CustomTheme.grey,
                             shape: customradius(),
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("199 USD",
+                            title: Text("19.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
                                     .copyWith(
                                       color:
-                                          (buttonController.selectedPlan == 1)
+                                          (buttonController.selectedPlan == 0)
                                               ? Colors.white
                                               : Colors.black,
                                     )),
-                            subtitle: Text("Every 12 Month",
+                            subtitle: Text("Every Month",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     .copyWith(
                                       color:
-                                          (buttonController.selectedPlan == 1)
+                                          (buttonController.selectedPlan == 0)
                                               ? Colors.white
                                               : Colors.black,
                                     )),
                             trailing: Icon(
                               Icons.check_circle_outlined,
-                              color: (buttonController.selectedPlan == 1)
+                              color: (buttonController.selectedPlan == 0)
                                   ? Colors.white
                                   : Colors.black,
                             ),
-                          )),
-                    ),
-                    InkWell(
-                        onTap: () async {
-                          // DateTime now = DateTime.now();
-                          // DateTime startDate =
-                          //     DateTime.utc(now.year, now.month, now.day);
-                          // DateTime endDate =
-                          //     DateTime.utc(now.year, now.month, now.day + 14);
-                          // int startTrial =
-                          //     startDate.millisecondsSinceEpoch ~/ 1000;
-                          // int endtrial = endDate.millisecondsSinceEpoch ~/ 1000;
-
-                          // print(startTrial);
-                          // print(endtrial);
-                          await makePayment(context);
-                        },
-                        child: customButton(context, Colors.white,
-                            CustomTheme.bgColor, "Continue to Meal Plan")),
-                    Text(
-                      "Your iTunes account will be charged within 24 hours of the end of your trial period ending and within 24 hours of the end of the current term for each renewal, cancellation must happen at least 24 hours before the end of the period. Subscriptions may be managed and auto-renewal turned off by going to your iTunes Account Settings after purchase. Any unused portion of a free trial period will be forfeited if you purchase a subscription prior to that trial period ending",
-                      style: Theme.of(context).textTheme.bodySmall.copyWith(
-                            color: CustomTheme.bgColor,
-                          ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        "By continuing, I agree to Terms and Conditions",
-                        style: Theme.of(context).textTheme.bodySmall.copyWith(
-                            color: CustomTheme.primaryColor,
-                            fontWeight: FontWeight.bold),
+                          ))),
+                      Obx(
+                        (() => ListTile(
+                              onTap: (() =>
+                                  buttonController.selectedPlan.value = 1),
+                              tileColor: (buttonController.selectedPlan == 1)
+                                  ? CustomTheme.bgColor
+                                  : CustomTheme.grey,
+                              shape: customradius(),
+                              leading: const FaIcon(
+                                FontAwesomeIcons.bookmark,
+                              ),
+                              title: Text("199 USD",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .copyWith(
+                                        color:
+                                            (buttonController.selectedPlan == 1)
+                                                ? Colors.white
+                                                : Colors.black,
+                                      )),
+                              subtitle: Text("Every 12 Month",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(
+                                        color:
+                                            (buttonController.selectedPlan == 1)
+                                                ? Colors.white
+                                                : Colors.black,
+                                      )),
+                              trailing: Icon(
+                                Icons.check_circle_outlined,
+                                color: (buttonController.selectedPlan == 1)
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            )),
                       ),
-                    ),
-                    SizedBox(
-                      height: 0,
-                    ),
-                    SizedBox(
-                      height: 0,
-                    ),
-                    SizedBox(
-                      height: 0,
-                    ),
-                  ])),
+                      InkWell(
+                          onTap: () async {
+                            // DateTime now = DateTime.now();
+                            // DateTime startDate =
+                            //     DateTime.utc(now.year, now.month, now.day);
+                            // DateTime endDate =
+                            //     DateTime.utc(now.year, now.month, now.day + 14);
+                            // int startTrial =
+                            //     startDate.millisecondsSinceEpoch ~/ 1000;
+                            // int endtrial = endDate.millisecondsSinceEpoch ~/ 1000;
+
+                            // print(startTrial);
+                            // print(endtrial);
+                            // updatePayment(context);
+                            await makePayment(context);
+                          },
+                          child: customButton(context, Colors.white,
+                              CustomTheme.bgColor, "Continue to Meal Plan")),
+                      Text(
+                        "Your iTunes account will be charged within 24 hours of the end of your trial period ending and within 24 hours of the end of the current term for each renewal, cancellation must happen at least 24 hours before the end of the period. Subscriptions may be managed and auto-renewal turned off by going to your iTunes Account Settings after purchase. Any unused portion of a free trial period will be forfeited if you purchase a subscription prior to that trial period ending",
+                        style: Theme.of(context).textTheme.bodySmall.copyWith(
+                              color: CustomTheme.bgColor,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "By continuing, I agree to Terms and Conditions",
+                          style: Theme.of(context).textTheme.bodySmall.copyWith(
+                              color: CustomTheme.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0,
+                      ),
+                      SizedBox(
+                        height: 0,
+                      ),
+                      SizedBox(
+                        height: 0,
+                      ),
+                    ])),
+          ),
         ));
   }
 
@@ -230,15 +250,17 @@ class TrialScreen extends StatelessWidget {
                           Text("Payment Successfull"),
                         ],
                       ),
-                      Text("")
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Enjoy",
+                              style: Theme.of(context).textTheme.headline6))
                     ],
                   ),
                 ));
         print("succesful");
-
-        // ScaffoldMessenger.of(context)
-        //     .showSnackBar(const SnackBar(content: Text("paid successfully")));
-
+        updatePayment(context);
         paymentIntent = null;
       }).onError((error, stackTrace) {
         print('Error is:--->$error $stackTrace');
@@ -287,5 +309,48 @@ class TrialScreen extends StatelessWidget {
   calculateAmount(String amount) {
     final calculatedAmout = (int.parse(amount)) * 100;
     return calculatedAmout.toString();
+  }
+
+  updatePayment(context) async {
+    print("user id");
+    print(box.read('userid').toString());
+    DateTime now = DateTime.now();
+    DateTime trialDate = DateTime.now().add(Duration(days: 14));
+
+    final buttonController = Get.put(ButtonController());
+
+    String url;
+    // var payload;
+    var response;
+    if (buttonController.selectedPlan.value == 0) {
+      DateTime subend = DateTime.now().add(Duration(days: 30));
+
+      url =
+          "${Constants.baseUrl}payment/SubStart/${now.year}-${now.month}-${now.day}/Subend/${subend.year}-${subend.month}-${subend.day}/Membership/Monthly/Trial/${trialDate.year}-${trialDate.month}-${trialDate.day}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+      response = await Network.put(url: url).catchError(
+        () {
+          Fluttertoast.showToast(msg: "Server is not responding");
+        },
+      );
+    } else if (buttonController.selectedPlan.value == 1) {
+      DateTime subend = DateTime.now().add(Duration(days: 365));
+
+      url =
+          "${Constants.baseUrl}payment/SubStart/${now.year}-${now.month}-${now.day}/Subend/${subend.year}-${subend.month}-${subend.day}/Membership/Yearly/Trial/${trialDate.year}-${trialDate.month}-${trialDate.day}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+
+      response = await Network.put(url: url).catchError(
+        () {
+          Fluttertoast.showToast(msg: "Server is not responding");
+        },
+      );
+    }
+
+    print(response);
+    if (response != null && response.contains("true")) {
+      Fluttertoast.showToast(msg: "Successfully Subscribed");
+      Constants.navigatepushreplac(context, Login());
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong");
+    }
   }
 }
