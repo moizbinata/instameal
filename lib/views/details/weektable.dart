@@ -88,16 +88,6 @@ class _WeekTableState extends State<WeekTable> {
                                               recipeModel:
                                                   _.listofWeeklyBfast[index],
                                             ));
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             RecipeDetail(
-                                        //               modelType: "breakfast",
-                                        //               recipeModel:
-                                        //                   _.listofWeeklyBfast[
-                                        //                       index],
-                                        //             )));
                                       },
                                       child: recipeBox2(
                                         context,
@@ -142,22 +132,13 @@ class _WeekTableState extends State<WeekTable> {
                                     return InkWell(
                                         onTap: () {
                                           Constants.navigatepush(
-                                              context,
-                                              RecipeDetail(
-                                                modelType: "breakfast",
-                                                recipeModel:
-                                                    _.listofWeeklyLunch[index],
-                                              ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklyLunch[
-                                          //                       index],
-                                          //             )));
+                                            context,
+                                            RecipeDetail(
+                                              modelType: "breakfast",
+                                              recipeModel:
+                                                  _.listofWeeklyLunch[index],
+                                            ),
+                                          );
                                         },
                                         child: recipeBox2(
                                           context,
@@ -207,16 +188,6 @@ class _WeekTableState extends State<WeekTable> {
                                                 recipeModel:
                                                     _.listofWeeklySnack[index],
                                               ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType: "breakfast",
-                                          //               recipeModel:
-                                          //                   _.listofWeeklySnack[
-                                          //                       index],
-                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,

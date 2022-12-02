@@ -66,15 +66,22 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                   ),
                   itemBuilder: (context, index) => InkWell(
                         onTap: () {
+                          int lengthh = 0;
+                          weeklyController.listofWeeklyBfast.forEach((element) {
+                            lengthh += element.items.length;
+                          });
+                          print(lengthh);
                           Constants.navigatepush(
                               context,
                               ShopItems2(
+                                itemLength: lengthh,
                                 itemList: weeklyController.listofWeeklyBfast,
                               ));
                         },
                         child: Container(
                           margin: EdgeInsets.all(SizeConfig.heightMultiplier),
-                          padding: EdgeInsets.all(SizeConfig.heightMultiplier),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.heightMultiplier * 1.5),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
@@ -106,7 +113,7 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
                                   Constants.categList[index].toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyMedium
+                                      .headline6
                                       .copyWith(
                                         color: CustomTheme.bgColor,
                                       ),

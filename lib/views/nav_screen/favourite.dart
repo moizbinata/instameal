@@ -8,6 +8,7 @@ import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../controllers/universalController.dart';
+import '../../controllers/weeklyController.dart';
 import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
@@ -21,162 +22,403 @@ class Favourite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: drawer(context),
-      appBar: customAppBar(action: () {
-        if (_scaffoldKey.currentState.isDrawerOpen) {
-          _scaffoldKey.currentState.openEndDrawer();
-        } else {
-          _scaffoldKey.currentState.openDrawer();
-        }
-      }),
-      backgroundColor: CustomTheme.bgColor2,
-      body: ListView(
-        children: [
+        key: _scaffoldKey,
+        drawer: drawer(context),
+        appBar: customAppBar(action: () {
+          if (_scaffoldKey.currentState.isDrawerOpen) {
+            _scaffoldKey.currentState.openEndDrawer();
+          } else {
+            _scaffoldKey.currentState.openDrawer();
+          }
+        }),
+        backgroundColor: CustomTheme.bgColor2,
+        body: ListView(children: [
           Text(
-            "   Top trending meals",
+            "   Favourite meals",
             style: Theme.of(context)
                 .textTheme
                 .headline6
                 .copyWith(color: CustomTheme.bgColor),
           ),
           space0(),
-          SizedBox(
-            height: SizeConfig.screenHeight,
-            child: GetBuilder<UniversalController>(
-                init: UniversalController(),
-                builder: (_) {
-                  return (_.listofFav.length == 0)
-                      ? Center(
-                          child: Image.asset(
-                          "assets/images/norecord.png",
-                          width: SizeConfig.screenWidth * 0.7,
-                        ))
-                      : ListView.builder(
-                          itemCount: _.listofFav.length + 1,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            print(_.listofFav.length);
+          DefaultTabController(
+            length: 2,
+            child: Column(
+              children: [
+                Container(
+                    height: SizeConfig.heightMultiplier * 5,
+                    width: SizeConfig.screenWidth,
+                    child: Center(
+                      child: TabBar(
+                          isScrollable: true,
+                          indicatorColor: CustomTheme.bgColor,
+                          tabs: [
+                            Text("Weekly Favourites",
+                                style: Theme.of(context).textTheme.bodyLarge),
+                            Text("Other Favourites",
+                                style: Theme.of(context).textTheme.bodyLarge),
+                          ]),
+                    )),
 
-                            return (index == _.listofFav.length)
-                                ? SizedBox(
-                                    height: SizeConfig.heightMultiplier * 50,
-                                  )
-                                : InkWell(
-                                    onTap: () {
-                                      Constants.navigatepush(
-                                          context,
-                                          RecipeDetail(
-                                            modelType: "collection",
-                                            recipeModel: _.listofFav[index],
-                                          ));
+                space0(),
+                Container(
+                  height: SizeConfig.screenHeight,
+                  child: TabBarView(children: [
+                    buildFavListWeekly(),
+                    buildFavListOther(),
+                  ]),
+                )
 
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             RecipeDetail(
-                                      //               modelType: "collection",
-                                      //               recipeModel:
-                                      //                   _.listofFav[index],
-                                      //             )));
-                                    },
-                                    child: Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      margin: EdgeInsets.all(
-                                          SizeConfig.heightMultiplier),
-                                      decoration: BoxDecoration(
-                                        color: CustomTheme.bgColor,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: CustomTheme.grey
-                                                .withOpacity(0.5),
-                                            blurRadius: 6,
-                                            spreadRadius: 6,
-                                            offset: Offset(0, 0),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Row(
+                // SizedBox(
+                //   height: SizeConfig.screenHeight,
+                //   child: GetX<WeeklyController>(
+                //       init: WeeklyController(),
+                //       builder: (_) {
+                //         return (_.listCartRecipe1.length == 0)
+                //             ? Center(
+                //                 child: Image.asset(
+                //                 "assets/images/norecord.png",
+                //                 width: SizeConfig.screenWidth * 0.7,
+                //               ))
+                //             : ListView.builder(
+                //                 itemCount: _.listCartRecipe1.length + 1,
+                //                 physics: AlwaysScrollableScrollPhysics(),
+                //                 itemBuilder: (context, index) {
+                //                   return (index == _.listCartRecipe1.length)
+                //                       ? SizedBox(
+                //                           height: SizeConfig.heightMultiplier * 50,
+                //                         )
+                //                       : InkWell(
+                //                           onTap: () {
+                //                             Constants.navigatepush(
+                //                                 context,
+                //                                 RecipeDetail(
+                //                                   modelType: "collection",
+                //                                   recipeModel:
+                //                                       _.listCartRecipe1[index],
+                //                                 ));
+                //                           },
+                //                           child: Container(
+                //                             clipBehavior: Clip.hardEdge,
+                //                             margin: EdgeInsets.all(
+                //                                 SizeConfig.heightMultiplier),
+                //                             decoration: BoxDecoration(
+                //                               color: CustomTheme.bgColor,
+                //                               borderRadius: BorderRadius.circular(20),
+                //                               boxShadow: [
+                //                                 BoxShadow(
+                //                                   color: CustomTheme.grey
+                //                                       .withOpacity(0.5),
+                //                                   blurRadius: 6,
+                //                                   spreadRadius: 6,
+                //                                   offset: Offset(0, 0),
+                //                                 ),
+                //                               ],
+                //                             ),
+                //                             child: Row(
+                //                               crossAxisAlignment:
+                //                                   CrossAxisAlignment.start,
+                //                               children: [
+                //                                 Expanded(
+                //                                   flex: 3,
+                //                                   child: CachedNetworkImage(
+                //                                     height:
+                //                                         SizeConfig.heightMultiplier *
+                //                                             20,
+                //                                     width:
+                //                                         SizeConfig.heightMultiplier *
+                //                                             20,
+                //                                     imageUrl: Constants.baseImageUrl +
+                //                                         _.listCartRecipe1[index]
+                //                                             .imagesUrl,
+                //                                     fit: BoxFit.cover,
+                //                                     placeholder: (context, url) => Center(
+                //                                         child: Center(
+                //                                             child:
+                //                                                 CircularProgressIndicator())),
+                //                                     errorWidget: (context, url,
+                //                                             error) =>
+                //                                         Image.asset(
+                //                                             "assets/images/breakfast.png"),
+                //                                   ),
+                //                                 ),
+                //                                 SizedBox(
+                //                                   width: SizeConfig.heightMultiplier,
+                //                                 ),
+                //                                 Expanded(
+                //                                   flex: 5,
+                //                                   child: SizedBox(
+                //                                     height:
+                //                                         SizeConfig.heightMultiplier *
+                //                                             20,
+                //                                     child: Column(
+                //                                       crossAxisAlignment:
+                //                                           CrossAxisAlignment.start,
+                //                                       mainAxisAlignment:
+                //                                           MainAxisAlignment.center,
+                //                                       children: [
+                //                                         Text(
+                //                                           _.listCartRecipe1[index]
+                //                                               .planName,
+                //                                           style: Theme.of(context)
+                //                                               .textTheme
+                //                                               .bodySmall,
+                //                                         ),
+                //                                         Text(
+                //                                           _.listCartRecipe1[index]
+                //                                               .recipeName,
+                //                                           style: Theme.of(context)
+                //                                               .textTheme
+                //                                               .bodyText1
+                //                                               .copyWith(
+                //                                                 fontWeight:
+                //                                                     FontWeight.bold,
+                //                                                 color: Colors.white,
+                //                                               ),
+                //                                         ),
+                //                                       ],
+                //                                     ),
+                //                                   ),
+                //                                 )
+                //                               ],
+                //                             ),
+                //                           ),
+                //                         );
+                //                 },
+                //               );
+                //       }),
+                // )
+              ],
+            ),
+          )
+        ]));
+  }
+}
+
+Widget buildFavListWeekly() {
+  return SizedBox(
+    height: SizeConfig.screenHeight,
+    child: GetX<WeeklyController>(
+        init: WeeklyController(),
+        builder: (_) {
+          return (_.listCartRecipe1.length == 0)
+              ? Center(
+                  child: Image.asset(
+                  "assets/images/norecord.png",
+                  width: SizeConfig.screenWidth * 0.7,
+                ))
+              : ListView.builder(
+                  itemCount: _.listCartRecipe1.length + 1,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return (index == _.listCartRecipe1.length)
+                        ? SizedBox(
+                            height: SizeConfig.heightMultiplier * 50,
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Constants.navigatepush(
+                                  context,
+                                  RecipeDetail(
+                                    modelType: "collection",
+                                    recipeModel: _.listCartRecipe1[index],
+                                  ));
+                            },
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              margin:
+                                  EdgeInsets.all(SizeConfig.heightMultiplier),
+                              decoration: BoxDecoration(
+                                color: CustomTheme.bgColor,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: CustomTheme.grey.withOpacity(0.5),
+                                    blurRadius: 6,
+                                    spreadRadius: 6,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: CachedNetworkImage(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      width: SizeConfig.heightMultiplier * 20,
+                                      imageUrl: Constants.baseImageUrl +
+                                          _.listCartRecipe1[index].imagesUrl,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/breakfast.png"),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.heightMultiplier,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: CachedNetworkImage(
-                                              height:
-                                                  SizeConfig.heightMultiplier *
-                                                      20,
-                                              width:
-                                                  SizeConfig.heightMultiplier *
-                                                      20,
-                                              imageUrl: Constants.baseImageUrl +
-                                                  _.listofFav[index].imagesUrl,
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) => Center(
-                                                  child: Center(
-                                                      child:
-                                                          CircularProgressIndicator())),
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  Image.asset(
-                                                      "assets/images/breakfast.png"),
-                                            ),
+                                          Text(
+                                            _.listCartRecipe1[index].planName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
                                           ),
-                                          SizedBox(
-                                            width: SizeConfig.heightMultiplier,
+                                          Text(
+                                            _.listCartRecipe1[index].recipeName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
                                           ),
-                                          Expanded(
-                                            flex: 5,
-                                            child: SizedBox(
-                                              height:
-                                                  SizeConfig.heightMultiplier *
-                                                      20,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    _.listofFav[index].planName,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  Text(
-                                                    _.listofFav[index]
-                                                        .recipeName,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText1
-                                                        .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                        ),
-                                                  ),
-                                                  InkWell(
-                                                      child: customButton2(
-                                                          context,
-                                                          Colors.white,
-                                                          Colors.white,
-                                                          "Add to List")),
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                          // InkWell(
+                                          //     child: customButton2(
+                                          //         context,
+                                          //         Colors.white,
+                                          //         Colors.white,
+                                          //         "Add to List")),
                                         ],
                                       ),
                                     ),
-                                  );
-                          },
-                        );
-                }),
-          ),
-        ],
-      ),
-    );
-  }
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                  },
+                );
+        }),
+  );
+}
+
+Widget buildFavListOther() {
+  return SizedBox(
+    height: SizeConfig.screenHeight,
+    child: GetX<WeeklyController>(
+        init: WeeklyController(),
+        builder: (_) {
+          return (_.listCartRecipe2.length == 0)
+              ? Center(
+                  child: Image.asset(
+                  "assets/images/norecord.png",
+                  width: SizeConfig.screenWidth * 0.7,
+                ))
+              : ListView.builder(
+                  itemCount: _.listCartRecipe2.length + 1,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return (index == _.listCartRecipe2.length)
+                        ? SizedBox(
+                            height: SizeConfig.heightMultiplier * 50,
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Constants.navigatepush(
+                                  context,
+                                  RecipeDetail(
+                                    modelType: "collection",
+                                    recipeModel: _.listCartRecipe2[index],
+                                  ));
+                            },
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              margin:
+                                  EdgeInsets.all(SizeConfig.heightMultiplier),
+                              decoration: BoxDecoration(
+                                color: CustomTheme.bgColor,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: CustomTheme.grey.withOpacity(0.5),
+                                    blurRadius: 6,
+                                    spreadRadius: 6,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: CachedNetworkImage(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      width: SizeConfig.heightMultiplier * 20,
+                                      imageUrl: Constants.baseImageUrl +
+                                          _.listCartRecipe2[index].imagesUrl,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/breakfast.png"),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.heightMultiplier,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            _.listCartRecipe2[index].planName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                          Text(
+                                            _.listCartRecipe2[index].recipeName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                          // InkWell(
+                                          //     child: customButton2(
+                                          //         context,
+                                          //         Colors.white,
+                                          //         Colors.white,
+                                          //         "Add to List")),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                  },
+                );
+        }),
+  );
 }

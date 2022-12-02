@@ -106,44 +106,45 @@ Widget customButton(context, color, bgColor, label) {
 Widget customField(textController, labelText,
     {icon, bgcolor, iconColor, eye = false}) {
   return TextFormField(
-    keyboardType: TextInputType.text,
-    autofocus: false,
-    textAlign: TextAlign.start,
-    textInputAction: TextInputAction.done,
-    obscureText: (eye) ? true : false,
-    controller: textController,
-    validator: RequiredValidator(errorText: '$labelText required'),
-    style: TextStyle(
-        color: Colors.black87,
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      textAlign: TextAlign.start,
+      textInputAction: TextInputAction.done,
+      obscureText: (eye) ? true : false,
+      controller: textController,
+      validator: RequiredValidator(errorText: '$labelText required'),
+      style: TextStyle(
+          color: Colors.black87,
+          fontSize: SizeConfig.textMultiplier * 1.9,
+          fontWeight: FontWeight.w500),
+      decoration: customDecor(icon,
+          iconColor: iconColor, bgcolor: bgcolor, labelText: labelText));
+}
+
+InputDecoration customDecor(icon, {iconColor, bgcolor, labelText}) {
+  return InputDecoration(
+    prefixIcon: Icon(
+      icon,
+      color: (iconColor.toString().isNotEmpty) ? iconColor : Colors.black,
+    ),
+    fillColor: (bgcolor.toString().isNotEmpty) ? bgcolor : CustomTheme.grey,
+    floatingLabelStyle: TextStyle(color: Colors.black),
+    filled: true,
+    labelText: labelText,
+    hintStyle: TextStyle(
+        color: Colors.grey,
         fontSize: SizeConfig.textMultiplier * 1.9,
         fontWeight: FontWeight.w500),
-    decoration: InputDecoration(
-      prefixIcon: Icon(
-        icon,
-        color: (iconColor.toString().isNotEmpty) ? iconColor : Colors.black,
-      ),
-      fillColor: (bgcolor.toString().isNotEmpty) ? bgcolor : CustomTheme.grey,
-      floatingLabelStyle: TextStyle(color: Colors.black),
-      filled: true,
-      labelText: labelText,
-      hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: SizeConfig.textMultiplier * 1.9,
-          fontWeight: FontWeight.w500),
-      labelStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: SizeConfig.textMultiplier * 1.9,
-          fontWeight: FontWeight.w500),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide.none),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide.none),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide.none),
-    ),
+    labelStyle: TextStyle(
+        color: Colors.grey,
+        fontSize: SizeConfig.textMultiplier * 1.9,
+        fontWeight: FontWeight.w500),
+    border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0), borderSide: BorderSide.none),
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0), borderSide: BorderSide.none),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0), borderSide: BorderSide.none),
   );
 }
 

@@ -91,8 +91,6 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: SizeConfig.heightMultiplier,
-                            mainAxisSpacing: SizeConfig.heightMultiplier,
                             childAspectRatio: 1,
                           ),
                           itemBuilder: (context, index) => InkWell(
@@ -134,8 +132,8 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: CachedNetworkImage(
-                                      height: SizeConfig.heightMultiplier * 15,
-                                      width: SizeConfig.heightMultiplier * 15,
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      width: SizeConfig.heightMultiplier * 20,
                                       imageUrl: Constants.baseImageUrl +
                                           _.filteredSCRecipe[index].imagesUrl,
                                       fit: BoxFit.cover,

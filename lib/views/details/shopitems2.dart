@@ -11,8 +11,9 @@ import '../../components/customdrawer.dart';
 import '../../utils/theme.dart';
 
 class ShopItems2 extends StatefulWidget {
-  ShopItems2({Key key, this.itemList}) : super(key: key);
+  ShopItems2({Key key, this.itemList, this.itemLength}) : super(key: key);
   final itemList;
+  final itemLength;
   @override
   State<ShopItems2> createState() => _ShopItems2State();
 }
@@ -71,14 +72,17 @@ class _ShopItems2State extends State<ShopItems2> {
                           (index) {
                             return Column(
                               children: [
-                                Text(widget.itemList.recipeName,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
                                 Text(
-                                  widget.itemList.items[index]
+                                  widget.itemList[index].recipeName,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Text(
+                                  widget.itemList[index].items[index]
                                       .toString()
                                       .toUpperCase(),
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             );
@@ -91,7 +95,7 @@ class _ShopItems2State extends State<ShopItems2> {
                       height: SizeConfig.screenHeight,
                       child: TabBarView(
                         children: List.generate(
-                          widget.itemList.items.length,
+                          widget.itemList.length,
                           (index) {
                             print("tabview");
                             print(martUrl + selectedItem);
@@ -101,7 +105,7 @@ class _ShopItems2State extends State<ShopItems2> {
                                     zoomEnabled: true,
                                     javascriptMode: JavascriptMode.unrestricted,
                                     initialUrl: martUrl +
-                                        widget.itemList.items[index].toString(),
+                                        widget.itemList[0].items[0].toString(),
                                   );
                           },
                         ),

@@ -49,6 +49,8 @@ dependencies:
   url_launcher: ^6.1.7
   page_transition: ^2.0.9
   form_field_validator: ^1.1.0
+  native_notify: ^0.0.16
+  firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   flutter_test:

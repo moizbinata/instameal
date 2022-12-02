@@ -80,32 +80,32 @@ class Shopping extends StatelessWidget {
             title: Text("My Instameal Meals List",
                 style: Theme.of(context).textTheme.headline6),
           ),
-          ListTile(
-            onTap: () {
-              Constants.navigatepush(
-                  context,
-                  CartRecipes(
-                    cartType: "collection",
-                  ));
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => CartRecipes(
-              //               cartType: "collection",
-              //             )));
-            },
-            tileColor: Colors.white,
-            leading: iconBox(
-              Color(0xfffcedf4),
-              Color(0xffffb2d5),
-              FontAwesomeIcons.opencart,
-            ),
-            title: Text(
-              "Recipes added in Cart",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            trailing: FaIcon(FontAwesomeIcons.chevronRight),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Constants.navigatepush(
+          //         context,
+          //         CartRecipes(
+          //           cartType: "collection",
+          //         ));
+          //     // Navigator.push(
+          //     //     context,
+          //     //     MaterialPageRoute(
+          //     //         builder: (context) => CartRecipes(
+          //     //               cartType: "collection",
+          //     //             )));
+          //   },
+          //   tileColor: Colors.white,
+          //   leading: iconBox(
+          //     Color(0xfffcedf4),
+          //     Color(0xffffb2d5),
+          //     FontAwesomeIcons.opencart,
+          //   ),
+          //   title: Text(
+          //     "Recipes added in Cart",
+          //     style: Theme.of(context).textTheme.bodyLarge,
+          //   ),
+          //   trailing: FaIcon(FontAwesomeIcons.chevronRight),
+          // ),
           ListTile(
             onTap: () async {
               final weeklyController = Get.put(WeeklyController());

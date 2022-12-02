@@ -11,9 +11,17 @@ import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 
-class SearchCategories extends StatelessWidget {
+class SearchCategories extends StatefulWidget {
   SearchCategories({Key key}) : super(key: key);
+
+  @override
+  State<SearchCategories> createState() => _SearchCategoriesState();
+}
+
+class _SearchCategoriesState extends State<SearchCategories> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  TextEditingController searchContr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,85 +47,101 @@ class SearchCategories extends StatelessWidget {
                       .textTheme
                       .bodyLarge
                       .copyWith(color: CustomTheme.bgColor)),
+              space0(),
+              customField(searchContr, "Search", icon: Icons.search),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                autofocus: false,
+                textAlign: TextAlign.start,
+                textInputAction: TextInputAction.done,
+                controller: searchContr,
+                style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: SizeConfig.textMultiplier * 1.9,
+                    fontWeight: FontWeight.w500),
+                decoration: customDecor(Icons.search),
+              ),
+              space0(),
               GetBuilder<SearchCategController>(
                 init: SearchCategController(),
                 builder: (_) {
                   return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _.listofSCateg.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: SizeConfig.heightMultiplier,
-                      mainAxisSpacing: SizeConfig.heightMultiplier,
-                    ),
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () async {
-                        final searchCategContr =
-                            Get.put(SearchCategController());
-                        await searchCategContr.filterSCategRecipe(
-                            _.listofSCateg[index].searchcategid);
-                        Constants.navigatepush(
-                          context,
-                          SearchCategRecipe(
-                            scategId: _.listofSCateg[index].searchcategid,
-                            scategName: _.listofSCateg[index].searchcategname,
-                          ),
-                        );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => SearchCategRecipe(
-                        //       scategId: _.listofSCateg[index].searchcategid,
-                        //       scategName: _.listofSCateg[index].searchcategname,
-                        //     ),
-                        //   ),
-                        // );
-                      },
-                      child: Container(
-                        child: Column(
-                          children: [
-                            space0(),
-                            Container(
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                  color: CustomTheme.bgColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: CustomTheme.grey.withOpacity(0.5),
-                                      blurRadius: 6,
-                                      spreadRadius: 6,
-                                      offset: Offset(0, 0),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: _.listofSCateg.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
+                      ),
+                      itemBuilder: (context, index) => (_
+                              .listofSCateg[index].searchcategname
+                              .contains(searchContr.text.toString()))
+                          ? InkWell(
+                              onTap: () async {
+                                final searchCategContr =
+                                    Get.put(SearchCategController());
+                                await searchCategContr.filterSCategRecipe(
+                                    _.listofSCateg[index].searchcategid);
+                                Constants.navigatepush(
+                                  context,
+                                  SearchCategRecipe(
+                                    scategId:
+                                        _.listofSCateg[index].searchcategid,
+                                    scategName:
+                                        _.listofSCateg[index].searchcategname,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                          color: CustomTheme.bgColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: CustomTheme.grey
+                                                  .withOpacity(0.5),
+                                              blurRadius: 6,
+                                              spreadRadius: 6,
+                                              offset: Offset(0, 0),
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: CachedNetworkImage(
+                                        height:
+                                            SizeConfig.heightMultiplier * 18,
+                                        width: SizeConfig.heightMultiplier * 18,
+                                        imageUrl: Constants.baseImageUrl +
+                                            _.listofSCateg[index].scategimg,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Center(
+                                            child: Center(
+                                                child:
+                                                    CircularProgressIndicator())),
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                                "assets/images/breakfast.png"),
+                                      ),
+                                    ),
+                                    space0(),
+                                    Text(
+                                      _.listofSCateg[index].searchcategname
+                                          .toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          .copyWith(color: CustomTheme.bgColor),
                                     ),
                                   ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: CachedNetworkImage(
-                                height: SizeConfig.heightMultiplier * 15,
-                                width: SizeConfig.heightMultiplier * 15,
-                                imageUrl: Constants.baseImageUrl +
-                                    _.listofSCateg[index].scategimg,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => Center(
-                                    child: Center(
-                                        child: CircularProgressIndicator())),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset("assets/images/breakfast.png"),
+                                ),
                               ),
-                            ),
-                            space0(),
-                            Text(
-                              _.listofSCateg[index].searchcategname.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  .copyWith(color: CustomTheme.bgColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                            )
+                          : SizedBox());
                 },
               )
             ],

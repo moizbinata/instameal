@@ -47,7 +47,7 @@ class CartRecipes extends StatelessWidget {
           (cartType == "collection")
               ? SizedBox(
                   height: SizeConfig.screenHeight,
-                  child: GetBuilder<WeeklyController>(
+                  child: GetX<WeeklyController>(
                       init: WeeklyController(),
                       builder: (_) {
                         return (_.listCartRecipe2.length == 0)
@@ -74,18 +74,6 @@ class CartRecipes extends StatelessWidget {
                                                   recipeModel:
                                                       _.listCartRecipe2[index],
                                                 ));
-
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             RecipeDetail(
-                                            //               modelType:
-                                            //                   "collection",
-                                            //               recipeModel:
-                                            //                   _.listCartRecipe2[
-                                            //                       index],
-                                            //             )));
                                           },
                                           child: Container(
                                             clipBehavior: Clip.hardEdge,
