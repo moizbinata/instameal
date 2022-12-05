@@ -8,7 +8,9 @@ import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/changepassword.dart';
+import 'package:instameal/views/details/securityques.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
+import 'package:intl/intl.dart';
 
 import '../components/components.dart';
 import '../controllers/universalController.dart';
@@ -32,6 +34,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   final _signupey = GlobalKey<FormState>();
+  String _chosenValue = "Favorite pet name";
 
   //login
   TextEditingController usernameController =
@@ -44,6 +47,7 @@ class _LoginState extends State<Login> {
   TextEditingController usernameController2 = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController answerController = TextEditingController();
 
   TextEditingController password1Controller = TextEditingController();
 
@@ -133,12 +137,10 @@ class _LoginState extends State<Login> {
                                       )),
                                 ],
                               ),
-                              // customField(passwordController, "Password",
-                              //     icon: Icons.lock),
                               TextButton(
                                   onPressed: () {
                                     Constants.navigatepush(
-                                        context, ChangePass());
+                                        context, SecureQues());
                                   },
                                   child: Text(
                                     "Forgot Password",
@@ -175,70 +177,156 @@ class _LoginState extends State<Login> {
                             ],
                           ),
                         ),
-                        Form(
-                          key: _signupey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              customField(usernameController2, "Username",
-                                  icon: Icons.account_circle),
-                              space0(),
-                              customField(emailController, "Email",
-                                  icon: Icons.mail),
-                              space0(),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 7,
-                                    child: customField(
-                                        password1Controller, "Password",
-                                        icon: Icons.lock, eye: eye),
-                                  ),
-                                  Expanded(
-                                      flex: 1,
-                                      child: IconButton(
-                                        icon: Icon(Icons.remove_red_eye),
-                                        onPressed: () {
-                                          setState(() {
-                                            eye = !eye;
-                                          });
+                        SingleChildScrollView(
+                          child: Form(
+                            key: _signupey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                space0(),
+                                customField(usernameController2, "Username",
+                                    icon: Icons.account_circle),
+                                space0(),
+                                customField(emailController, "Email",
+                                    icon: Icons.mail),
+                                space0(),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 7,
+                                      child: customField(
+                                          password1Controller, "Password",
+                                          icon: Icons.lock, eye: eye),
+                                    ),
+                                    Expanded(
+                                        flex: 1,
+                                        child: IconButton(
+                                          icon: Icon(Icons.remove_red_eye),
+                                          onPressed: () {
+                                            setState(() {
+                                              eye = !eye;
+                                            });
+                                          },
+                                        )),
+                                  ],
+                                ),
+                                space0(),
+                                customField(
+                                    password2Controller, "Confirm Password",
+                                    icon: Icons.lock, eye: eye),
+                                space0(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "Security Question",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: StatefulBuilder(builder:
+                                          (BuildContext context,
+                                              StateSetter dropDownState) {
+                                        return DropdownButton<String>(
+                                          value: _chosenValue,
+                                          items: <String>[
+                                            'Favorite pet name',
+                                            'Mothers maiden name',
+                                            'High school you attend',
+                                            'Elementary school name',
+                                            'Favorite food as a child',
+                                            'Favorite movie',
+                                            'First exam you failed',
+                                          ].map((String value) {
+                                            return new DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ));
+                                          }).toList(),
+                                          onChanged: (String value) {
+                                            dropDownState(() {
+                                              _chosenValue = value;
+                                            });
+                                          },
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                space1(),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          "Security Answer",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 5,
+                                        child: customField(
+                                          answerController,
+                                          "Answer",
+                                        ),
+                                      ),
+                                    ]),
+                                space2(),
+                                (signupLoader)
+                                    ? CustomTheme.loader()
+                                    : InkWell(
+                                        onTap: () {
+                                          // setState(() {
+                                          //   signupLoader = true;
+                                          // });
+                                          FocusScope.of(context)
+                                              .requestFocus(fn);
+                                          if (_signupey.currentState
+                                                  .validate() &&
+                                              password1Controller.text ==
+                                                  password2Controller.text) {
+                                            postSignup(context);
+                                          } else {
+                                            setState(() {
+                                              signupLoader = false;
+                                            });
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    'Validation error or Password not matched');
+                                          }
                                         },
-                                      )),
-                                ],
-                              ),
-                              space0(),
-                              customField(
-                                  password2Controller, "Confirm Password",
-                                  icon: Icons.lock, eye: eye),
-                              space2(),
-                              (signupLoader)
-                                  ? CustomTheme.loader()
-                                  : InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          signupLoader = true;
-                                        });
-                                        FocusScope.of(context).requestFocus(fn);
-                                        if (_signupey.currentState.validate() &&
-                                            password1Controller.text ==
-                                                password2Controller.text) {
-                                          postSignup(context);
-                                        } else {
-                                          setState(() {
-                                            signupLoader = false;
-                                          });
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  'Validation error or Password not matched');
-                                        }
-                                      },
-                                      child: customButton(
-                                          context,
-                                          Colors.white,
-                                          CustomTheme.bgColor,
-                                          "Continue to Meal Plan")),
-                            ],
+                                        child: customButton(
+                                            context,
+                                            Colors.white,
+                                            CustomTheme.bgColor,
+                                            "Continue to Meal Plan")),
+                                space3()
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -255,17 +343,30 @@ class _LoginState extends State<Login> {
   }
 
   postSignup(context) async {
+    String formatNow = DateFormat('yyyy-MM-dd').format(now);
+    print("formattedd");
+    print(formatNow.toString());
     String url = "${Constants.baseUrl}signup";
+    print(usernameController2.text.toString());
+    print(password1Controller.text.toString());
+    print(emailController.text.toString());
+    print(answerController.text.toString());
+    print(formatNow.toString());
+    print(_chosenValue.toString());
     var payload = {
       "username": usernameController2.text.toString(),
       "password": password1Controller.text.toString(),
       "email": emailController.text.toString(),
-      "subscriptionstart": "${now.year}-${now.month}-${now.day}",
-      "subscriptionend": "${now.year}-${now.month}-${now.day}",
+      "subscriptionstart": formatNow,
+      "subscriptionend": formatNow,
       "membershiptype": "Daily",
-      "trialstatus": "${now.day}/${now.month}/${now.year}",
+      "trialstatus": formatNow,
       "paymentstatus": "Unpaid",
+      "question": _chosenValue.toString(),
+      "answer": answerController.text.toString()
     };
+    print(payload);
+
     var response = await Network.post(url: url, payload: payload).catchError(
       () {
         Fluttertoast.showToast(msg: "Server is not responding");
@@ -279,7 +380,7 @@ class _LoginState extends State<Login> {
         signupLoader = false;
       });
       Constants.navigatepushreplac(context, Login());
-    } else if (response == "Username already exist") {
+    } else if (response == "Username or Email already exist") {
       Fluttertoast.showToast(msg: "Username already exist");
       setState(() {
         signupLoader = false;
@@ -293,6 +394,12 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> loginService(context) async {
+    print("now");
+    print(now.toString());
+    var formatDate =
+        DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: 1)));
+    DateTime formattedDate = DateTime.parse(formatDate);
+    print(formatDate);
     final UniversalController universalController =
         Get.put(UniversalController());
     GetStorage box = GetStorage();
@@ -334,10 +441,12 @@ class _LoginState extends State<Login> {
         setState(() {
           loginLoader = false;
         });
-        if (now.isAfter(DateTime.parse(loginModel.data[0].subscriptionEnd)))
-          Constants.navigatepushreplac(context, TrialScreen());
-        else
+        if (DateTime.parse(loginModel.data[0].subscriptionEnd)
+                .isAfter(formattedDate) &&
+            loginModel.data[0].paymentStatus == "Paid")
           Constants.navigatepushreplac(context, BottomNavigator());
+        else
+          Constants.navigatepushreplac(context, TrialScreen());
       } else {
         setState(() {
           loginLoader = false;

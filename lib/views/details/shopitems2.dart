@@ -58,7 +58,7 @@ class _ShopItems2State extends State<ShopItems2> {
           child: Column(
             children: [
               DefaultTabController(
-                length: widget.itemList.length,
+                length: widget.itemLength,
                 child: Column(
                   children: [
                     Container(
@@ -68,7 +68,7 @@ class _ShopItems2State extends State<ShopItems2> {
                         isScrollable: true,
                         indicatorColor: CustomTheme.bgColor,
                         tabs: List.generate(
-                          widget.itemList.length,
+                          widget.itemLength,
                           (index) {
                             return Column(
                               children: [
@@ -76,14 +76,14 @@ class _ShopItems2State extends State<ShopItems2> {
                                   widget.itemList[index].recipeName,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
-                                Text(
-                                  widget.itemList[index].items[index]
-                                      .toString()
-                                      .toUpperCase(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                // Text(
+                                //   widget.itemList[1].items[0]
+                                //       .toString()
+                                //       .toUpperCase(),
+                                //   style: TextStyle(
+                                //     color: Colors.black,
+                                //   ),
+                                // ),
                               ],
                             );
                           },

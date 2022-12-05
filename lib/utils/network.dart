@@ -49,11 +49,9 @@ class Network {
         apiHeaders.addAll(headers);
       }
       var body = json.encode(payload);
-      debugPrint(url);
       var response =
           await client.post(Uri.parse(url), body: body, headers: apiHeaders);
-      debugPrint(response.body);
-      debugPrint(response.statusCode.toString());
+      print(response.statusCode.toString());
       if (response.statusCode == 200) {
         return response.body;
         // return json.decode(response.body);

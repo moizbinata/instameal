@@ -6,8 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:intl/intl.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
 import '../../utils/constants.dart';
@@ -315,28 +314,32 @@ class _TrialScreenState extends State<TrialScreen> {
     print("user id");
     print(box.read('userid').toString());
     DateTime now = DateTime.now();
+    DateTime formatNow = DateTime.parse(DateFormat('yyyy-MM-dd').format(now));
     DateTime trialDate = DateTime.now().add(Duration(days: 14));
+    DateTime formatTrial =
+        DateTime.parse(DateFormat('yyyy-MM-dd').format(trialDate));
 
     final buttonController = Get.put(ButtonController());
-
     String url;
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 30));
-
+      DateTime subend = DateTime.now().add(Duration(days: 44));
+      DateTime formatSubEnd =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
-          "${Constants.baseUrl}payment/SubStart/${now.year}-${now.month}-${now.day}/Subend/${subend.year}-${subend.month}-${subend.day}/Membership/Monthly/Trial/${trialDate.year}-${trialDate.month}-${trialDate.day}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Monthly/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
       response = await Network.put(url: url).catchError(
         () {
           Fluttertoast.showToast(msg: "Server is not responding");
         },
       );
     } else if (buttonController.selectedPlan.value == 1) {
-      DateTime subend = DateTime.now().add(Duration(days: 365));
-
+      DateTime subend = DateTime.now().add(Duration(days: 379));
+      DateTime formatSubEnd =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
-          "${Constants.baseUrl}payment/SubStart/${now.year}-${now.month}-${now.day}/Subend/${subend.year}-${subend.month}-${subend.day}/Membership/Yearly/Trial/${trialDate.year}-${trialDate.month}-${trialDate.day}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Yearly/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
 
       response = await Network.put(url: url).catchError(
         () {

@@ -7,6 +7,7 @@ import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../controllers/searchcategcontroller.dart';
+import '../../models/searchcategmodel.dart';
 import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
@@ -20,8 +21,17 @@ class SearchCategories extends StatefulWidget {
 
 class _SearchCategoriesState extends State<SearchCategories> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  List<SCategModel> filteredList = <SCategModel>[];
   TextEditingController searchContr = TextEditingController();
+  final searchCategContr = Get.put(SearchCategController());
+
+  String searchValue = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    filteredList = searchCategContr.listofSCateg;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,106 +58,113 @@ class _SearchCategoriesState extends State<SearchCategories> {
                       .bodyLarge
                       .copyWith(color: CustomTheme.bgColor)),
               space0(),
-              customField(searchContr, "Search", icon: Icons.search),
+              // customField(searchContr, "Search", icon: Icons.search),
               TextFormField(
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 textAlign: TextAlign.start,
                 textInputAction: TextInputAction.done,
                 controller: searchContr,
+                onChanged: (value) {
+                  setState(() {
+                    searchValue = value;
+                    refreshList();
+                  });
+                },
                 style: TextStyle(
                     color: Colors.black87,
                     fontSize: SizeConfig.textMultiplier * 1.9,
                     fontWeight: FontWeight.w500),
-                decoration: customDecor(Icons.search),
+                decoration: customDecor(Icons.search, labelText: 'Search'),
               ),
               space0(),
-              GetBuilder<SearchCategController>(
-                init: SearchCategController(),
-                builder: (_) {
-                  return GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _.listofSCateg.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 0,
-                        mainAxisSpacing: 0,
-                      ),
-                      itemBuilder: (context, index) => (_
-                              .listofSCateg[index].searchcategname
-                              .contains(searchContr.text.toString()))
-                          ? InkWell(
-                              onTap: () async {
-                                final searchCategContr =
-                                    Get.put(SearchCategController());
-                                await searchCategContr.filterSCategRecipe(
-                                    _.listofSCateg[index].searchcategid);
-                                Constants.navigatepush(
-                                  context,
-                                  SearchCategRecipe(
-                                    scategId:
-                                        _.listofSCateg[index].searchcategid,
-                                    scategName:
-                                        _.listofSCateg[index].searchcategname,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                          color: CustomTheme.bgColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: CustomTheme.grey
-                                                  .withOpacity(0.5),
-                                              blurRadius: 6,
-                                              spreadRadius: 6,
-                                              offset: Offset(0, 0),
-                                            ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: CachedNetworkImage(
-                                        height:
-                                            SizeConfig.heightMultiplier * 18,
-                                        width: SizeConfig.heightMultiplier * 18,
-                                        imageUrl: Constants.baseImageUrl +
-                                            _.listofSCateg[index].scategimg,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) => Center(
-                                            child: Center(
-                                                child:
-                                                    CircularProgressIndicator())),
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                                "assets/images/breakfast.png"),
+              // GetBuilder<SearchCategController>(
+              //   init: SearchCategController(),
+              //   builder: (_) {
+              //     return
+              GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: filteredList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                  ),
+                  itemBuilder: (context, index) => InkWell(
+                        onTap: () async {
+                          final searchCategContr =
+                              Get.put(SearchCategController());
+                          await searchCategContr.filterSCategRecipe(
+                              filteredList[index].searchcategid);
+                          Constants.navigatepush(
+                            context,
+                            SearchCategRecipe(
+                              scategId: filteredList[index].searchcategid,
+                              scategName: filteredList[index].searchcategname,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                    color: CustomTheme.bgColor,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            CustomTheme.grey.withOpacity(0.5),
+                                        blurRadius: 6,
+                                        spreadRadius: 6,
+                                        offset: Offset(0, 0),
                                       ),
-                                    ),
-                                    space0(),
-                                    Text(
-                                      _.listofSCateg[index].searchcategname
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          .copyWith(color: CustomTheme.bgColor),
-                                    ),
-                                  ],
+                                    ],
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: CachedNetworkImage(
+                                  height: SizeConfig.heightMultiplier * 18,
+                                  width: SizeConfig.heightMultiplier * 18,
+                                  imageUrl: Constants.baseImageUrl +
+                                      filteredList[index].scategimg,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Center(
+                                      child: Center(
+                                          child: CircularProgressIndicator())),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          "assets/images/breakfast.png"),
                                 ),
                               ),
-                            )
-                          : SizedBox());
-                },
-              )
+                              space0(),
+                              Text(
+                                filteredList[index].searchcategname.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    .copyWith(color: CustomTheme.bgColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
+              //   },
+              // )
             ],
           ),
         ),
       ),
     );
+  }
+
+  refreshList() {
+    setState(() {
+      filteredList = searchCategContr.listofSCateg
+          .where((p0) => p0.searchcategname
+              .toLowerCase()
+              .contains(searchValue.toLowerCase()))
+          .toList();
+    });
   }
 }

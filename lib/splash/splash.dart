@@ -51,6 +51,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
+                      // box.erase();
                       DateTime now = DateTime.now();
 
                       if (box.read('username') == null) {
