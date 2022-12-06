@@ -85,6 +85,7 @@ class _ChangePassState extends State<ChangePass> {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
+    print(url);
     var response = await client.put(Uri.parse(url), headers: apiHeaders);
     print(response.body);
     if (response.body != null && response.statusCode == 200) {

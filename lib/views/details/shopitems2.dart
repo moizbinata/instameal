@@ -58,7 +58,7 @@ class _ShopItems2State extends State<ShopItems2> {
           child: Column(
             children: [
               DefaultTabController(
-                length: widget.itemLength,
+                length: widget.itemLength - 1,
                 child: Column(
                   children: [
                     Container(
@@ -68,23 +68,46 @@ class _ShopItems2State extends State<ShopItems2> {
                         isScrollable: true,
                         indicatorColor: CustomTheme.bgColor,
                         tabs: List.generate(
-                          widget.itemLength,
+                          widget.itemLength - 1,
                           (index) {
-                            return Column(
-                              children: [
-                                Text(
-                                  widget.itemList[index].recipeName,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                // Text(
-                                //   widget.itemList[1].items[0]
-                                //       .toString()
-                                //       .toUpperCase(),
-                                //   style: TextStyle(
-                                //     color: Colors.black,
-                                //   ),
-                                // ),
-                              ],
+                            return Row(
+                              children: List.generate(
+                                  widget.itemList.first.items.length - 1,
+                                  (indexj) {
+                                // print(widget.itemList[index].items[indexj]);
+                                // print(
+                                //   widget.itemList[index].items.length
+                                //       .toString(),
+                                // );
+                                return Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: SizeConfig.heightMultiplier),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: SizeConfig.heightMultiplier),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        widget.itemList.first.recipeName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            .copyWith(color: Colors.black),
+                                      ),
+                                      Text(
+                                        widget.itemList.first.items[indexj]
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
                             );
                           },
                         ),
@@ -94,19 +117,59 @@ class _ShopItems2State extends State<ShopItems2> {
                     Container(
                       height: SizeConfig.screenHeight,
                       child: TabBarView(
+                        physics: AlwaysScrollableScrollPhysics(),
                         children: List.generate(
-                          widget.itemList.length,
+                          widget.itemLength - 1,
                           (index) {
-                            print("tabview");
-                            print(martUrl + selectedItem);
-                            return (martUrl == "")
-                                ? Center(child: Text("Select shop first"))
-                                : WebView(
-                                    zoomEnabled: true,
-                                    javascriptMode: JavascriptMode.unrestricted,
-                                    initialUrl: martUrl +
-                                        widget.itemList[0].items[0].toString(),
-                                  );
+                            return ListView(
+                              children: List.generate(
+                                  widget.itemList.first.items.length - 1,
+                                  (indexj) {
+                                return (martUrl == "")
+                                    ? Center(child: Text("Select shop first"))
+                                    : SizedBox(
+                                        height: SizeConfig.screenHeight,
+                                        width: SizeConfig.screenWidth,
+                                        child: WebView(
+                                          zoomEnabled: true,
+                                          javascriptMode:
+                                              JavascriptMode.unrestricted,
+                                          initialUrl: martUrl +
+                                              widget
+                                                  .itemList.first.items[indexj]
+                                                  .toString(),
+                                        ),
+                                      );
+                                // Container(
+                                //   margin: EdgeInsets.symmetric(
+                                //       horizontal: SizeConfig.heightMultiplier),
+                                //   padding: EdgeInsets.symmetric(
+                                //       horizontal: SizeConfig.heightMultiplier),
+                                //   decoration: BoxDecoration(
+                                //       color: Colors.white,
+                                //       borderRadius: BorderRadius.circular(10)),
+                                //   child: Column(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: [
+                                //       Text(
+                                //         widget.itemList.first.recipeName,
+                                //         style: Theme.of(context)
+                                //             .textTheme
+                                //             .bodySmall
+                                //             .copyWith(color: Colors.black),
+                                //       ),
+                                //       Text(
+                                //         widget.itemList.first.items[indexj]
+                                //             .toUpperCase(),
+                                //         style: TextStyle(
+                                //           color: Colors.black,
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // );
+                              }),
+                            );
                           },
                         ),
                       ),

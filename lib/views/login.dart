@@ -300,9 +300,9 @@ class _LoginState extends State<Login> {
                                     ? CustomTheme.loader()
                                     : InkWell(
                                         onTap: () {
-                                          // setState(() {
-                                          //   signupLoader = true;
-                                          // });
+                                          setState(() {
+                                            signupLoader = true;
+                                          });
                                           FocusScope.of(context)
                                               .requestFocus(fn);
                                           if (_signupey.currentState
