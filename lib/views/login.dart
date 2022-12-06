@@ -406,15 +406,15 @@ class _LoginState extends State<Login> {
     box.write('plantype', "Plant-Based");
     box.write('planid', "3");
     print("planid ${box.read('planid')}");
-    universalController.mart.value = 'shipt';
+    universalController.mart.value = 'walmart';
     universalController.plan.value = "Plant-Based";
     universalController.planid.value = 3;
     box.write('mart', 'amazonfresh');
     box.write('amazonfresh', 'https://www.amazon.com/s?k=');
     box.write('walmart', 'https://www.walmart.com/search?q=');
     box.write('instacart', 'https://www.instacart.com/store/s?k=');
-    box.write('kroger', 'https: //kroger.com/search?query=');
-    box.write('shipt', 'https: //kroger.com/search?query=');
+    box.write('kroger', 'https://kroger.com/search?query=');
+    box.write('shipt', 'https://kroger.com/search?query=');
     String url =
         "${Constants.baseUrl}login/Email/${usernameController.text.toString()}/Password/${passwordController.text.toString()}";
 

@@ -58,7 +58,7 @@ class _ShopItems2State extends State<ShopItems2> {
           child: Column(
             children: [
               DefaultTabController(
-                length: widget.itemLength - 1,
+                length: widget.itemList.length,
                 child: Column(
                   children: [
                     Container(
@@ -68,46 +68,28 @@ class _ShopItems2State extends State<ShopItems2> {
                         isScrollable: true,
                         indicatorColor: CustomTheme.bgColor,
                         tabs: List.generate(
-                          widget.itemLength - 1,
+                          widget.itemList.length,
                           (index) {
-                            return Row(
-                              children: List.generate(
-                                  widget.itemList.first.items.length - 1,
-                                  (indexj) {
-                                // print(widget.itemList[index].items[indexj]);
-                                // print(
-                                //   widget.itemList[index].items.length
-                                //       .toString(),
-                                // );
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SizeConfig.heightMultiplier),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: SizeConfig.heightMultiplier),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        widget.itemList.first.recipeName,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            .copyWith(color: Colors.black),
-                                      ),
-                                      Text(
-                                        widget.itemList.first.items[indexj]
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
+                            return Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.heightMultiplier),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.heightMultiplier),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.itemList[index].recipeName,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        .copyWith(color: Colors.black),
                                   ),
-                                );
-                              }),
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -117,63 +99,99 @@ class _ShopItems2State extends State<ShopItems2> {
                     Container(
                       height: SizeConfig.screenHeight,
                       child: TabBarView(
-                        physics: AlwaysScrollableScrollPhysics(),
                         children: List.generate(
-                          widget.itemLength - 1,
+                          widget.itemList.length,
                           (index) {
-                            return ListView(
-                              children: List.generate(
-                                  widget.itemList.first.items.length - 1,
-                                  (indexj) {
-                                return (martUrl == "")
-                                    ? Center(child: Text("Select shop first"))
-                                    : SizedBox(
+                            return DefaultTabController(
+                              length: widget.itemList[index].items.length,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: SizeConfig.heightMultiplier * 5,
+                                      width: SizeConfig.screenWidth,
+                                      child: TabBar(
+                                        isScrollable: true,
+                                        indicatorColor: CustomTheme.bgColor,
+                                        tabs: List.generate(
+                                            widget.itemList[index].items.length,
+                                            (indexj) {
+                                          return Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: SizeConfig
+                                                    .heightMultiplier),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: SizeConfig
+                                                    .heightMultiplier),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  widget.itemList[index]
+                                                      .items[indexj],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall
+                                                      .copyWith(
+                                                          color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                    space0(),
+                                    SingleChildScrollView(
+                                      child: Container(
                                         height: SizeConfig.screenHeight,
-                                        width: SizeConfig.screenWidth,
-                                        child: WebView(
-                                          zoomEnabled: true,
-                                          javascriptMode:
-                                              JavascriptMode.unrestricted,
-                                          initialUrl: martUrl +
-                                              widget
-                                                  .itemList.first.items[indexj]
-                                                  .toString(),
+                                        child: TabBarView(
+                                          children: List.generate(
+                                            widget.itemList[index].items.length,
+                                            (indexh) {
+                                              return (martUrl == "")
+                                                  ? Center(
+                                                      child: Text(
+                                                        "Select shop first",
+                                                      ),
+                                                    )
+                                                  : SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight,
+                                                      width: SizeConfig
+                                                          .screenWidth,
+                                                      child: WebView(
+                                                        zoomEnabled: true,
+                                                        javascriptMode:
+                                                            JavascriptMode
+                                                                .unrestricted,
+                                                        initialUrl: martUrl +
+                                                            widget
+                                                                .itemList[index]
+                                                                .items[indexh]
+                                                                .toString(),
+                                                      ),
+                                                    );
+                                              // Text(widget.itemList[index]
+                                              //     .items[indexh]);
+                                            },
+                                          ),
                                         ),
-                                      );
-                                // Container(
-                                //   margin: EdgeInsets.symmetric(
-                                //       horizontal: SizeConfig.heightMultiplier),
-                                //   padding: EdgeInsets.symmetric(
-                                //       horizontal: SizeConfig.heightMultiplier),
-                                //   decoration: BoxDecoration(
-                                //       color: Colors.white,
-                                //       borderRadius: BorderRadius.circular(10)),
-                                //   child: Column(
-                                //     mainAxisAlignment: MainAxisAlignment.center,
-                                //     children: [
-                                //       Text(
-                                //         widget.itemList.first.recipeName,
-                                //         style: Theme.of(context)
-                                //             .textTheme
-                                //             .bodySmall
-                                //             .copyWith(color: Colors.black),
-                                //       ),
-                                //       Text(
-                                //         widget.itemList.first.items[indexj]
-                                //             .toUpperCase(),
-                                //         style: TextStyle(
-                                //           color: Colors.black,
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
-                              }),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           },
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

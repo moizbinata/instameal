@@ -7,11 +7,13 @@ import 'package:instameal/controllers/searchcategcontroller.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/splash/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:native_notify/native_notify.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 
 import 'controllers/weeklyController.dart';
+import 'navigation/bottom_navigator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +33,9 @@ class MyApp extends StatelessWidget {
       Get.put(SearchCategController());
   final UniversalController universalController =
       Get.put(UniversalController());
+  DateTime now = DateTime.now();
+  GetStorage box = GetStorage();
+
   @override
   Widget build(BuildContext context) {
     // Get.lazyPut(()=>DataContr)
@@ -39,11 +44,17 @@ class MyApp extends StatelessWidget {
         SizeConfig().init(constraints, orientation);
 
         return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Instameal',
-          theme: CustomTheme.themedata,
-          home: SplashScreen(),
-        );
+            debugShowCheckedModeBanner: false,
+            title: 'Instameal',
+            theme: CustomTheme.themedata,
+            home: box.read('username') == null
+                ? SplashScreen()
+                : (box.read('subscriptionEnd') != null)
+                    ? (now.isAfter(DateTime.parse(
+                            box.read('subscriptionEnd').toString())))
+                        ? TrialScreen()
+                        : BottomNavigator()
+                    : SplashScreen());
       });
     });
   }

@@ -72,10 +72,6 @@ Widget drawer(context) {
               ),
               onTap: () {
                 Constants.navigatepush(context, Profile());
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Profile()),
-                // );
               },
             ),
             ListTile(
@@ -93,11 +89,6 @@ Widget drawer(context) {
               ),
               onTap: () {
                 Constants.navigatepush(context, Shopping());
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Shopping()),
-                // );
               },
             ),
             space1(),
@@ -131,16 +122,11 @@ Widget drawer(context) {
                 FontAwesomeIcons.arrowTrendUp,
               ),
               title: Text(
-                "Trending Plans",
+                "Favourite Plans",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
                 Constants.navigatepush(context, Favourite());
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Favourite()),
-                // );
               },
             ),
             space1(),
@@ -174,12 +160,13 @@ Widget drawer(context) {
 void launchEmailSubmission() async {
   GetStorage box = GetStorage();
   final Uri params = Uri(
-      scheme: 'mailto',
-      path: 'mailto:jawad2114@gmail.com',
-      queryParameters: {
-        'subject': 'Instameal User ID ${box.read('userid')}',
-        'body': ''
-      });
+    scheme: 'mailto',
+    path: 'mailto:jawad2114@gmail.com',
+    // queryParameters: {
+    //   'subject': 'Instameal User ID ${box.read('userid')}',
+    //   'body': ''
+    // }
+  );
   String url = params.toString();
   await launchUrl(Uri.parse(url));
 }
