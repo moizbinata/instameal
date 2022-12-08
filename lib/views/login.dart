@@ -35,13 +35,13 @@ class _LoginState extends State<Login> {
 
   final _signupey = GlobalKey<FormState>();
   String _chosenValue = "Favorite pet name";
-
+  bool selectedGender = true;
   //login
   TextEditingController usernameController =
       TextEditingController(text: 'decrs@gmail.com');
 
   TextEditingController passwordController =
-      TextEditingController(text: 'abc123');
+      TextEditingController(text: 'ab123');
 
   //signup
   TextEditingController usernameController2 = TextEditingController();
@@ -114,7 +114,8 @@ class _LoginState extends State<Login> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              customField(usernameController, "Email address",
+                              customField(
+                                  usernameController, "Email or Username",
                                   icon: Icons.mail),
                               space1(),
                               Row(
@@ -140,7 +141,9 @@ class _LoginState extends State<Login> {
                               TextButton(
                                   onPressed: () {
                                     Constants.navigatepush(
-                                        context, SecureQues());
+                                      context,
+                                      SecureQues(),
+                                    );
                                   },
                                   child: Text(
                                     "Forgot Password",
@@ -295,6 +298,40 @@ class _LoginState extends State<Login> {
                                         ),
                                       ),
                                     ]),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(flex: 1, child: Text("Gender")),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Transform.scale(
+                                        scale: 2,
+                                        child: Switch(
+                                          trackColor: MaterialStateProperty.all(
+                                            CustomTheme.bgColor,
+                                          ),
+                                          activeColor: CustomTheme.bgColor,
+                                          inactiveThumbColor:
+                                              CustomTheme.bgColor,
+                                          activeTrackColor: CustomTheme.bgColor,
+                                          activeThumbImage: AssetImage(
+                                            'assets/images/icons/icon4.png',
+                                          ),
+                                          inactiveThumbImage: AssetImage(
+                                              'assets/images/icons/icon5.png'),
+                                          value: selectedGender,
+                                          onChanged: (value) {
+                                            print(value);
+                                            setState(() {
+                                              selectedGender = !selectedGender;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 space2(),
                                 (signupLoader)
                                     ? CustomTheme.loader()
@@ -363,7 +400,8 @@ class _LoginState extends State<Login> {
       "trialstatus": formatNow,
       "paymentstatus": "Unpaid",
       "question": _chosenValue.toString(),
-      "answer": answerController.text.toString()
+      "answer": answerController.text.toString(),
+      "gender": selectedGender ? "Male" : "Female"
     };
     print(payload);
 
@@ -414,7 +452,7 @@ class _LoginState extends State<Login> {
     box.write('walmart', 'https://www.walmart.com/search?q=');
     box.write('instacart', 'https://www.instacart.com/store/s?k=');
     box.write('kroger', 'https://kroger.com/search?query=');
-    box.write('shipt', 'https://kroger.com/search?query=');
+    box.write('doordash', 'https://www.doordash.com/search/store/');
     String url =
         "${Constants.baseUrl}login/Email/${usernameController.text.toString()}/Password/${passwordController.text.toString()}";
 
@@ -438,6 +476,7 @@ class _LoginState extends State<Login> {
         box.write('membershipType', loginModel.data[0].membershipType);
         box.write('trialStatus', loginModel.data[0].trialStatus);
         box.write('paymentStatus', loginModel.data[0].paymentStatus);
+        box.write('gender', loginModel.data[0].gender);
         setState(() {
           loginLoader = false;
         });

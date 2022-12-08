@@ -5,12 +5,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/howtocook.dart';
 import 'package:instameal/views/details/shopitems.dart';
 
 import '../../components/components.dart';
+import '../../controllers/universalController.dart';
 import '../../controllers/weeklyController.dart';
 import '../../utils/constants.dart';
 
@@ -19,10 +21,13 @@ class RecipeDetail extends StatelessWidget {
   final recipeModel;
   final modelType;
   GetStorage box = GetStorage();
+  int ingredCount = 0;
+  int directionCount = 0;
   @override
   Widget build(BuildContext context) {
     final weeklyController = Get.put(WeeklyController());
-
+    ingredCount = 0;
+    directionCount = 0;
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
       body: CustomScrollView(
@@ -222,10 +227,27 @@ class RecipeDetail extends StatelessWidget {
                           ),
                           TextButton.icon(
                             onPressed: () {
+                              // final UniversalController universalController =
+                              //     Get.put(UniversalController());
+                              // universalController.currentPage.value = 1;
+
+                              // universalController
+                              //     .navigatorKeys["Shopping List"].currentState
+                              //     .popUntil((route) => route.isFirst);
+                              // universalController.currentPage.value = 1;
+
                               Clipboard.setData(ClipboardData(
                                   text: recipeModel.recipeName +
                                       '\n' +
                                       recipeModel.whatYouNeed.toString()));
+                              Fluttertoast.showToast(
+                                  msg: "Recipe Copied.",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.share,
@@ -300,31 +322,68 @@ class RecipeDetail extends StatelessWidget {
                         //ingredients
                         ConstrainedBox(
                           constraints:
-                              BoxConstraints(maxHeight: 200, minHeight: 56.0),
+                              BoxConstraints(maxHeight: 500, minHeight: 56.0),
                           child: ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             itemCount: recipeModel.whatYouNeed.length,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              print(recipeModel.whatYouNeed.length);
-                              return RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: (index < 9)
-                                        ? "0" + (index + 1).toString() + ":  "
-                                        : "" + (index + 1).toString() + ":  ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: CustomTheme.bgColor)),
-                                TextSpan(
-                                    text: recipeModel.whatYouNeed[index],
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall)
-                              ]));
+                              recipeModel.whatYouNeed[index]
+                                      .toString()
+                                      .contains(":")
+                                  ? ingredCount = ingredCount
+                                  : ingredCount++;
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                        (ingredCount < 10)
+                                            ? "0" +
+                                                (ingredCount).toString() +
+                                                ":  "
+                                            : "" +
+                                                (ingredCount).toString() +
+                                                ":  ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            .copyWith(
+                                                color: recipeModel
+                                                        .whatYouNeed[index]
+                                                        .toString()
+                                                        .contains(":")
+                                                    ? CustomTheme.bgColor2
+                                                    : CustomTheme.bgColor)),
+                                  ),
+                                  Expanded(
+                                    flex: 12,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: recipeModel
+                                                  .whatYouNeed[index]
+                                                  .toString()
+                                                  .contains(":")
+                                              ? SizeConfig.heightMultiplier * 2
+                                              : 0),
+                                      child: Text(
+                                          recipeModel.whatYouNeed[index],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              .copyWith(
+                                                  fontWeight: recipeModel
+                                                          .whatYouNeed[index]
+                                                          .toString()
+                                                          .contains(":")
+                                                      ? FontWeight.bold
+                                                      : FontWeight.normal)),
+                                    ),
+                                  )
+                                ],
+                              );
                             },
                           ),
                         ),
@@ -345,30 +404,88 @@ class RecipeDetail extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: recipeModel.direction.length,
                             itemBuilder: (context, index) {
-                              print(recipeModel.direction.length);
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: (index + 1).toString() + ":  ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomTheme.bgColor)),
-                                  TextSpan(
-                                      text: recipeModel.direction[index],
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall)
-                                ])),
+                              recipeModel.direction[index]
+                                      .toString()
+                                      .contains(":")
+                                  ? directionCount = directionCount
+                                  : directionCount++;
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                        (directionCount < 10)
+                                            ? "0" +
+                                                (directionCount).toString() +
+                                                ":  "
+                                            : "" +
+                                                (directionCount).toString() +
+                                                ":  ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            .copyWith(
+                                                color: recipeModel
+                                                        .direction[index]
+                                                        .toString()
+                                                        .contains(":")
+                                                    ? CustomTheme.bgColor2
+                                                    : CustomTheme.bgColor)),
+                                  ),
+                                  Expanded(
+                                    flex: 12,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: recipeModel.direction[index]
+                                                  .toString()
+                                                  .contains(":")
+                                              ? SizeConfig.heightMultiplier * 2
+                                              : 0),
+                                      child: Text(recipeModel.direction[index],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              .copyWith(
+                                                  fontWeight: recipeModel
+                                                          .direction[index]
+                                                          .toString()
+                                                          .contains(":")
+                                                      ? FontWeight.bold
+                                                      : FontWeight.normal)),
+                                    ),
+                                  )
+                                ],
                               );
-                              // Text(
-                              //   (index + 1).toString() +
-                              //       ":  " +
-                              //       recipeModel.direction[index],
-                              //   style: Theme.of(context).textTheme.bodySmall,
+
+                              // RichText(
+                              //   text: TextSpan(
+                              //     children: [
+                              //       TextSpan(
+                              //           text: (directionCount < 10)
+                              //               ? "0" +
+                              //                   (directionCount).toString() +
+                              //                   ":  "
+                              //               : "" +
+                              //                   (directionCount).toString() +
+                              //                   ":  ",
+                              //           style: Theme.of(context)
+                              //               .textTheme
+                              //               .bodySmall
+                              //               .copyWith(
+                              //                   color: recipeModel
+                              //                           .direction[index]
+                              //                           .toString()
+                              //                           .contains(":")
+                              //                       ? CustomTheme.bgColor2
+                              //                       : CustomTheme.bgColor)),
+                              //       TextSpan(
+                              //           text: recipeModel.direction[index],
+                              //           style: Theme.of(context)
+                              //               .textTheme
+                              //               .bodySmall)
+                              //     ],
+                              //   ),
                               // );
                             },
                           ),

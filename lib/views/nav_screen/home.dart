@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
@@ -86,7 +87,34 @@ class _HomeState extends State<Home> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return InkWell(
+                                      onTapDown: ((details) =>
+                                          Fluttertoast.showToast(
+                                              msg: "Loading, please wait",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0)),
+                                      onDoubleTap: () {
+                                        Fluttertoast.showToast(
+                                            msg: "Loading, please wait",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      },
                                       onTap: () async {
+                                        Fluttertoast.showToast(
+                                            msg: "Loading, please wait",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                         int week = _.currentRxWeek.value;
                                         await weeklyController.fetchWeekly(
                                             box.read('planid').toString(),
@@ -208,13 +236,13 @@ class _HomeState extends State<Home> {
                     ListTile(
                       tileColor: CustomTheme.bgColor,
                       title: Text(
-                        "Explore new plans",
+                        "Explore instameal",
                         style: Theme.of(context).textTheme.headline6.copyWith(
                               color: Colors.white,
                             ),
                       ),
                       subtitle: Text(
-                        "Explore new subscription plans for you",
+                        "Any day any time any recipe",
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),

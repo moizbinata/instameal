@@ -32,6 +32,7 @@ class _ShopItemsState extends State<ShopItems> {
     setState(() {
       martUrl = box.read(abc);
     });
+    print(martUrl);
   }
 
   @override

@@ -16,6 +16,7 @@ import '../views/login.dart';
 import '../views/nav_screen/home.dart';
 
 Widget drawer(context) {
+  GetStorage box = GetStorage();
   return Drawer(
     child: ListView(
       // padding: EdgeInsets.zero,
@@ -31,29 +32,23 @@ Widget drawer(context) {
                   width: SizeConfig.heightMultiplier * 11),
               ListTile(
                 // contentPadding: EdgeInsets.zero,
+                minVerticalPadding: 0.0,
                 leading: Image.asset(
-                  'assets/images/icons/icon1.png',
+                  box.read('gender').toString() == "Male"
+                      ? 'assets/images/icons/icon4.png'
+                      : 'assets/images/icons/icon1.png',
                 ),
                 title: Text(
-                  "Patricia Kamara",
+                  box.read('username'),
                   style: Theme.of(context).textTheme.bodyMedium.copyWith(
                       color: CustomTheme.bgColor, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text("patricia.kamara@gmail.com",
+                subtitle: Text(box.read('email'),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
             ],
           ),
-
-          //  Image.asset('assets/images/icons/icon1.png',
-          //     width: SizeConfig.heightMultiplier * 10),
-
-          // Image(
-          //   image: const AssetImage('assets/images/icons/icon1.png'),
-          //   width: SizeConfig.heightMultiplier * 20,
-          // ),
         ),
-        space1(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -82,6 +77,23 @@ Widget drawer(context) {
                 Color(0xfffdeade),
                 Color(0xfffdd47d),
                 FontAwesomeIcons.bookmark,
+              ),
+              title: Text(
+                "Weekly Ingredients",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onTap: () {
+                Constants.navigatepush(context, Shopping());
+              },
+            ),
+            ListTile(
+              selected: true,
+              selectedColor: CustomTheme.bgColor,
+              tileColor: Colors.white,
+              leading: iconBox(
+                Color.fromARGB(64, 104, 173, 194),
+                Color.fromARGB(255, 104, 173, 194),
+                FontAwesomeIcons.calendarWeek,
               ),
               title: Text(
                 "My Subscription",

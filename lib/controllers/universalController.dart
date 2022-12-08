@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/models/planmodel.dart';
@@ -16,6 +17,13 @@ class UniversalController extends GetxController {
   RxString mart = "".obs;
   RxString plan = "".obs;
   RxInt planid = 0.obs;
+  RxInt currentPage = 0.obs;
+  RxMap<String, GlobalKey<NavigatorState>> navigatorKeys = {
+    "Meal Plans": GlobalKey<NavigatorState>(),
+    "Shopping List": GlobalKey<NavigatorState>(),
+    "Favourite": GlobalKey<NavigatorState>(),
+    "Search": GlobalKey<NavigatorState>(),
+  }.obs;
   GetStorage box = GetStorage();
   @override
   void onInit() {

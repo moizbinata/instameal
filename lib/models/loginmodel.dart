@@ -45,6 +45,7 @@ class UserModel {
     this.membershipType,
     this.trialStatus,
     this.paymentStatus,
+    this.gender,
   });
 
   int userid;
@@ -56,6 +57,7 @@ class UserModel {
   String membershipType;
   String trialStatus;
   String paymentStatus;
+  String gender;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userid: json["userid"],
@@ -67,6 +69,7 @@ class UserModel {
         membershipType: json["membershipType"],
         trialStatus: json["trialStatus"],
         paymentStatus: json["paymentStatus"],
+        gender: json["gender"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,5 +82,6 @@ class UserModel {
         "membershipType": membershipType,
         "trialStatus": trialStatus,
         "paymentStatus": paymentStatus,
+        "gender": gender,
       };
 }

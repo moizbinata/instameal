@@ -41,9 +41,9 @@ void customDialogue(context) {
                         value: _chosenValue,
                         items: <String>[
                           'instacart',
-                          'amazon',
+                          'amazonfresh',
                           'kroger',
-                          'shipt',
+                          'doordash',
                           'walmart',
                         ].map((String value) {
                           return new DropdownMenuItem<String>(

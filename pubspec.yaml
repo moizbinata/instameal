@@ -51,6 +51,8 @@ dependencies:
   form_field_validator: ^1.1.0
   native_notify: ^0.0.16
   firebase_core_platform_interface: 4.5.1
+  purchases_flutter: ^4.4.3
+  in_app_purchase: ^3.0.8
 
 dev_dependencies:
   flutter_test:

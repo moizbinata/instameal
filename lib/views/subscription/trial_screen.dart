@@ -25,7 +25,8 @@ class TrialScreen extends StatefulWidget {
 }
 
 class _TrialScreenState extends State<TrialScreen> {
-  Map<String, dynamic> paymentIntent;
+  Map<String, dynamic> paymentIntentMonthly;
+  Map<String, dynamic> paymentIntentYearly;
   GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
@@ -56,19 +57,18 @@ class _TrialScreenState extends State<TrialScreen> {
                         ],
                       ),
                       Text(
-                        "Enjoy Instameal for 14 day extra for free",
+                        "Signup and enjoy free 14 days more",
                         style: Theme.of(context)
                             .textTheme
                             .headline5
                             .copyWith(color: CustomTheme.bgColor),
                       ),
                       bulletPoints(context,
-                          label:
-                              "Every day solutions for healthy, home cooked."),
+                          label: "More Than Just a Meal Plan."),
                       bulletPoints(
                         context,
                         label:
-                            "Unlimited switching between all of our meal plans.",
+                            "With a InstaMeals subscription, it`s like getting a personal chef and dietitian all in one.",
                       ),
                       bulletPoints(context,
                           label: "Upto 50% savings per saving vs Blue Apron."),
@@ -80,36 +80,39 @@ class _TrialScreenState extends State<TrialScreen> {
                       Obx((() => ListTile(
                             onTap: (() =>
                                 buttonController.selectedPlan.value = 0),
-                            tileColor: (buttonController.selectedPlan == 0)
-                                ? CustomTheme.bgColor
-                                : CustomTheme.grey,
+                            tileColor:
+                                (buttonController.selectedPlan.value == 0)
+                                    ? CustomTheme.bgColor
+                                    : CustomTheme.grey,
                             shape: customradius(),
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("19.99 USD",
+                            title: Text("20 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
                                     .copyWith(
-                                      color:
-                                          (buttonController.selectedPlan == 0)
-                                              ? Colors.white
-                                              : Colors.black,
+                                      color: (buttonController
+                                                  .selectedPlan.value ==
+                                              0)
+                                          ? Colors.white
+                                          : Colors.black,
                                     )),
                             subtitle: Text("Every Month",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     .copyWith(
-                                      color:
-                                          (buttonController.selectedPlan == 0)
-                                              ? Colors.white
-                                              : Colors.black,
+                                      color: (buttonController
+                                                  .selectedPlan.value ==
+                                              0)
+                                          ? Colors.white
+                                          : Colors.black,
                                     )),
                             trailing: Icon(
                               Icons.check_circle_outlined,
-                              color: (buttonController.selectedPlan == 0)
+                              color: (buttonController.selectedPlan.value == 0)
                                   ? Colors.white
                                   : Colors.black,
                             ),
@@ -118,38 +121,42 @@ class _TrialScreenState extends State<TrialScreen> {
                         (() => ListTile(
                               onTap: (() =>
                                   buttonController.selectedPlan.value = 1),
-                              tileColor: (buttonController.selectedPlan == 1)
-                                  ? CustomTheme.bgColor
-                                  : CustomTheme.grey,
+                              tileColor:
+                                  (buttonController.selectedPlan.value == 1)
+                                      ? CustomTheme.bgColor
+                                      : CustomTheme.grey,
                               shape: customradius(),
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("199 USD",
+                              title: Text("198 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
                                       .copyWith(
-                                        color:
-                                            (buttonController.selectedPlan == 1)
-                                                ? Colors.white
-                                                : Colors.black,
+                                        color: (buttonController
+                                                    .selectedPlan.value ==
+                                                1)
+                                            ? Colors.white
+                                            : Colors.black,
                                       )),
                               subtitle: Text("Every 12 Month",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
                                       .copyWith(
-                                        color:
-                                            (buttonController.selectedPlan == 1)
-                                                ? Colors.white
-                                                : Colors.black,
+                                        color: (buttonController
+                                                    .selectedPlan.value ==
+                                                1)
+                                            ? Colors.white
+                                            : Colors.black,
                                       )),
                               trailing: Icon(
                                 Icons.check_circle_outlined,
-                                color: (buttonController.selectedPlan == 1)
-                                    ? Colors.white
-                                    : Colors.black,
+                                color:
+                                    (buttonController.selectedPlan.value == 1)
+                                        ? Colors.white
+                                        : Colors.black,
                               ),
                             )),
                       ),
@@ -201,22 +208,26 @@ class _TrialScreenState extends State<TrialScreen> {
   }
 
   Future<void> makePayment(context) async {
+    final buttonController = Get.put(ButtonController());
+
     // await launchUrl(
     //     Uri.parse('https://buy.stripe.com/test_9AQ5ojaIYbMG1JScMN'));
+    print(buttonController.selectedPlan.value.toString());
     try {
-      paymentIntent = await createPaymentIntent('19.99', 'USD');
-      paymentIntent = await createPaymentIntent('199', 'USD');
+      paymentIntentMonthly = await createPaymentIntent('20', 'USD');
+      paymentIntentYearly = await createPaymentIntent('198', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntent['client_secret'],
-
+          paymentIntentClientSecret: (buttonController.selectedPlan.value == 0)
+              ? paymentIntentMonthly['client_secret']
+              : paymentIntentYearly['client_secret'],
           allowsDelayedPaymentMethods: true,
           // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
           // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
           style: ThemeMode.dark,
-          merchantDisplayName: 'Adnan',
+          merchantDisplayName: 'Instameal',
         ),
       )
           .then((value) {
@@ -260,7 +271,8 @@ class _TrialScreenState extends State<TrialScreen> {
                 ));
         print("succesful");
         updatePayment(context);
-        paymentIntent = null;
+        paymentIntentMonthly = null;
+        paymentIntentYearly = null;
       }).onError((error, stackTrace) {
         print('Error is:--->$error $stackTrace');
       });
