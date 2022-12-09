@@ -245,8 +245,7 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color,
                   .copyWith(color: CustomTheme.bgColor),
         ),
         (btn == false)
-            ? InkWell(
-                child: customButton2(context, color, color, "Add to List"))
+            ? InkWell(child: customButton2(context, color, color, "View"))
             : SizedBox()
       ],
     ),

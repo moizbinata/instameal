@@ -4,6 +4,7 @@ import 'package:instameal/utils/sizeconfig.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../utils/theme.dart';
 
 class IngredientList extends StatelessWidget {
@@ -18,15 +19,15 @@ class IngredientList extends StatelessWidget {
       backgroundColor: CustomTheme.bgColor2,
       key: _scaffoldKey,
       drawer: drawer(context),
-      appBar: customAppBar(
-        action: () {
-          if (_scaffoldKey.currentState.isDrawerOpen) {
-            _scaffoldKey.currentState.openEndDrawer();
-          } else {
-            _scaffoldKey.currentState.openDrawer();
-          }
-        },
-      ),
+      appBar: customAppBar(action: () {
+        if (_scaffoldKey.currentState.isDrawerOpen) {
+          _scaffoldKey.currentState.openEndDrawer();
+        } else {
+          _scaffoldKey.currentState.openDrawer();
+        }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
+      }),
       body: Container(
         height: SizeConfig.screenHeight,
         padding:

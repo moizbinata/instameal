@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../controllers/universalController.dart';
 import '../../controllers/weeklyController.dart';
 import '../../utils/constants.dart';
@@ -30,6 +31,8 @@ class Favourite extends StatelessWidget {
           } else {
             _scaffoldKey.currentState.openDrawer();
           }
+        }, action2: () {
+          showDialog(context: context, builder: (ctx) => notifDialog(ctx));
         }),
         backgroundColor: CustomTheme.bgColor2,
         body: ListView(children: [

@@ -7,6 +7,7 @@ import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/recipe.dart';
 import '../../components/components.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../controllers/universalController.dart';
 import '../../utils/sizeconfig.dart';
 import 'package:instameal/components/customappbar.dart';
@@ -47,6 +48,8 @@ class _WeekTableState extends State<WeekTable> {
         } else {
           _scaffoldKey.currentState.openDrawer();
         }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
       }),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),

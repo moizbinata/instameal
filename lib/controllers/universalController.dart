@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/models/allrecipemodel.dart';
 import 'package:instameal/models/planmodel.dart';
 import 'package:instameal/services/universalservices.dart';
 
@@ -8,6 +9,7 @@ import '../models/universal_model.dart';
 import '../services/weeklyservices.dart';
 
 class UniversalController extends GetxController {
+  RxList<AllRecipeModel> listofAllRecipe = <AllRecipeModel>[].obs;
   RxList<UniversalModel> listofUniversal = <UniversalModel>[].obs;
   RxList<PModel> listofPlans = <PModel>[].obs;
   RxList<Collection> listofFav = <Collection>[].obs;
@@ -31,6 +33,7 @@ class UniversalController extends GetxController {
     super.onInit();
     fetchUniversal();
     fetchPlans();
+    fetchAllRecipes();
     mart.value = box.read('mart');
     plan.value = box.read('plantype') ?? "";
   }
@@ -98,6 +101,17 @@ class UniversalController extends GetxController {
       listofPlans.assignAll(plans.data);
     } else {
       listofPlans.length = 0;
+    }
+    update();
+  }
+
+  Future<void> fetchAllRecipes() async {
+    await Future.delayed(Duration.zero);
+    var plans = await UniversalService.fetchAllRecipes();
+    if (plans.data.isNotEmpty) {
+      listofAllRecipe.assignAll(plans.data.reversed.toList());
+    } else {
+      listofAllRecipe.length = 0;
     }
     update();
   }

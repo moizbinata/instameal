@@ -3,8 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../utils/sizeconfig.dart';
 import '../utils/theme.dart';
+import 'notifdialog.dart';
 
-Widget customAppBar({action}) {
+Widget customAppBar({action, action2}) {
+  print("2");
+
   return AppBar(
     backgroundColor: CustomTheme.bgColor2,
     elevation: 0.0,
@@ -20,12 +23,23 @@ Widget customAppBar({action}) {
     ),
     actions: [
       IconButton(
-        onPressed: () {},
-        icon: FaIcon(
-          FontAwesomeIcons.bell,
-          color: CustomTheme.bgColor,
-        ),
-      ),
+          onPressed: action2,
+          icon: Stack(
+            children: [
+              FaIcon(
+                FontAwesomeIcons.bell,
+                color: CustomTheme.bgColor,
+              ),
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: FaIcon(
+                    FontAwesomeIcons.solidCircle,
+                    color: CustomTheme.red,
+                    size: SizeConfig.heightMultiplier,
+                  ))
+            ],
+          )),
     ],
   );
 }

@@ -8,6 +8,7 @@ import 'package:instameal/views/details/shopitems.dart';
 import 'package:instameal/views/details/shopitems2.dart';
 import '../../components/components.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import 'package:instameal/components/customappbar.dart';
@@ -36,6 +37,8 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
         } else {
           _scaffoldKey.currentState.openDrawer();
         }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
       }),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),

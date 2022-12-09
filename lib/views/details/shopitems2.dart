@@ -8,6 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../utils/theme.dart';
 
 class ShopItems2 extends StatefulWidget {
@@ -42,15 +43,15 @@ class _ShopItems2State extends State<ShopItems2> {
       backgroundColor: CustomTheme.bgColor2,
       key: _scaffoldKey,
       drawer: drawer(context),
-      appBar: customAppBar(
-        action: () {
-          if (_scaffoldKey.currentState.isDrawerOpen) {
-            _scaffoldKey.currentState.openEndDrawer();
-          } else {
-            _scaffoldKey.currentState.openDrawer();
-          }
-        },
-      ),
+      appBar: customAppBar(action: () {
+        if (_scaffoldKey.currentState.isDrawerOpen) {
+          _scaffoldKey.currentState.openEndDrawer();
+        } else {
+          _scaffoldKey.currentState.openDrawer();
+        }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
+      }),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
         height: SizeConfig.screenHeight,

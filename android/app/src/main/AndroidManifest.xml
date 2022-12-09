@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.instameal">
+    package="com.insta.instameal">
    <application
         android:label="Instameal"
         android:name="${applicationName}"

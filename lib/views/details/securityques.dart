@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:http/http.dart' as http;
+import 'package:instameal/views/details/changepassword.dart';
 import '../../components/components.dart';
+import '../../models/loginmodel.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 
@@ -144,6 +148,7 @@ class _SecureQuesState extends State<SecureQues> {
   }
 
   Future<void> secureQuestions(context) async {
+    GetStorage box = GetStorage();
     var client = http.Client();
     String url =
         "${Constants.baseUrl}secureques/Email/${emailController.text.toString()}/Question/${_chosenValue.toString()}/Answer/${answerController.text.toString()}";
@@ -155,8 +160,11 @@ class _SecureQuesState extends State<SecureQues> {
     var response = await client.get(Uri.parse(url), headers: apiHeaders);
     print(response.body);
     if (response.body != null && response.statusCode == 200) {
+      var loginModel =
+          LoginModel.fromJson(jsonDecode(response.body.toString()));
+      box.write('userid', loginModel.data.first.userid.toString());
       Fluttertoast.showToast(msg: 'Successfully Confirmed');
-      Constants.navigatepush(context, SecureQues());
+      Constants.navigatepush(context, ChangePass());
       // Navigator.pop(context);
     } else {
       Fluttertoast.showToast(msg: "Something went wrong");

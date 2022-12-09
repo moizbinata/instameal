@@ -1,44 +1,38 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/models/allrecipemodel.dart';
 
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
 import '../../components/notifdialog.dart';
-import '../../controllers/searchcategcontroller.dart';
-import '../../models/searchcategrecipemodel.dart';
 import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import '../details/recipe.dart';
 
-class SearchCategRecipe extends StatefulWidget {
-  SearchCategRecipe({Key key, this.scategName, this.scategId})
-      : super(key: key);
-  final scategName;
-  final scategId;
+class AllRecipes extends StatefulWidget {
+  const AllRecipes({Key key}) : super(key: key);
 
   @override
-  State<SearchCategRecipe> createState() => _SearchCategRecipeState();
+  State<AllRecipes> createState() => _AllRecipesState();
 }
 
-class _SearchCategRecipeState extends State<SearchCategRecipe> {
+class _AllRecipesState extends State<AllRecipes> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<SCRecipeModel> filteredList = <SCRecipeModel>[];
+  List<AllRecipeModel> allrecipeList = <AllRecipeModel>[];
   TextEditingController searchContr = TextEditingController();
-  final searchCategContr = Get.put(SearchCategController());
+  final universalController = Get.put(UniversalController());
 
   String searchValue = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    filteredList = searchCategContr.filteredSCRecipe;
+    allrecipeList = universalController.listofAllRecipe;
   }
 
   @override
@@ -65,7 +59,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
           child: Column(
             children: [
               Text(
-                widget.scategName,
+                "All Recipes List",
                 style: Theme.of(context).textTheme.bodyLarge.copyWith(
                       color: CustomTheme.bgColor,
                     ),
@@ -89,12 +83,12 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                     fontWeight: FontWeight.w500),
                 decoration: customDecor(Icons.search, labelText: 'Search'),
               ),
-              // GetBuilder<SearchCategController>(
-              //   init: SearchCategController(),
+              // GetBuilder<universalControlleroller>(
+              //   init: universalControlleroller(),
               //   builder: (_) {
-              // print(filteredList.length);
+              // print(allrecipeList.length);
               //return
-              (filteredList.length < 1)
+              (allrecipeList.length < 1)
                   ? SizedBox(
                       height: SizeConfig.screenHeight,
                       child: Column(
@@ -118,7 +112,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                   : GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: filteredList.length,
+                      itemCount: allrecipeList.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 1,
@@ -131,7 +125,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                             context,
                             RecipeDetail(
                               modelType: "breakfast",
-                              recipeModel: filteredList[index],
+                              recipeModel: allrecipeList[index],
                             ),
                           );
                           // Navigator.push(
@@ -139,7 +133,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                           //   MaterialPageRoute(
                           //     builder: (context) => RecipeDetail(
                           //       modelType: "breakfast",
-                          //       recipeModel: filteredList[index],
+                          //       recipeModel: allrecipeList[index],
                           //     ),
                           //   ),
                           // );
@@ -166,7 +160,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                                   height: SizeConfig.heightMultiplier * 20,
                                   width: SizeConfig.heightMultiplier * 20,
                                   imageUrl: Constants.baseImageUrl +
-                                      filteredList[index].imagesUrl,
+                                      allrecipeList[index].imagesUrl,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Center(
                                       child: Center(
@@ -178,7 +172,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                               ),
                               space0(),
                               Text(
-                                filteredList[index].recipeName.toString(),
+                                allrecipeList[index].recipeName.toString(),
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -201,7 +195,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
 
   refreshList() {
     setState(() {
-      filteredList = searchCategContr.filteredSCRecipe
+      allrecipeList = universalController.listofAllRecipe
           .where((p0) =>
               p0.recipeName.toLowerCase().contains(searchValue.toLowerCase()))
           .toList();

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:http/http.dart' as http;
 import '../../components/components.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
+import '../login.dart';
 
 class ChangePass extends StatefulWidget {
   ChangePass({Key key}) : super(key: key);
@@ -90,7 +92,7 @@ class _ChangePassState extends State<ChangePass> {
     print(response.body);
     if (response.body != null && response.statusCode == 200) {
       Fluttertoast.showToast(msg: 'Successfully updated');
-      Navigator.pop(context);
+      Get.offAll(Login());
     } else {
       Fluttertoast.showToast(msg: "Something went wrong");
     }

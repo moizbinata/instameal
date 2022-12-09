@@ -7,6 +7,7 @@ import 'package:instameal/controllers/weeklyController.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../utils/constants.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
@@ -30,6 +31,8 @@ class CartRecipes extends StatelessWidget {
         } else {
           _scaffoldKey.currentState.openDrawer();
         }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
       }),
       backgroundColor: CustomTheme.bgColor2,
       body: ListView(

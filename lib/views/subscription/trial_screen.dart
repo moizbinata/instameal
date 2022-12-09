@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
 import '../../utils/constants.dart';
@@ -14,7 +14,6 @@ import '../../utils/network.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
-
 import '../login.dart';
 
 class TrialScreen extends StatefulWidget {
@@ -25,6 +24,9 @@ class TrialScreen extends StatefulWidget {
 }
 
 class _TrialScreenState extends State<TrialScreen> {
+  bool payLoader = false;
+  bool isSubscriberd = false;
+  int coins = 0;
   Map<String, dynamic> paymentIntentMonthly;
   Map<String, dynamic> paymentIntentYearly;
   GetStorage box = GetStorage();
@@ -56,6 +58,8 @@ class _TrialScreenState extends State<TrialScreen> {
                           ),
                         ],
                       ),
+                      Icon(isSubscriberd ? Icons.paid : Icons.lock),
+                      Text(coins.toString()),
                       Text(
                         "Signup and enjoy free 14 days more",
                         style: Theme.of(context)
@@ -162,19 +166,15 @@ class _TrialScreenState extends State<TrialScreen> {
                       ),
                       InkWell(
                           onTap: () async {
-                            // DateTime now = DateTime.now();
-                            // DateTime startDate =
-                            //     DateTime.utc(now.year, now.month, now.day);
-                            // DateTime endDate =
-                            //     DateTime.utc(now.year, now.month, now.day + 14);
-                            // int startTrial =
-                            //     startDate.millisecondsSinceEpoch ~/ 1000;
-                            // int endtrial = endDate.millisecondsSinceEpoch ~/ 1000;
-
-                            // print(startTrial);
-                            // print(endtrial);
-                            // updatePayment(context);
-                            await makePayment(context);
+                            payLoader ? null : fetchOffers();
+                            // try {
+                            //   await Purchases.purchaseProduct('id_subs');
+                            //   setState(() {
+                            //     coins += 100;
+                            //   });
+                            // } catch (e) {
+                            //   debugPrint(e.toString());
+                            // }
                           },
                           child: customButton(context, Colors.white,
                               CustomTheme.bgColor, "Continue to Meal Plan")),
@@ -205,6 +205,27 @@ class _TrialScreenState extends State<TrialScreen> {
                     ])),
           ),
         ));
+  }
+
+  fetchOffers() async {
+    final offerings = await PurchaseApi.fetchOffers();
+    if (offerings.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No plans found')));
+    } else {
+      final packages = offerings
+          .map((e) => e.availablePackages)
+          .expand((element) => element)
+          .toList();
+      Fluttertoast.showToast(
+          msg: "Upgrade your plan",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   Future<void> makePayment(context) async {
@@ -367,5 +388,19 @@ class _TrialScreenState extends State<TrialScreen> {
     } else {
       Fluttertoast.showToast(msg: "Something went wrong");
     }
+  }
+}
+
+class PurchaseApi {
+  static const _apiKey = '';
+  static Future init() async {
+    await Purchases.setDebugLogsEnabled(true);
+    await PurchasesConfiguration(_apiKey);
+  }
+
+  static Future<List<Offering>> fetchOffers() async {
+    final offerings = await Purchases.getOfferings();
+    final current = offerings.current;
+    return current == null ? [] : [current];
   }
 }

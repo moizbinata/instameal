@@ -10,7 +10,7 @@ class SearchCategController extends GetxController {
   RxList<SCategModel> listofSCateg = <SCategModel>[].obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     // TODO: implement onInit
     super.onInit();
     fetchSearchCategRecipeController();

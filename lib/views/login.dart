@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
@@ -13,6 +14,7 @@ import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../components/components.dart';
+import '../components/customdrawer.dart';
 import '../controllers/universalController.dart';
 import '../models/loginmodel.dart';
 import '../utils/network.dart';
@@ -69,6 +71,14 @@ class _LoginState extends State<Login> {
             physics: AlwaysScrollableScrollPhysics(),
             children: [
               space2(),
+              Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                    onTap: () {
+                      launchEmailSubmission();
+                    },
+                    child: FaIcon(FontAwesomeIcons.headset)),
+              ),
               Image.asset(
                 "assets/images/logo.png",
                 height: SizeConfig.heightMultiplier * 13,
@@ -480,6 +490,7 @@ class _LoginState extends State<Login> {
         setState(() {
           loginLoader = false;
         });
+        print("userid" + loginModel.data[0].userid.toString());
         if (DateTime.parse(loginModel.data[0].subscriptionEnd)
                 .isAfter(formattedDate) &&
             loginModel.data[0].paymentStatus == "Paid")

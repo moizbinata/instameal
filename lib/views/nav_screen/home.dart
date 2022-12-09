@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/notifdialog.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
@@ -43,6 +44,8 @@ class _HomeState extends State<Home> {
           } else {
             _scaffoldKey.currentState.openDrawer();
           }
+        }, action2: () {
+          showDialog(context: context, builder: (ctx) => notifDialog(ctx));
         }),
         backgroundColor: CustomTheme.bgColor2,
         body: SafeArea(
@@ -57,16 +60,6 @@ class _HomeState extends State<Home> {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                    // Container(
-                    //   padding: EdgeInsets.symmetric(
-                    //     horizontal: SizeConfig.heightMultiplier * 2,
-                    //     vertical: SizeConfig.heightMultiplier * 0.5,
-                    //   ),
-                    //   child: customField(passwordController, "Search",
-                    //       icon: Icons.search,
-                    //       bgcolor: CustomTheme.grey,
-                    //       iconColor: Colors.grey),
-                    // ),
                     //week banner
                     SizedBox(
                       height: SizeConfig.heightMultiplier * 24,

@@ -6,6 +6,7 @@ import 'package:instameal/views/details/changepassword.dart';
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 
@@ -19,15 +20,15 @@ class Profile extends StatelessWidget {
       floatingActionButton: floatButton(context),
       key: _scaffoldKey,
       drawer: drawer(context),
-      appBar: customAppBar(
-        action: () {
-          if (_scaffoldKey.currentState.isDrawerOpen) {
-            _scaffoldKey.currentState.openEndDrawer();
-          } else {
-            _scaffoldKey.currentState.openDrawer();
-          }
-        },
-      ),
+      appBar: customAppBar(action: () {
+        if (_scaffoldKey.currentState.isDrawerOpen) {
+          _scaffoldKey.currentState.openEndDrawer();
+        } else {
+          _scaffoldKey.currentState.openDrawer();
+        }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
+      }),
       backgroundColor: CustomTheme.bgColor2,
       body: ListView(
         children: [
