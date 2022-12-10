@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/tab_navigator.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/login.dart';
@@ -20,6 +21,7 @@ class BottomNavigator extends StatefulWidget {
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
+  GetStorage box = GetStorage();
   // int _currentPage = 0;
   List<String> pageKeys = [
     "Meal Plans",
@@ -79,20 +81,23 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     return isFirstRouteInCurrentTab;
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   final UniversalController universalController =
-  //       Get.put(UniversalController());
-  //   universalController.currentPage.value = 1;
-  //   if (universalController.navigatorKeys["Shopping List"].currentState !=
-  //       null) {
-  //     universalController.navigatorKeys["Shopping List"].currentState
-  //         .popUntil((route) => route.isFirst);
-  //     universalController.currentPage.value = 1;
-  //   }
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (box.read('firsttime').toString() == "yes") {
+      final UniversalController universalController =
+          Get.put(UniversalController());
+      universalController.currentPage.value = 1;
+      if (universalController.navigatorKeys["Shopping List"].currentState !=
+          null) {
+        universalController.navigatorKeys["Shopping List"].currentState
+            .popUntil((route) => route.isFirst);
+        universalController.currentPage.value = 1;
+      }
+      box.write('firsttime', 'no');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -6,6 +8,7 @@ import 'package:instameal/controllers/buttonController.dart';
 import 'package:instameal/controllers/notifcontroller.dart';
 import 'package:instameal/controllers/searchcategcontroller.dart';
 import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
@@ -28,12 +31,14 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
+  final UniversalController universalController =
+      Get.put(UniversalController());
+  final VideoController videoController = Get.put(VideoController());
   final ButtonController buttonController = Get.put(ButtonController());
   final WeeklyController weeklyController = Get.put(WeeklyController());
   final SearchCategController searchCategController =
       Get.put(SearchCategController());
-  final UniversalController universalController =
-      Get.put(UniversalController());
+
   final NotifController notifController = Get.put(NotifController());
   DateTime now = DateTime.now();
   GetStorage box = GetStorage();
@@ -43,6 +48,11 @@ class MyApp extends StatelessWidget {
     // Get.lazyPut(()=>DataContr)
     return LayoutBuilder(builder: (context, constraints) {
       return OrientationBuilder(builder: (context, orientation) {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+        AutoOrientation.portraitAutoMode();
         SizeConfig().init(constraints, orientation);
 
         return GetMaterialApp(

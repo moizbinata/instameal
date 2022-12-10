@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:instameal/views/searchcateg/searchcategrecipe.dart';
 
 import '../../components/components.dart';
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
+import '../../components/notifdialog.dart';
 import '../../controllers/searchcategcontroller.dart';
 import '../../models/searchcategmodel.dart';
 import '../../utils/constants.dart';
@@ -45,6 +47,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
         } else {
           _scaffoldKey.currentState.openDrawer();
         }
+      }, action2: () {
+        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
       }),
       backgroundColor: CustomTheme.bgColor2,
       body: Container(
@@ -61,6 +65,14 @@ class _SearchCategoriesState extends State<SearchCategories> {
               space0(),
               InkWell(
                 onTap: () {
+                  Fluttertoast.showToast(
+                      msg: "Loading, please wait",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                   Constants.navigatepush(
                     context,
                     AllRecipes(),

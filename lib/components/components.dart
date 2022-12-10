@@ -252,6 +252,111 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color,
   );
 }
 
+Widget videoBox(context, imagesUrl, day, recipeName, dayName, color,
+    {btn = false}) {
+  print(Constants.baseImageUrl + imagesUrl);
+  return Container(
+    margin: EdgeInsets.all(SizeConfig.heightMultiplier),
+    height: SizeConfig.heightMultiplier * 20,
+    width: SizeConfig.heightMultiplier * 30,
+    child: Column(
+      crossAxisAlignment:
+          (btn == true) ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            Positioned(
+                child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                color: CustomTheme.bgColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              child: CachedNetworkImage(
+                height: (btn == true)
+                    ? SizeConfig.heightMultiplier * 12
+                    : SizeConfig.heightMultiplier * 20,
+                width: (btn == true)
+                    ? SizeConfig.heightMultiplier * 12
+                    : SizeConfig.heightMultiplier * 30,
+                imageUrl: Constants.baseImageUrl + imagesUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Center(child: Center(child: CircularProgressIndicator())),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/breakfast.png"),
+              ),
+            )),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.heightMultiplier * 2,
+                    vertical: SizeConfig.heightMultiplier * 1.5),
+                decoration: BoxDecoration(
+                  color: CustomTheme.bgColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
+                child: Text(
+                  day.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      .copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: CircleAvatar(
+                backgroundColor: Colors.black.withOpacity(0.1),
+                child: FaIcon(
+                  FontAwesomeIcons.play,
+                  size: SizeConfig.heightMultiplier * 5,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              dayName.toString(),
+              overflow: TextOverflow.ellipsis,
+              style: (btn == false)
+                  ? Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      )
+                  : Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      .copyWith(color: CustomTheme.bgColor),
+            ),
+            (btn == false)
+                ? InkWell(child: customButton2(context, color, color, "View"))
+                : SizedBox()
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
 Widget recipeBox(context, imgUrl, recipeName) {
   return SizedBox(
     height: SizeConfig.heightMultiplier * 13,

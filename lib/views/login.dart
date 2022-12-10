@@ -487,6 +487,7 @@ class _LoginState extends State<Login> {
         box.write('trialStatus', loginModel.data[0].trialStatus);
         box.write('paymentStatus', loginModel.data[0].paymentStatus);
         box.write('gender', loginModel.data[0].gender);
+        box.write('firsttime', 'yes');
         setState(() {
           loginLoader = false;
         });

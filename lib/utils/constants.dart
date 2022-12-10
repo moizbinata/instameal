@@ -8,6 +8,7 @@ class Constants {
   // static final baseImageUrl = "http://192.168.18.168:3000/assets/";
   static final baseUrl = "https://paaocenter.com/";
   static final baseImageUrl = "https://paaocenter.com/assets/";
+  static final baseVideoUrl = "https://paaocenter.com/assets/videos/";
   static final colorList = [
     Color(0xff9fd6e5),
     Color(0xfffdd47d),

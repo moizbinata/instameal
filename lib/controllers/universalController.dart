@@ -31,9 +31,9 @@ class UniversalController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    fetchAllRecipes();
     fetchUniversal();
     fetchPlans();
-    fetchAllRecipes();
     mart.value = box.read('mart');
     plan.value = box.read('plantype') ?? "";
   }
