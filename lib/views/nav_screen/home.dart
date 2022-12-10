@@ -11,6 +11,7 @@ import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/views/details/playrecipe.dart';
+import 'package:instameal/views/details/recipevideo.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
@@ -607,11 +608,10 @@ class _HomeState extends State<Home> {
                                     return InkWell(
                                       onTap: () {
                                         Constants.navigatepush(
-                                          context,
-                                          ChewieDemo(
-                                            videoModel: _.listofVideos[index],
-                                          ),
-                                        );
+                                            context,
+                                            Recipevideo(
+                                              videoModel: _.listofVideos[index],
+                                            ));
                                       },
                                       child: videoBox(
                                         context,
