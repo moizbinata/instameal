@@ -418,22 +418,25 @@ RoundedRectangleBorder customradius() {
 }
 
 Widget bulletPoints(context, {label}) {
-  return Row(
-    children: [
-      Expanded(
-        flex: 1,
-        child: const Icon(
-          Icons.check_circle_outlined,
-          color: CustomTheme.bgColor,
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier),
+    child: Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: const Icon(
+            Icons.check_circle_outlined,
+            color: CustomTheme.bgColor,
+          ),
         ),
-      ),
-      Expanded(
-        flex: 6,
-        child: Text(label,
-            style: Theme.of(context).textTheme.bodySmall.copyWith(
-                  color: Colors.black,
-                )),
-      )
-    ],
+        Expanded(
+          flex: 6,
+          child: Text(label,
+              style: Theme.of(context).textTheme.bodySmall.copyWith(
+                    color: Colors.black,
+                  )),
+        )
+      ],
+    ),
   );
 }

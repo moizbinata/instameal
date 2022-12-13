@@ -29,6 +29,7 @@ class RecipeDetail extends StatelessWidget {
     ingredCount = 0;
     directionCount = 0;
     return Scaffold(
+      floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
       body: CustomScrollView(
         slivers: [
@@ -245,8 +246,8 @@ class RecipeDetail extends StatelessWidget {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
+                                  backgroundColor: Colors.white,
+                                  textColor: Colors.black,
                                   fontSize: 16.0);
                             },
                             icon: FaIcon(
@@ -490,6 +491,7 @@ class RecipeDetail extends StatelessWidget {
                             },
                           ),
                         ),
+
                         space0(),
                         space0(),
                         Text(
@@ -524,13 +526,21 @@ class RecipeDetail extends StatelessWidget {
                                                     .toString()
                                                     .contains("Kcal"))
                                                 ? Color(0xffffb2d5)
-                                                : CustomTheme.bgColor,
+                                                : (recipeModel
+                                                        .nutritPerServe[index]
+                                                        .toString()
+                                                        .contains("Protein"))
+                                                    ? Color.fromARGB(
+                                                        255, 57, 197, 221)
+                                                    : CustomTheme.bgColor,
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Center(
                                   child: Text(
                                     recipeModel.nutritPerServe[index],
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        .copyWith(color: Colors.white),
                                   ),
                                 ),
                               );
@@ -572,14 +582,20 @@ class RecipeDetail extends StatelessWidget {
                                                             .toString() ==
                                                         "V")
                                                     ? Color(0xffffb2d5)
-                                                    : CustomTheme.bgColor,
+                                                    : (recipeModel.keys[index]
+                                                                .toString() ==
+                                                            "N")
+                                                        ? Color(0xffffb2d5)
+                                                        : CustomTheme.bgColor,
                                         borderRadius:
                                             BorderRadius.circular(100)),
                                     child: Center(
                                         child: Text(
                                       recipeModel.keys[index],
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          .copyWith(color: Colors.white),
                                     )));
                               },
                             ),

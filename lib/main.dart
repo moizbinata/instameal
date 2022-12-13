@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
                     ? (now.isAfter(DateTime.parse(
                             box.read('subscriptionEnd').toString())))
                         ? TrialScreen()
-                        : BottomNavigator()
+                        : BottomNavigator() //BottomNavigator
                     : SplashScreen());
       });
     });

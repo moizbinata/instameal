@@ -90,7 +90,7 @@ class _ShopItemsState extends State<ShopItems> {
                     ),
                     space0(),
                     Container(
-                      height: SizeConfig.screenHeight,
+                      height: SizeConfig.screenHeight * 10,
                       child: TabBarView(
                         children: List.generate(
                           widget.itemList.items.length,

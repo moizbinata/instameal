@@ -39,18 +39,28 @@ class VideoModel {
     this.title,
     this.imageUrl,
     this.videoUrl,
+    this.directions,
+    this.ingredients,
   });
 
   int videoid;
   String title;
   String imageUrl;
   String videoUrl;
+  List<String> directions;
+  List<String> ingredients;
 
   factory VideoModel.fromJson(Map<String, dynamic> json) => VideoModel(
         videoid: json["videoid"],
         title: json["title"],
         imageUrl: json["imageUrl"],
         videoUrl: json["videoUrl"],
+        directions: json["directions"] != null
+            ? json['directions'].toString().split('***').toList()
+            : [],
+        ingredients: json["ingredients"] != null
+            ? json['ingredients'].toString().split('***').toList()
+            : [],
       );
 
   Map<String, dynamic> toJson() => {

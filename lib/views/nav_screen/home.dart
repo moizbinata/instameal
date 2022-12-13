@@ -10,7 +10,9 @@ import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
+import 'package:instameal/views/details/latestVideo.dart';
 import 'package:instameal/views/details/playrecipe.dart';
+import 'package:instameal/views/details/recipeplay.dart';
 import 'package:instameal/views/details/recipevideo.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
@@ -88,8 +90,8 @@ class _HomeState extends State<Home> {
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
+                                    backgroundColor: Colors.white,
+                                    textColor: Colors.black,
                                     fontSize: 16.0)),
                                 onDoubleTap: () {
                                   Fluttertoast.showToast(
@@ -97,8 +99,8 @@ class _HomeState extends State<Home> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
                                       fontSize: 16.0);
                                 },
                                 onTap: () async {
@@ -107,8 +109,8 @@ class _HomeState extends State<Home> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
                                       fontSize: 16.0);
                                   int week = _.currentRxWeek.value;
                                   await weeklyController.fetchWeekly(
@@ -595,7 +597,7 @@ class _HomeState extends State<Home> {
                             children: [
                               space0(),
                               Text(
-                                "   Top Collections",
+                                "   Latest Videos",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               SizedBox(
@@ -609,8 +611,9 @@ class _HomeState extends State<Home> {
                                       onTap: () {
                                         Constants.navigatepush(
                                             context,
-                                            Recipevideo(
-                                              videoModel: _.listofVideos[index],
+                                            RecipePlayer(
+                                              latVideoData:
+                                                  _.listofVideos[index],
                                             ));
                                       },
                                       child: videoBox(

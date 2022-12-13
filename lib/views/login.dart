@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
       TextEditingController(text: 'decrs@gmail.com');
 
   TextEditingController passwordController =
-      TextEditingController(text: 'ab123');
+      TextEditingController(text: 'asdf');
 
   //signup
   TextEditingController usernameController2 = TextEditingController();

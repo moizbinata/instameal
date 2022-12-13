@@ -105,88 +105,76 @@ class _ShopItems2State extends State<ShopItems2> {
                           (index) {
                             return DefaultTabController(
                               length: widget.itemList[index].items.length,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: SizeConfig.heightMultiplier * 5,
-                                      width: SizeConfig.screenWidth,
-                                      child: TabBar(
-                                        isScrollable: true,
-                                        indicatorColor: CustomTheme.bgColor,
-                                        tabs: List.generate(
-                                            widget.itemList[index].items.length,
-                                            (indexj) {
-                                          return Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: SizeConfig
-                                                    .heightMultiplier),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: SizeConfig
-                                                    .heightMultiplier),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  widget.itemList[index]
-                                                      .items[indexj],
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall
-                                                      .copyWith(
-                                                          color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }),
-                                      ),
-                                    ),
-                                    space0(),
-                                    SingleChildScrollView(
-                                      child: Container(
-                                        height: SizeConfig.screenHeight,
-                                        child: TabBarView(
-                                          children: List.generate(
-                                            widget.itemList[index].items.length,
-                                            (indexh) {
-                                              return (martUrl == "")
-                                                  ? Center(
-                                                      child: Text(
-                                                        "Select shop first",
-                                                      ),
-                                                    )
-                                                  : SizedBox(
-                                                      height: SizeConfig
-                                                          .screenHeight,
-                                                      width: SizeConfig
-                                                          .screenWidth,
-                                                      child: WebView(
-                                                        zoomEnabled: true,
-                                                        javascriptMode:
-                                                            JavascriptMode
-                                                                .unrestricted,
-                                                        initialUrl: martUrl +
-                                                            widget
-                                                                .itemList[index]
-                                                                .items[indexh]
-                                                                .toString(),
-                                                      ),
-                                                    );
-                                              // Text(widget.itemList[index]
-                                              //     .items[indexh]);
-                                            },
+                              child: ListView(
+                                children: [
+                                  Container(
+                                    height: SizeConfig.heightMultiplier * 5,
+                                    width: SizeConfig.screenWidth,
+                                    child: TabBar(
+                                      isScrollable: true,
+                                      indicatorColor: CustomTheme.bgColor,
+                                      tabs: List.generate(
+                                          widget.itemList[index].items.length,
+                                          (indexj) {
+                                        return Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  SizeConfig.heightMultiplier),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                widget.itemList[index]
+                                                    .items[indexj],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                  space0(),
+                                  Container(
+                                    height: SizeConfig.screenHeight * 6,
+                                    child: TabBarView(
+                                      children: List.generate(
+                                        widget.itemList[index].items.length,
+                                        (indexh) {
+                                          return (martUrl == "")
+                                              ? Center(
+                                                  child: Text(
+                                                    "Select shop first",
+                                                  ),
+                                                )
+                                              : WebView(
+                                                  zoomEnabled: true,
+                                                  javascriptMode: JavascriptMode
+                                                      .unrestricted,
+                                                  initialUrl: martUrl +
+                                                      widget.itemList[index]
+                                                          .items[indexh]
+                                                          .toString(),
+                                                );
+                                          // Text(widget.itemList[index]
+                                          //     .items[indexh]);
+                                        },
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             );
                           },

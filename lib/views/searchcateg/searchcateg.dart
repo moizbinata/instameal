@@ -70,8 +70,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                       fontSize: 16.0);
                   Constants.navigatepush(
                     context,

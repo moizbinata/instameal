@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,11 +37,11 @@ class _TrialScreenState extends State<TrialScreen> {
 
     return Scaffold(
         backgroundColor: CustomTheme.bgColor2,
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Container(
-                height: SizeConfig.screenHeight,
-                padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+        body: SafeArea(
+          child: Container(
+              height: SizeConfig.screenHeight,
+              padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+              child: SingleChildScrollView(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -58,15 +59,16 @@ class _TrialScreenState extends State<TrialScreen> {
                           ),
                         ],
                       ),
-                      Icon(isSubscriberd ? Icons.paid : Icons.lock),
-                      Text(coins.toString()),
+                      // Icon(isSubscriberd ? Icons.paid : Icons.lock),
+                      // Text(coins.toString()),
                       Text(
-                        "Signup and enjoy free 14 days more",
+                        "Sign up for Free 14 days Trial",
                         style: Theme.of(context)
                             .textTheme
                             .headline5
                             .copyWith(color: CustomTheme.bgColor),
                       ),
+                      space0(),
                       bulletPoints(context,
                           label: "More Than Just a Meal Plan."),
                       bulletPoints(
@@ -75,12 +77,51 @@ class _TrialScreenState extends State<TrialScreen> {
                             "With a InstaMeals subscription, it`s like getting a personal chef and dietitian all in one.",
                       ),
                       bulletPoints(context,
-                          label: "Upto 50% savings per saving vs Blue Apron."),
+                          label: "The easiest way to eat healthy."),
                       bulletPoints(
                         context,
                         label:
-                            "Optionally send your shopping list to instacart.",
+                            "Good for your groceries, simple recipes, recommended just for you.",
                       ),
+
+                      bulletPoints(
+                        context,
+                        label: "Youre always in control.",
+                      ),
+                      bulletPoints(
+                        context,
+                        label:
+                            "Take our suggestions or choose exactly what you want",
+                      ),
+                      bulletPoints(
+                        context,
+                        label: "Calorie & Portion Controlled",
+                      ),
+                      bulletPoints(
+                        context,
+                        label: "Nutritionally Balanced",
+                      ),
+                      bulletPoints(
+                        context,
+                        label:
+                            "Printable weekly shopping list/send shopping list to instacart",
+                      ),
+                      bulletPoints(
+                        context,
+                        label:
+                            "Access to 5000 breakfast, lunch, snacks, dinner, dessert and holidays recipes",
+                      ),
+
+                      bulletPoints(
+                        context,
+                        label: "Hit Pause Anytime",
+                      ),
+                      bulletPoints(
+                        context,
+                        label: "Keep it USD 19.99 & USD 199",
+                      ),
+                      space0(),
+
                       Obx((() => ListTile(
                             onTap: (() =>
                                 buttonController.selectedPlan.value = 0),
@@ -92,7 +133,7 @@ class _TrialScreenState extends State<TrialScreen> {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("20 USD",
+                            title: Text("19.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -121,6 +162,7 @@ class _TrialScreenState extends State<TrialScreen> {
                                   : Colors.black,
                             ),
                           ))),
+                      space0(),
                       Obx(
                         (() => ListTile(
                               onTap: (() =>
@@ -133,7 +175,7 @@ class _TrialScreenState extends State<TrialScreen> {
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("198 USD",
+                              title: Text("199 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -164,26 +206,30 @@ class _TrialScreenState extends State<TrialScreen> {
                               ),
                             )),
                       ),
+                      space0(),
+
                       InkWell(
-                          onTap: () async {
-                            payLoader ? null : fetchOffers();
-                            // try {
-                            //   await Purchases.purchaseProduct('id_subs');
-                            //   setState(() {
-                            //     coins += 100;
-                            //   });
-                            // } catch (e) {
-                            //   debugPrint(e.toString());
-                            // }
-                          },
+                          // onTap: () async {
+                          // payLoader ? null : fetchOffers();
+                          // try {
+                          //   await Purchases.purchaseProduct('id_subs');
+                          //   setState(() {
+                          //     coins += 100;
+                          //   });
+                          // } catch (e) {
+                          //   debugPrint(e.toString());
+                          // }
+                          // },
                           child: customButton(context, Colors.white,
                               CustomTheme.bgColor, "Continue to Meal Plan")),
+                      space0(),
                       Text(
                         "Your iTunes account will be charged within 24 hours of the end of your trial period ending and within 24 hours of the end of the current term for each renewal, cancellation must happen at least 24 hours before the end of the period. Subscriptions may be managed and auto-renewal turned off by going to your iTunes Account Settings after purchase. Any unused portion of a free trial period will be forfeited if you purchase a subscription prior to that trial period ending",
                         style: Theme.of(context).textTheme.bodySmall.copyWith(
                               color: CustomTheme.bgColor,
                             ),
                       ),
+                      space0(),
                       InkWell(
                         onTap: () {},
                         child: Text(
@@ -193,17 +239,9 @@ class _TrialScreenState extends State<TrialScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: 0,
-                      ),
-                    ])),
-          ),
+                      space1(),
+                    ]),
+              )),
         ));
   }
 
@@ -222,8 +260,8 @@ class _TrialScreenState extends State<TrialScreen> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
           fontSize: 16.0);
     }
   }
@@ -399,8 +437,12 @@ class PurchaseApi {
   }
 
   static Future<List<Offering>> fetchOffers() async {
-    final offerings = await Purchases.getOfferings();
-    final current = offerings.current;
-    return current == null ? [] : [current];
+    try {
+      final offerings = await Purchases.getOfferings();
+      final current = offerings.current;
+      return current == null ? [] : [current];
+    } on PlatformException catch (e) {
+      return [];
+    }
   }
 }
