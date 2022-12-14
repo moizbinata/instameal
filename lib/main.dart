@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
   final WeeklyController weeklyController = Get.put(WeeklyController());
   final SearchCategController searchCategController =
       Get.put(SearchCategController());
-
   final NotifController notifController = Get.put(NotifController());
   DateTime now = DateTime.now();
   GetStorage box = GetStorage();

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
-
+import 'dart:math' as math;
 import '../../utils/theme.dart';
 
 class HowtoCook extends StatelessWidget {
@@ -35,29 +36,70 @@ class HowtoCook extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SizedBox(
-          height: SizeConfig.screenHeight,
-          width: SizeConfig.screenWidth,
-          child: ListView.builder(
-              itemCount: directionsList.length,
-              physics: AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.heightMultiplier * 2),
-                  height: SizeConfig.screenHeight,
-                  width: SizeConfig.screenWidth,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Step no: ${index + 1}"),
-                      space2(),
-                      Text(directionsList[index].toString()),
-                    ],
-                  ),
-                );
-              })),
+        height: SizeConfig.screenHeight,
+        width: SizeConfig.screenWidth,
+        child: Column(
+          children: [
+            FaIcon(FontAwesomeIcons.chevronUp),
+            SizedBox(
+                height: SizeConfig.screenHeight * 0.7,
+                width: SizeConfig.screenWidth,
+                child: ListView.builder(
+                    itemCount: directionsList.length,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.heightMultiplier * 2,
+                            vertical: SizeConfig.heightMultiplier * 3),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.heightMultiplier * 2,
+                            vertical: SizeConfig.heightMultiplier * 3),
+                        height: SizeConfig.screenHeight * 0.7,
+                        width: SizeConfig.screenWidth,
+                        child: Transform.rotate(
+                          angle: -math.pi / -2,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.heightMultiplier * 2,
+                                vertical: SizeConfig.heightMultiplier * 3),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/logo2.png",
+                                  height: SizeConfig.heightMultiplier * 5,
+                                ),
+                                Text(
+                                  "Step no: ${index + 1}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                space2(),
+                                Text(
+                                  directionsList[index].toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    })),
+            FaIcon(FontAwesomeIcons.chevronDown),
+          ],
+        ),
+      ),
     );
   }
 }

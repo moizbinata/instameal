@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/controllers/notifcontroller.dart';
 import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
@@ -488,6 +489,8 @@ class _LoginState extends State<Login> {
         box.write('paymentStatus', loginModel.data[0].paymentStatus);
         box.write('gender', loginModel.data[0].gender);
         box.write('firsttime', 'yes');
+        final notifContr = Get.put(NotifController());
+        notifContr.fetchSearchCategRecipeController();
         setState(() {
           loginLoader = false;
         });

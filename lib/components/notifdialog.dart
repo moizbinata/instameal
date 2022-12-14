@@ -9,13 +9,16 @@ AlertDialog notifDialog(ctx) {
   print("2");
 
   return AlertDialog(
-    backgroundColor: CustomTheme.bgColor,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32.0))),
+    contentPadding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+    backgroundColor: Colors.white,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           "Notifications",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
         IconButton(
             onPressed: () {
@@ -23,7 +26,7 @@ AlertDialog notifDialog(ctx) {
             },
             icon: FaIcon(
               FontAwesomeIcons.xmark,
-              color: Colors.white,
+              color: CustomTheme.bgColor,
             ))
       ],
     ),
@@ -39,18 +42,23 @@ AlertDialog notifDialog(ctx) {
               : ListView.builder(
                   itemCount: _.listofNotif.length,
                   itemBuilder: (context, i) {
+                    bool colorTile = true;
                     return ListTile(
+                      onTap: () {},
                       contentPadding: EdgeInsets.zero,
                       minVerticalPadding: 0,
+                      leading: Text((i + 1).toString()),
                       title: Text(
                         _.listofNotif[i].title,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: CustomTheme.bgColor,
+                        ),
                       ),
                       subtitle: Text(_.listofNotif[i].message),
                       trailing: FaIcon(
-                        FontAwesomeIcons.solidCircle,
+                        FontAwesomeIcons.solidBell,
                         color: (_.listofNotif[i].important == 0)
-                            ? Colors.white
+                            ? CustomTheme.bgColor
                             : CustomTheme.grey,
                         size: SizeConfig.heightMultiplier * 2,
                       ),
