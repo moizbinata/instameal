@@ -1,201 +1,396 @@
-import 'package:auto_orientation/auto_orientation.dart';
-import 'package:chewie/chewie.dart';
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instameal/utils/constants.dart';
-import 'package:video_player/video_player.dart';
-import 'package:flutter/foundation.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/theme.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class ChewieDemo extends StatefulWidget {
-  ChewieDemo({this.videoModel});
-  final videoModel;
-
+class PlayRecipe extends StatefulWidget {
+  PlayRecipe({Key key, this.vmodel}) : super(key: key);
+  final vmodel;
   @override
-  State<StatefulWidget> createState() {
-    return _ChewieDemoState();
-  }
+  State<PlayRecipe> createState() => _PlayRecipeState();
 }
 
-class _ChewieDemoState extends State<ChewieDemo> {
-  TargetPlatform _platform;
-  VideoPlayerController _videoPlayerController1;
-  ChewieController _chewieController;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+class _PlayRecipeState extends State<PlayRecipe> {
+  YoutubePlayerController _controller;
+  TextEditingController _idController;
+  TextEditingController _seekToController;
+
+  PlayerState _playerState;
+  YoutubeMetaData _videoMetaData;
+  double _volume = 100;
+  bool _muted = false;
+  bool _isPlayerReady = false;
 
   @override
   void initState() {
     super.initState();
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.vmodel.videoUrl,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    )..addListener(listener);
+    _idController = TextEditingController();
+    _seekToController = TextEditingController();
+    _videoMetaData = const YoutubeMetaData();
+    _playerState = PlayerState.unknown;
+  }
+
+  void listener() {
+    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
       setState(() {
-        _platform = TargetPlatform.android;
-      });
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      setState(() {
-        _platform = TargetPlatform.iOS;
+        _playerState = _controller.value.playerState;
+        _videoMetaData = _controller.metadata;
       });
     }
-    print(Constants.baseVideoUrl + widget.videoModel.videoUrl);
-    _videoPlayerController1 = VideoPlayerController.network(
-      Constants.baseVideoUrl + widget.videoModel.videoUrl,
-      formatHint: VideoFormat.hls,
-    );
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController1,
-      aspectRatio: 3 / 2,
-      autoPlay: true,
-      looping: true,
-      routePageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondAnimation, provider) {
-        return AnimatedBuilder(
-          animation: animation,
-          builder: (BuildContext context, Widget child) {
-            return VideoScaffold(
-              child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                body: Container(
-                  alignment: Alignment.center,
-                  color: Colors.black,
-                  child: provider,
-                ),
-              ),
-            );
-          },
-        );
-      },
+  }
 
-      // Try playing around with some of these other options:
-
-      // showControls: false,
-
-      materialProgressColors: ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.blue,
-        backgroundColor: Colors.grey,
-        bufferedColor: Colors.lightGreen,
-      ),
-      placeholder: Container(
-        color: Colors.grey,
-      ),
-      autoInitialize: true,
-    );
-    _chewieController.enterFullScreen();
+  @override
+  void deactivate() {
+    // Pauses video while navigating to next page.
+    _controller.pause();
+    super.deactivate();
   }
 
   @override
   void dispose() {
-    _videoPlayerController1.dispose();
-    _chewieController.dispose();
+    _controller.dispose();
+    _idController.dispose();
+    _seekToController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-            color: CustomTheme.bgColor,
-            borderRadius: BorderRadius.circular(
-              100,
-            )),
-        child: IconButton(
-          icon: Icon(Icons.chevron_left),
-          onPressed: () {
-            SystemChrome.setPreferredOrientations([
-              DeviceOrientation.portraitUp,
-              DeviceOrientation.portraitDown,
-            ]);
-            AutoOrientation.portraitAutoMode();
-          },
-          color: Colors.white,
-        ),
-      ),
-      key: _scaffoldKey,
-      drawer: drawer(context),
-      appBar: customAppBar(action: () {
-        if (_scaffoldKey.currentState.isDrawerOpen) {
-          _scaffoldKey.currentState.openEndDrawer();
-        } else {
-          _scaffoldKey.currentState.openDrawer();
-        }
-      }, action2: () {
-        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
-      }),
-      body: Column(
-        children: <Widget>[
+    return YoutubePlayerBuilder(
+      onExitFullScreen: () {
+        // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
+        SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+      },
+      player: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.blueAccent,
+        topActions: <Widget>[
+          const SizedBox(width: 8.0),
           Expanded(
-            child: Center(
-              child: Chewie(
-                controller: _chewieController,
+            child: Text(
+              _controller.metadata.title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
-          TextButton(
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+              size: 25.0,
+            ),
             onPressed: () {
-              _chewieController.enterFullScreen();
+              log('Settings Tapped!');
             },
-            child: Text('Fullscreen'),
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _chewieController.dispose();
-                // _videoPlayerController1.pause();
-                // _videoPlayerController1.seekTo(Duration(seconds: 0));
-                _chewieController = ChewieController(
-                  videoPlayerController: _videoPlayerController1,
-                  aspectRatio: 3 / 2,
-                  autoPlay: true,
-                  looping: true,
-                );
-              });
-            },
-            child: Padding(
-              child: Text("Video 1"),
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+        ],
+        onReady: () {
+          _isPlayerReady = true;
+        },
+        onEnded: (data) {
+          _controller.load(widget.vmodel.videoUrl);
+          _showSnackBar('Next Video Started!');
+        },
+      ),
+      builder: (context, player) => Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Image.asset(
+              'assets/images/breakfast.png',
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          title: const Text(
+            'Youtube Player Flutter',
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: [
+            IconButton(
+                icon: const Icon(Icons.video_library),
+                onPressed: () {
+                  //   Navigator.push(
+                  //   context,
+                  //   CupertinoPageRoute(
+                  //     builder: (context) => VideoList(),
+                  //   ),
+                  // );
+                }),
+          ],
+        ),
+        body: ListView(
+          children: [
+            player,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _space,
+                  _text('Title', _videoMetaData.title),
+                  _space,
+                  _text('Channel', _videoMetaData.author),
+                  _space,
+                  _text('Video Id', _videoMetaData.videoId),
+                  _space,
+                  Row(
+                    children: [
+                      _text(
+                        'Playback Quality',
+                        _controller.value.playbackQuality ?? '',
+                      ),
+                      const Spacer(),
+                      _text(
+                        'Playback Rate',
+                        '${_controller.value.playbackRate}x  ',
+                      ),
+                    ],
+                  ),
+                  _space,
+                  TextField(
+                    enabled: _isPlayerReady,
+                    controller: _idController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Enter youtube \<video id\> or \<link\>',
+                      fillColor: Colors.blueAccent.withAlpha(20),
+                      filled: true,
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        color: Colors.blueAccent,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () => _idController.clear(),
+                      ),
+                    ),
+                  ),
+                  _space,
+                  Row(
+                    children: [
+                      _loadCueButton('LOAD'),
+                      const SizedBox(width: 10.0),
+                      _loadCueButton('CUE'),
+                    ],
+                  ),
+                  _space,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // IconButton(
+                      //   icon: const Icon(Icons.skip_previous),
+                      //   onPressed: _isPlayerReady
+                      //       ? () => _controller.load(_ids[
+                      //           (_ids.indexOf(_controller.metadata.videoId) -
+                      //                   1) %
+                      //               _ids.length])
+                      //       : null,
+                      // ),
+                      IconButton(
+                        icon: Icon(
+                          _controller.value.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                        ),
+                        onPressed: _isPlayerReady
+                            ? () {
+                                _controller.value.isPlaying
+                                    ? _controller.pause()
+                                    : _controller.play();
+                                setState(() {});
+                              }
+                            : null,
+                      ),
+                      IconButton(
+                        icon: Icon(_muted ? Icons.volume_off : Icons.volume_up),
+                        onPressed: _isPlayerReady
+                            ? () {
+                                _muted
+                                    ? _controller.unMute()
+                                    : _controller.mute();
+                                setState(() {
+                                  _muted = !_muted;
+                                });
+                              }
+                            : null,
+                      ),
+                      FullScreenButton(
+                        controller: _controller,
+                        color: Colors.blueAccent,
+                      ),
+                    ],
+                  ),
+                  _space,
+                  Row(
+                    children: <Widget>[
+                      const Text(
+                        "Volume",
+                        style: TextStyle(fontWeight: FontWeight.w300),
+                      ),
+                      Expanded(
+                        child: Slider(
+                          inactiveColor: Colors.transparent,
+                          value: _volume,
+                          min: 0.0,
+                          max: 100.0,
+                          divisions: 10,
+                          label: '${(_volume).round()}',
+                          onChanged: _isPlayerReady
+                              ? (value) {
+                                  setState(() {
+                                    _volume = value;
+                                  });
+                                  _controller.setVolume(_volume.round());
+                                }
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _space,
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 800),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: _getStateColor(_playerState),
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _playerState.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _text(String title, String value) {
+    return RichText(
+      text: TextSpan(
+        text: '$title : ',
+        style: const TextStyle(
+          color: Colors.blueAccent,
+          fontWeight: FontWeight.bold,
+        ),
+        children: [
+          TextSpan(
+            text: value,
+            style: const TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.w300,
             ),
           ),
         ],
       ),
     );
   }
-}
 
-class VideoScaffold extends StatefulWidget {
-  const VideoScaffold({Key key, this.child}) : super(key: key);
-
-  final Widget child;
-
-  @override
-  State<StatefulWidget> createState() => _VideoScaffoldState();
-}
-
-class _VideoScaffoldState extends State<VideoScaffold> {
-  @override
-  void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    AutoOrientation.landscapeAutoMode();
-    super.initState();
+  Color _getStateColor(PlayerState state) {
+    switch (state) {
+      case PlayerState.unknown:
+        return Colors.grey[700];
+      case PlayerState.unStarted:
+        return Colors.pink;
+      case PlayerState.ended:
+        return Colors.red;
+      case PlayerState.playing:
+        return Colors.blueAccent;
+      case PlayerState.paused:
+        return Colors.orange;
+      case PlayerState.buffering:
+        return Colors.yellow;
+      case PlayerState.cued:
+        return Colors.blue[900];
+      default:
+        return Colors.blue;
+    }
   }
 
-  @override
-  dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    AutoOrientation.portraitAutoMode();
-    super.dispose();
+  Widget get _space => const SizedBox(height: 10);
+
+  Widget _loadCueButton(String action) {
+    return Expanded(
+      child: MaterialButton(
+        color: Colors.blueAccent,
+        onPressed: _isPlayerReady
+            ? () {
+                if (_idController.text.isNotEmpty) {
+                  var id = YoutubePlayer.convertUrlToId(
+                        _idController.text,
+                      ) ??
+                      '';
+                  if (action == 'LOAD') _controller.load(id);
+                  if (action == 'CUE') _controller.cue(id);
+                  FocusScope.of(context).requestFocus(FocusNode());
+                } else {
+                  _showSnackBar('Source can\'t be empty!');
+                }
+              }
+            : null,
+        disabledColor: Colors.grey,
+        disabledTextColor: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14.0),
+          child: Text(
+            action,
+            style: const TextStyle(
+              fontSize: 18.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontWeight: FontWeight.w300,
+            fontSize: 16.0,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+      ),
+    );
   }
 }

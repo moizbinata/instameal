@@ -23,6 +23,7 @@ class _ShopItemsState extends State<ShopItems> {
   String selectedItem = "";
   String martUrl = "";
   GetStorage box = GetStorage();
+  bool isError = false;
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,7 @@ class _ShopItemsState extends State<ShopItems> {
 
   @override
   Widget build(BuildContext context) {
+    isError = false;
     return Scaffold(
       floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
@@ -55,23 +57,28 @@ class _ShopItemsState extends State<ShopItems> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
         height: SizeConfig.screenHeight,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              DefaultTabController(
-                length: widget.itemList.items.length,
-                child: Column(
-                  children: [
-                    Container(
-                      height: SizeConfig.heightMultiplier * 5,
-                      width: SizeConfig.screenWidth,
-                      child: TabBar(
-                        isScrollable: true,
-                        indicatorColor: CustomTheme.bgColor,
-                        tabs: List.generate(
-                          widget.itemList.items.length,
-                          (index) {
-                            return Column(
+        child: Column(
+          children: [
+            DefaultTabController(
+              length: widget.itemList.items.length,
+              child: ListView(
+                children: [
+                  Container(
+                    height: SizeConfig.heightMultiplier * 5,
+                    width: SizeConfig.screenWidth,
+                    child: TabBar(
+                      isScrollable: true,
+                      indicatorColor: CustomTheme.bgColor,
+                      tabs: List.generate(
+                        widget.itemList.items.length,
+                        (index) {
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                isError = false;
+                              });
+                            },
+                            child: Column(
                               children: [
                                 Text(widget.itemList.recipeName,
                                     style:
@@ -83,37 +90,59 @@ class _ShopItemsState extends State<ShopItems> {
                                   style: TextStyle(color: Colors.black),
                                 ),
                               ],
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    space0(),
-                    Container(
-                      height: SizeConfig.screenHeight * 10,
-                      child: TabBarView(
-                        children: List.generate(
-                          widget.itemList.items.length,
-                          (index) {
-                            print("tabview");
-                            print(martUrl + selectedItem);
-                            return (martUrl == "")
-                                ? Center(child: Text("Select shop first"))
-                                : WebView(
-                                    zoomEnabled: true,
-                                    javascriptMode: JavascriptMode.unrestricted,
-                                    initialUrl: martUrl +
-                                        widget.itemList.items[index].toString(),
-                                  );
-                          },
-                        ),
+                  ),
+                  space0(),
+                  Container(
+                    height: SizeConfig.screenHeight * 0.7,
+                    child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
+                      children: List.generate(
+                        widget.itemList.items.length,
+                        (index) {
+                          print("tabview");
+                          print(martUrl +
+                              widget.itemList.items[index].toString());
+                          return (martUrl == "")
+                              ? Center(
+                                  child: Text(
+                                    "Select shop first",
+                                  ),
+                                )
+                              : isError
+                                  ? Text(
+                                      "No Loaded",
+                                      style: TextStyle(color: Colors.black),
+                                    )
+                                  : SingleChildScrollView(
+                                      child: SizedBox(
+                                        height: SizeConfig.screenHeight * 0.7,
+                                        child: WebView(
+                                          zoomEnabled: true,
+                                          onWebResourceError: (error) =>
+                                              setState(() {
+                                            isError = true;
+                                          }),
+                                          javascriptMode:
+                                              JavascriptMode.unrestricted,
+                                          initialUrl: martUrl +
+                                              widget.itemList.items[index]
+                                                  .toString(),
+                                        ),
+                                      ),
+                                    );
+                        },
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

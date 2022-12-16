@@ -41,7 +41,7 @@ class SCRecipeModel {
     this.id,
     this.searchcategname,
     this.searchcategid,
-    this.recipeId,
+    this.recipeid,
     this.recipeName,
     this.whatYouNeed,
     this.direction,
@@ -61,7 +61,7 @@ class SCRecipeModel {
   int id;
   String searchcategname;
   int searchcategid;
-  int recipeId;
+  int recipeid;
   String recipeName;
   List<String> whatYouNeed;
   List<String> direction;
@@ -81,7 +81,7 @@ class SCRecipeModel {
         id: json["id"],
         searchcategname: json["searchcategname"],
         searchcategid: json["searchcategid"],
-        recipeId: json["recipeId"],
+        recipeid: json["recipeid"],
         recipeName: json["recipeName"],
         whatYouNeed: json["whatYouNeed"] != null
             ? json['whatYouNeed'].toString().split('***').toList()
@@ -110,7 +110,7 @@ class SCRecipeModel {
         "id": id,
         "searchcategname": searchcategname,
         "searchcategid": searchcategid,
-        "recipeId": recipeId,
+        "recipeid": recipeid,
         "recipeName": recipeName,
         "whatYouNeed": whatYouNeed,
         "direction": direction,

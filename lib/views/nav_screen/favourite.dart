@@ -45,31 +45,41 @@ class Favourite extends StatelessWidget {
           ),
           space0(),
           DefaultTabController(
-            length: 2,
+            length: 4,
             child: Column(
               children: [
                 Container(
-                    height: SizeConfig.heightMultiplier * 5,
-                    width: SizeConfig.screenWidth,
-                    child: Center(
-                      child: TabBar(
-                          isScrollable: true,
-                          indicatorColor: CustomTheme.bgColor,
-                          tabs: [
-                            Text("Weekly Favourites",
-                                style: Theme.of(context).textTheme.bodyLarge),
-                            Text("Other Favourites",
-                                style: Theme.of(context).textTheme.bodyLarge),
-                          ]),
-                    )),
+                  height: SizeConfig.heightMultiplier * 5,
+                  width: SizeConfig.screenWidth,
+                  child: Center(
+                    child: TabBar(
+                        isScrollable: true,
+                        indicatorColor: CustomTheme.bgColor,
+                        tabs: [
+                          Text("Weekly Favourites",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          Text("Other Favourites",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          Text("Category's Favourites",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          Text("All Recipe Favourites",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                        ]),
+                  ),
+                ),
                 space0(),
                 Container(
                   height: SizeConfig.screenHeight,
-                  child: TabBarView(children: [
-                    buildFavListWeekly(),
-                    buildFavListOther(),
-                  ]),
-                )
+                  child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      buildFavListWeekly(),
+                      buildFavListOther(),
+                      buildScategRecipeListOther(),
+                      buildAllRecipeListOther(),
+                    ],
+                  ),
+                ),
               ],
             ),
           )
@@ -91,11 +101,11 @@ Widget buildFavListWeekly() {
                 ))
               : ListView.builder(
                   itemCount: _.listCartRecipe1.length + 1,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe1.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 50,
+                            height: SizeConfig.heightMultiplier * 100,
                           )
                         : InkWell(
                             onTap: () {
@@ -126,22 +136,34 @@ Widget buildFavListWeekly() {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    flex: 3,
-                                    child: CachedNetworkImage(
-                                      height: SizeConfig.heightMultiplier * 20,
-                                      width: SizeConfig.heightMultiplier * 20,
-                                      imageUrl: Constants.baseImageUrl +
-                                          _.listCartRecipe1[index].imagesUrl,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Center(
-                                          child: Center(
-                                              child:
-                                                  CircularProgressIndicator())),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/breakfast.png"),
-                                    ),
-                                  ),
+                                      flex: 3,
+                                      child: Stack(
+                                        children: [
+                                          CachedNetworkImage(
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            imageUrl: Constants.baseImageUrl +
+                                                _.listCartRecipe1[index]
+                                                    .imagesUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator())),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                Image.asset(
+                                                    "assets/images/breakfast.png"),
+                                          ),
+                                          Positioned(
+                                              child: CircleAvatar(
+                                            child: Text(index.toString()),
+                                          ))
+                                        ],
+                                      )),
                                   SizedBox(
                                     width: SizeConfig.heightMultiplier,
                                   ),
@@ -200,16 +222,17 @@ Widget buildFavListOther() {
           return (_.listCartRecipe2.length == 0)
               ? Center(
                   child: Image.asset(
-                  "assets/images/norecord.png",
-                  width: SizeConfig.screenWidth * 0.7,
-                ))
+                    "assets/images/norecord.png",
+                    width: SizeConfig.screenWidth * 0.7,
+                  ),
+                )
               : ListView.builder(
                   itemCount: _.listCartRecipe2.length + 1,
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe2.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 50,
+                            height: SizeConfig.heightMultiplier * 100,
                           )
                         : InkWell(
                             onTap: () {
@@ -240,12 +263,140 @@ Widget buildFavListOther() {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
+                                      flex: 3,
+                                      child: Stack(
+                                        children: [
+                                          CachedNetworkImage(
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            imageUrl: Constants.baseImageUrl +
+                                                _.listCartRecipe2[index]
+                                                    .imagesUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator())),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                Image.asset(
+                                                    "assets/images/breakfast.png"),
+                                          ),
+                                          Positioned(
+                                              child: CircleAvatar(
+                                            backgroundColor:
+                                                Colors.black.withOpacity(0.5),
+                                            child: Text(index.toString()),
+                                          ))
+                                        ],
+                                      )),
+                                  SizedBox(
+                                    width: SizeConfig.heightMultiplier,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            _.listCartRecipe2[index].planName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                          Text(
+                                            _.listCartRecipe2[index].recipeName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                          // InkWell(
+                                          //     child: customButton2(
+                                          //         context,
+                                          //         Colors.white,
+                                          //         Colors.white,
+                                          //         "Add to List")),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                  },
+                );
+        }),
+  );
+}
+
+Widget buildAllRecipeListOther() {
+  return SizedBox(
+    height: SizeConfig.screenHeight,
+    child: GetX<WeeklyController>(
+        init: WeeklyController(),
+        builder: (_) {
+          return (_.listCartRecipe4.length == 0)
+              ? Center(
+                  child: Image.asset(
+                  "assets/images/norecord.png",
+                  width: SizeConfig.screenWidth * 0.7,
+                ))
+              : ListView.builder(
+                  itemCount: _.listCartRecipe4.length + 1,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return (index == _.listCartRecipe4.length)
+                        ? SizedBox(
+                            height: SizeConfig.heightMultiplier * 50,
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Constants.navigatepush(
+                                  context,
+                                  RecipeDetail(
+                                    modelType: "universal",
+                                    recipeModel: _.listCartRecipe4[index],
+                                  ));
+                            },
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              margin:
+                                  EdgeInsets.all(SizeConfig.heightMultiplier),
+                              decoration: BoxDecoration(
+                                color: CustomTheme.bgColor,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: CustomTheme.grey.withOpacity(0.5),
+                                    blurRadius: 6,
+                                    spreadRadius: 6,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
                                     flex: 3,
                                     child: CachedNetworkImage(
                                       height: SizeConfig.heightMultiplier * 20,
                                       width: SizeConfig.heightMultiplier * 20,
                                       imageUrl: Constants.baseImageUrl +
-                                          _.listCartRecipe2[index].imagesUrl,
+                                          _.listCartRecipe4[index].imagesUrl,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Center(
                                           child: Center(
@@ -270,13 +421,127 @@ Widget buildFavListOther() {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            _.listCartRecipe2[index].planName,
+                                            _.listCartRecipe4[index].planName,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall,
                                           ),
                                           Text(
-                                            _.listCartRecipe2[index].recipeName,
+                                            _.listCartRecipe4[index].recipeName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                          // InkWell(
+                                          //     child: customButton2(
+                                          //         context,
+                                          //         Colors.white,
+                                          //         Colors.white,
+                                          //         "Add to List")),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                  },
+                );
+        }),
+  );
+}
+
+Widget buildScategRecipeListOther() {
+  return SizedBox(
+    height: SizeConfig.screenHeight,
+    child: GetX<WeeklyController>(
+        init: WeeklyController(),
+        builder: (_) {
+          return (_.listCartRecipe3.length == 0)
+              ? Center(
+                  child: Image.asset(
+                  "assets/images/norecord.png",
+                  width: SizeConfig.screenWidth * 0.7,
+                ))
+              : ListView.builder(
+                  itemCount: _.listCartRecipe3.length + 1,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return (index == _.listCartRecipe3.length)
+                        ? SizedBox(
+                            height: SizeConfig.heightMultiplier * 50,
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Constants.navigatepush(
+                                  context,
+                                  RecipeDetail(
+                                    modelType: "scateg",
+                                    recipeModel: _.listCartRecipe3[index],
+                                  ));
+                            },
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              margin:
+                                  EdgeInsets.all(SizeConfig.heightMultiplier),
+                              decoration: BoxDecoration(
+                                color: CustomTheme.bgColor,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: CustomTheme.grey.withOpacity(0.5),
+                                    blurRadius: 6,
+                                    spreadRadius: 6,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: CachedNetworkImage(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      width: SizeConfig.heightMultiplier * 20,
+                                      imageUrl: Constants.baseImageUrl +
+                                          _.listCartRecipe3[index].imagesUrl,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/breakfast.png"),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.heightMultiplier,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      height: SizeConfig.heightMultiplier * 20,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            _.listCartRecipe3[index].planName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                          Text(
+                                            _.listCartRecipe3[index].recipeName,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1

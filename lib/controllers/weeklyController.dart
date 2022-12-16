@@ -4,6 +4,8 @@ import 'package:instameal/models/images_model.dart';
 import 'package:instameal/models/universal_model.dart';
 import 'package:instameal/models/weekly_model.dart';
 import 'package:intl/intl.dart';
+import '../models/allrecipemodel.dart';
+import '../models/searchcategrecipemodel.dart';
 import '../services/weeklyservices.dart';
 
 class WeeklyController extends GetxController {
@@ -18,6 +20,8 @@ class WeeklyController extends GetxController {
   RxList<Breakfast> listofWeeklyDinner = <Breakfast>[].obs;
   RxList<Breakfast> listCartRecipe1 = <Breakfast>[].obs;
   RxList<Collection> listCartRecipe2 = <Collection>[].obs;
+  RxList<SCRecipeModel> listCartRecipe3 = <SCRecipeModel>[].obs;
+  RxList<AllRecipeModel> listCartRecipe4 = <AllRecipeModel>[].obs;
 
   @override
   void onInit() {

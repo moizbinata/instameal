@@ -130,7 +130,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                           Constants.navigatepush(
                             context,
                             RecipeDetail(
-                              modelType: "breakfast",
+                              modelType: "universal",
                               recipeModel: filteredList[index],
                             ),
                           );
@@ -147,7 +147,6 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                         child: Container(
                           child: Column(
                             children: [
-                              space0(),
                               Container(
                                 clipBehavior: Clip.hardEdge,
                                 decoration: BoxDecoration(
@@ -163,8 +162,8 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                                     ],
                                     borderRadius: BorderRadius.circular(10)),
                                 child: CachedNetworkImage(
-                                  height: SizeConfig.heightMultiplier * 20,
-                                  width: SizeConfig.heightMultiplier * 20,
+                                  height: SizeConfig.heightMultiplier * 17,
+                                  width: SizeConfig.heightMultiplier * 17,
                                   imageUrl: Constants.baseImageUrl +
                                       filteredList[index].imagesUrl,
                                   fit: BoxFit.cover,
@@ -185,6 +184,7 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                                     .bodyMedium
                                     .copyWith(color: CustomTheme.bgColor),
                               ),
+                              space0(),
                             ],
                           ),
                         ),

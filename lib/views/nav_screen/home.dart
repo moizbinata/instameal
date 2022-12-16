@@ -10,13 +10,11 @@ import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
-import 'package:instameal/views/details/latestVideo.dart';
-import 'package:instameal/views/details/playrecipe.dart';
 import 'package:instameal/views/details/recipeplay.dart';
-import 'package:instameal/views/details/recipevideo.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
+import '../details/playrecipe.dart';
 import '../details/recipe.dart';
 import '../details/weektable.dart';
 
@@ -609,6 +607,11 @@ class _HomeState extends State<Home> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: () {
+                                        // Constants.navigatepush(
+                                        //     context,
+                                        //     PlayRecipe(
+                                        //       vmodel: _.listofVideos[index],
+                                        //     ));
                                         Constants.navigatepush(
                                             context,
                                             RecipePlayer(

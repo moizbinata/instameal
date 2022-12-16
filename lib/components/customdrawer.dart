@@ -74,23 +74,6 @@ Widget drawer(context) {
               selectedColor: CustomTheme.bgColor,
               tileColor: Colors.white,
               leading: iconBox(
-                Color(0xfffdeade),
-                Color(0xfffdd47d),
-                FontAwesomeIcons.bookmark,
-              ),
-              title: Text(
-                "Weekly Ingredients",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              onTap: () {
-                Constants.navigatepush(context, Shopping());
-              },
-            ),
-            ListTile(
-              selected: true,
-              selectedColor: CustomTheme.bgColor,
-              tileColor: Colors.white,
-              leading: iconBox(
                 Color.fromARGB(64, 104, 173, 194),
                 Color.fromARGB(255, 104, 173, 194),
                 FontAwesomeIcons.calendarWeek,
@@ -139,6 +122,23 @@ Widget drawer(context) {
               ),
               onTap: () {
                 Constants.navigatepush(context, Favourite());
+              },
+            ),
+            ListTile(
+              selected: true,
+              selectedColor: CustomTheme.bgColor,
+              tileColor: Colors.white,
+              leading: iconBox(
+                Color(0xfffdeade),
+                Color(0xfffdd47d),
+                FontAwesomeIcons.bookmark,
+              ),
+              title: Text(
+                "Weekly Ingredients",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onTap: () {
+                Constants.navigatepush(context, Shopping());
               },
             ),
             space1(),

@@ -36,7 +36,7 @@ class ARecipeModels {
 
 class AllRecipeModel {
   AllRecipeModel({
-    this.recipeId,
+    this.recipeid,
     this.recipeName,
     this.whatYouNeed,
     this.direction,
@@ -53,16 +53,16 @@ class AllRecipeModel {
     this.categName,
   });
 
-  int recipeId;
+  int recipeid;
   String recipeName;
-  String whatYouNeed;
-  String direction;
-  String nutritPerServe;
+  List<String> whatYouNeed;
+  List<String> direction;
+  List<String> nutritPerServe;
   String imagesUrl;
   int serving;
   String prepTime;
   String cookTime;
-  String keys;
+  List<String> keys;
   int categId;
   int planId;
   String items;
@@ -70,16 +70,24 @@ class AllRecipeModel {
   String categName;
 
   factory AllRecipeModel.fromJson(Map<String, dynamic> json) => AllRecipeModel(
-        recipeId: json["recipeId"],
+        recipeid: json["recipeid"],
         recipeName: json["recipeName"],
-        whatYouNeed: json["whatYouNeed"],
-        direction: json["direction"],
-        nutritPerServe: json["nutritPerServe"],
+        whatYouNeed: json["whatYouNeed"] != null
+            ? json['whatYouNeed'].toString().split('***').toList()
+            : [],
+        direction: json["direction"] != null
+            ? json['direction'].toString().split('***').toList()
+            : [],
+        nutritPerServe: json["nutritPerServe"] != null
+            ? json['nutritPerServe'].toString().split('***').toList()
+            : [],
         imagesUrl: json["imagesUrl"],
         serving: json["serving"],
         prepTime: json["prepTime"],
         cookTime: json["cookTime"],
-        keys: json["keys"],
+        keys: json["keys"] != null
+            ? json['keys'].toString().split('***').toList()
+            : [],
         categId: json["categId"],
         planId: json["planId"],
         items: json["items"],
@@ -88,7 +96,7 @@ class AllRecipeModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "recipeId": recipeId,
+        "recipeid": recipeid,
         "recipeName": recipeName,
         "whatYouNeed": whatYouNeed,
         "direction": direction,

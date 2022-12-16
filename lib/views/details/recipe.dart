@@ -116,7 +116,37 @@ class RecipeDetail extends StatelessWidget {
                         children: [
                           TextButton.icon(
                             onPressed: () {
-                              if (modelType == "collection") {
+                              if (modelType == "scateg") {
+                                if (weeklyController.listCartRecipe4
+                                    .contains(recipeModel)) {
+                                  weeklyController.listCartRecipe4
+                                      .remove(recipeModel);
+                                  Fluttertoast.showToast(msg: 'Removed');
+                                } else {
+                                  weeklyController.listCartRecipe4
+                                      .add(recipeModel);
+                                  box.write('universal',
+                                      weeklyController.listCartRecipe4);
+                                  print(weeklyController
+                                      .listCartRecipe4.first.categName);
+                                  Fluttertoast.showToast(msg: 'Added');
+                                }
+                              } else if (modelType == "universal") {
+                                if (weeklyController.listCartRecipe3
+                                    .contains(recipeModel)) {
+                                  weeklyController.listCartRecipe3
+                                      .remove(recipeModel);
+                                  Fluttertoast.showToast(msg: 'Removed');
+                                } else {
+                                  weeklyController.listCartRecipe3
+                                      .add(recipeModel);
+                                  box.write('universal',
+                                      weeklyController.listCartRecipe3);
+                                  print(weeklyController
+                                      .listCartRecipe3.first.categName);
+                                  Fluttertoast.showToast(msg: 'Added');
+                                }
+                              } else if (modelType == "collection") {
                                 if (weeklyController.listCartRecipe2
                                     .contains(recipeModel)) {
                                   weeklyController.listCartRecipe2
@@ -134,6 +164,7 @@ class RecipeDetail extends StatelessWidget {
                               } else {
                                 var recipeToAdd;
                                 int recipeId = recipeModel.recipeid;
+
                                 if (recipeModel.categName == "Breakfast") {
                                   recipeToAdd = weeklyController
                                       .listofWeeklyBfast
@@ -178,12 +209,20 @@ class RecipeDetail extends StatelessWidget {
                                 (controller.listCartRecipe1
                                             .contains(recipeModel) ||
                                         controller.listCartRecipe2
+                                            .contains(recipeModel) ||
+                                        controller.listCartRecipe3
+                                            .contains(recipeModel) ||
+                                        controller.listCartRecipe4
                                             .contains(recipeModel))
                                     ? FontAwesomeIcons.solidHeart
                                     : FontAwesomeIcons.heart,
                                 color: (controller.listCartRecipe1
                                             .contains(recipeModel) ||
                                         controller.listCartRecipe2
+                                            .contains(recipeModel) ||
+                                        controller.listCartRecipe3
+                                            .contains(recipeModel) ||
+                                        controller.listCartRecipe4
                                             .contains(recipeModel))
                                     ? Colors.red
                                     : Colors.white,

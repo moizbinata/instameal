@@ -4,6 +4,7 @@ import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'dart:math' as math;
 
 import '../../components/customappbar.dart';
 import '../../components/customdrawer.dart';
@@ -61,6 +62,7 @@ class _RecipePlayerState extends State<RecipePlayer> {
     }
   }
 
+  bool rotateBool = false;
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
@@ -81,6 +83,20 @@ class _RecipePlayerState extends State<RecipePlayer> {
     directionCount = 0;
     ingredCount = 0;
 
+    return MyWidget(
+      controlller: _controller,
+      title: widget.latVideoData.title,
+    );
+  }
+}
+
+class PortraitVideo extends StatelessWidget {
+  PortraitVideo({Key key, this.controller}) : super(key: key);
+  final controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: floatButton(context),
       key: _scaffoldKey,
@@ -95,196 +111,70 @@ class _RecipePlayerState extends State<RecipePlayer> {
         showDialog(context: context, builder: (ctx) => notifDialog(ctx));
       }),
       backgroundColor: CustomTheme.bgColor2,
-      body: Container(
-          height: SizeConfig.screenHeight,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator: true,
-                  onReady: () => debugPrint('ready'),
-                  bottomActions: [
-                    CurrentPosition(),
-                    ProgressBar(
-                      isExpanded: true,
-                      colors: const ProgressBarColors(
-                          playedColor: CustomTheme.bgColor,
-                          handleColor: CustomTheme.bgColor2),
-                    ),
-                    const PlaybackSpeedButton()
-                  ],
-                ),
-                space0(),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.youtube),
-                  title: Text(
-                    widget.latVideoData.title,
-                    style: Theme.of(context).textTheme.bodyMedium.copyWith(
-                          color: CustomTheme.bgColor,
-                        ),
-                  ),
-                ),
-                space0(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.heightMultiplier * 2),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Ingredients: ",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxHeight: SizeConfig.screenHeight,
-                            minHeight: 56.0),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.latVideoData.directions.length,
-                          itemBuilder: (context, index) {
-                            widget.latVideoData.directions[index]
-                                    .toString()
-                                    .contains(":")
-                                ? directionCount = directionCount
-                                : directionCount++;
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                      (directionCount < 10)
-                                          ? "0" +
-                                              (directionCount).toString() +
-                                              ":  "
-                                          : "" +
-                                              (directionCount).toString() +
-                                              ":  ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          .copyWith(
-                                              color: widget.latVideoData
-                                                      .directions[index]
-                                                      .toString()
-                                                      .contains(":")
-                                                  ? CustomTheme.bgColor2
-                                                  : CustomTheme.bgColor)),
-                                ),
-                                Expanded(
-                                  flex: 12,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: widget
-                                                .latVideoData.directions[index]
-                                                .toString()
-                                                .contains(":")
-                                            ? SizeConfig.heightMultiplier * 2
-                                            : 0),
-                                    child: Text(
-                                        widget.latVideoData.directions[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            .copyWith(
-                                                fontWeight: widget.latVideoData
-                                                        .directions[index]
-                                                        .toString()
-                                                        .contains(":")
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal)),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      space0(),
-                      Text(
-                        "Directions: ",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      space0(),
-                      //directions
-                      ConstrainedBox(
-                        constraints:
-                            BoxConstraints(maxHeight: 300, minHeight: 56.0),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.latVideoData.ingredients.length,
-                          itemBuilder: (context, index) {
-                            widget.latVideoData.ingredients[index]
-                                    .toString()
-                                    .contains(":")
-                                ? ingredCount = ingredCount
-                                : ingredCount++;
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                      (ingredCount < 10)
-                                          ? "0" +
-                                              (ingredCount).toString() +
-                                              ":  "
-                                          : "" +
-                                              (ingredCount).toString() +
-                                              ":  ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          .copyWith(
-                                              color: widget.latVideoData
-                                                      .ingredients[index]
-                                                      .toString()
-                                                      .contains(":")
-                                                  ? CustomTheme.bgColor2
-                                                  : CustomTheme.bgColor)),
-                                ),
-                                Expanded(
-                                  flex: 12,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: widget
-                                                .latVideoData.ingredients[index]
-                                                .toString()
-                                                .contains(":")
-                                            ? SizeConfig.heightMultiplier * 2
-                                            : 0),
-                                    child: Text(
-                                        widget.latVideoData.ingredients[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            .copyWith(
-                                                fontWeight: widget.latVideoData
-                                                        .ingredients[index]
-                                                        .toString()
-                                                        .contains(":")
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal)),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      space2(),
-                    ],
-                  ),
-                ),
-                space0(),
-              ],
-            ),
-          )),
+      body: SizedBox(
+        // height: double.infinity,
+        // width: double.infinity,
+        child: YoutubePlayer(
+          controller: controller,
+          showVideoProgressIndicator: true,
+          width: double.infinity,
+          actionsPadding: EdgeInsets.zero,
+          aspectRatio: 16 / 9,
+          onReady: () => debugPrint('ready'),
+          bottomActions: [
+            FullScreenButton(),
+          ],
+        ),
+      ),
     );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  MyWidget({Key key, this.title, this.controlller}) : super(key: key);
+  final title;
+  final controlller;
+  @override
+  Widget build(BuildContext context) {
+    return OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+      if (orientation == Orientation.landscape) {
+        return Scaffold(
+          floatingActionButton: floatButton(context),
+          body: youtubeHierarchy(),
+        );
+      } else {
+        return Scaffold(
+          floatingActionButton: floatButton(context),
+          appBar: AppBar(
+            backgroundColor: CustomTheme.bgColor,
+            title: Text(title),
+            actions: [],
+          ),
+          body: youtubeHierarchy(),
+        );
+      }
+    });
+  }
+
+  youtubeHierarchy() {
+    return Container(
+      child: Align(
+        alignment: Alignment.center,
+        child: FittedBox(
+          fit: BoxFit.fill,
+          child: YoutubePlayer(
+            controller: controlller,
+            // bottomActions: [FullScreenButton()],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> _willPopCallback() async {
+    // await showDialog or Show add banners or whatever
+    // then
+    return Future.value(true);
   }
 }

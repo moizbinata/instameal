@@ -87,16 +87,20 @@ class _SearchCategoriesState extends State<SearchCategories> {
                         fit: BoxFit.cover,
                         alignment: Alignment.topCenter),
                   ),
-                  height: SizeConfig.heightMultiplier * 10,
+                  height: SizeConfig.heightMultiplier * 8,
                   width: SizeConfig.screenWidth,
-                  child: Center(
-                    child: Text(
-                      "View All Recipes",
-                      style: Theme.of(context).textTheme.headline6.copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "  View All Recipes",
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ],
                   ),
                 ),
               ),

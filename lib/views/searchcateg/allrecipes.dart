@@ -112,7 +112,9 @@ class _AllRecipesState extends State<AllRecipes> {
                   : GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: allrecipeList.length,
+                      itemCount: (allrecipeList.length > 30)
+                          ? 30
+                          : allrecipeList.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 1,
@@ -124,24 +126,14 @@ class _AllRecipesState extends State<AllRecipes> {
                           Constants.navigatepush(
                             context,
                             RecipeDetail(
-                              modelType: "breakfast",
+                              modelType: "scateg",
                               recipeModel: allrecipeList[index],
                             ),
                           );
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => RecipeDetail(
-                          //       modelType: "breakfast",
-                          //       recipeModel: allrecipeList[index],
-                          //     ),
-                          //   ),
-                          // );
                         },
                         child: Container(
                           child: Column(
                             children: [
-                              space0(),
                               Container(
                                 clipBehavior: Clip.hardEdge,
                                 decoration: BoxDecoration(
@@ -157,8 +149,8 @@ class _AllRecipesState extends State<AllRecipes> {
                                     ],
                                     borderRadius: BorderRadius.circular(10)),
                                 child: CachedNetworkImage(
-                                  height: SizeConfig.heightMultiplier * 20,
-                                  width: SizeConfig.heightMultiplier * 20,
+                                  height: SizeConfig.heightMultiplier * 17,
+                                  width: SizeConfig.heightMultiplier * 17,
                                   imageUrl: Constants.baseImageUrl +
                                       allrecipeList[index].imagesUrl,
                                   fit: BoxFit.cover,
@@ -179,6 +171,7 @@ class _AllRecipesState extends State<AllRecipes> {
                                     .bodyMedium
                                     .copyWith(color: CustomTheme.bgColor),
                               ),
+                              space0(),
                             ],
                           ),
                         ),
