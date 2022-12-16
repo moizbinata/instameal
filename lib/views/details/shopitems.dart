@@ -56,12 +56,12 @@ class _ShopItemsState extends State<ShopItems> {
       }),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
-        height: SizeConfig.screenHeight,
+        // height: SizeConfig.screenHeight,
         child: Column(
           children: [
             DefaultTabController(
               length: widget.itemList.items.length,
-              child: ListView(
+              child: Column(
                 children: [
                   Container(
                     height: SizeConfig.heightMultiplier * 5,

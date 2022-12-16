@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:math' as math;
 
@@ -86,6 +87,7 @@ class _RecipePlayerState extends State<RecipePlayer> {
     return MyWidget(
       controlller: _controller,
       title: widget.latVideoData.title,
+      videoUrl: widget.latVideoData.videoUrl,
     );
   }
 }
@@ -131,8 +133,10 @@ class PortraitVideo extends StatelessWidget {
 }
 
 class MyWidget extends StatelessWidget {
-  MyWidget({Key key, this.title, this.controlller}) : super(key: key);
+  MyWidget({Key key, this.title, this.controlller, this.videoUrl})
+      : super(key: key);
   final title;
+  final videoUrl;
   final controlller;
   @override
   Widget build(BuildContext context) {
@@ -149,7 +153,14 @@ class MyWidget extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: CustomTheme.bgColor,
             title: Text(title),
-            actions: [],
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    launchUrl(
+                        Uri.parse("https://www.youtube.com/watch?v=$videoUrl"));
+                  },
+                  icon: FaIcon(FontAwesomeIcons.youtube))
+            ],
           ),
           body: youtubeHierarchy(),
         );
