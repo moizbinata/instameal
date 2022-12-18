@@ -233,10 +233,10 @@ class _PlayRecipeState extends State<PlayRecipe> {
                               }
                             : null,
                       ),
-                      FullScreenButton(
-                        controller: _controller,
-                        color: Colors.blueAccent,
-                      ),
+                      // FullScreenButton(
+                      //   controller: _controller,
+                      //   color: Colors.blueAccent,
+                      // ),
                     ],
                   ),
                   _space,

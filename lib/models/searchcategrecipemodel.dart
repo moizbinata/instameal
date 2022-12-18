@@ -75,7 +75,7 @@ class SCRecipeModel {
   String categName;
   int planId;
   String planName;
-  String items;
+  List<String> items;
 
   factory SCRecipeModel.fromJson(Map<String, dynamic> json) => SCRecipeModel(
         id: json["id"],
@@ -103,9 +103,42 @@ class SCRecipeModel {
         categName: json["categName"] ?? "",
         planId: json["planId"],
         planName: json["planName"] ?? "",
-        items: json["items"],
+        items: json["items"] != null
+            ? json['items'].toString().split('***').toList()
+            : [],
       );
-
+  factory SCRecipeModel.fromMap(Map map) {
+    return SCRecipeModel(
+      id: map["id"],
+      searchcategname: map["searchcategname"],
+      searchcategid: map["searchcategid"],
+      recipeid: map["recipeid"],
+      recipeName: map["recipeName"],
+      whatYouNeed: map["whatYouNeed"] != null
+          ? map['whatYouNeed'].toString().split('***').toList()
+          : [],
+      direction: map["direction"] != null
+          ? map['direction'].toString().split('***').toList()
+          : [],
+      nutritPerServe: map["nutritPerServe"] != null
+          ? map['nutritPerServe'].toString().split('***').toList()
+          : [],
+      imagesUrl: map["imagesUrl"],
+      serving: map["serving"],
+      prepTime: map["prepTime"],
+      cookTime: map["cookTime"],
+      keys: map["keys"] != null
+          ? map['keys'].toString().split('***').toList()
+          : [],
+      categId: map["categId"],
+      categName: map["categName"] ?? "",
+      planId: map["planId"],
+      planName: map["planName"] ?? "",
+      items: map["items"] != null
+          ? map['items'].toString().split('***').toList()
+          : [],
+    );
+  }
   Map<String, dynamic> toJson() => {
         "id": id,
         "searchcategname": searchcategname,

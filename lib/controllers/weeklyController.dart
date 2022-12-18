@@ -28,19 +28,45 @@ class WeeklyController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     fetchWeeklyImage();
-    // getCartRecipe();
+    getCartRecipe();
   }
 
   getCartRecipe() {
     if (box.read('collection') != null) {
-      List<Collection> abc = [];
-      abc = List<Collection>.from(box.read('collection'));
-      print(abc);
+      print(box.read('collection'));
+      List abcd = box.read('collection');
+      print(abcd);
+      listCartRecipe2.clear();
+      for (final map in abcd) {
+        listCartRecipe2.add(Collection.fromMap(map));
+      }
     }
     if (box.read('breakfast') != null) {
-      List<Breakfast> abc = [];
-      abc = List<Breakfast>.from(box.read('breakfast'));
-      print(abc);
+      print(box.read('breakfast'));
+      List abcd = box.read('breakfast');
+      print(abcd);
+      listCartRecipe1.clear();
+      for (final map in abcd) {
+        listCartRecipe1.add(Breakfast.fromMap(map));
+      }
+    }
+    if (box.read('universal') != null) {
+      print(box.read('universal'));
+      List abcd = box.read('universal');
+      print(abcd);
+      listCartRecipe3.clear();
+      for (final map in abcd) {
+        listCartRecipe3.add(SCRecipeModel.fromMap(map));
+      }
+    }
+    if (box.read('scateg') != null) {
+      print(box.read('scateg'));
+      List abcd = box.read('scateg');
+      print(abcd);
+      listCartRecipe4.clear();
+      for (final map in abcd) {
+        listCartRecipe4.add(AllRecipeModel.fromMap(map));
+      }
     }
   }
 

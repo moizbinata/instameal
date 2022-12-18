@@ -334,18 +334,20 @@ Widget videoBox(context, imagesUrl, day, recipeName, dayName, color,
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              dayName.toString(),
-              overflow: TextOverflow.ellipsis,
-              style: (btn == false)
-                  ? Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: color,
-                      )
-                  : Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      .copyWith(color: CustomTheme.bgColor),
+            Flexible(
+              child: Text(
+                dayName.toString(),
+                overflow: TextOverflow.ellipsis,
+                style: (btn == false)
+                    ? Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        )
+                    : Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        .copyWith(color: CustomTheme.bgColor),
+              ),
             ),
             (btn == false)
                 ? InkWell(child: customButton2(context, color, color, "View"))

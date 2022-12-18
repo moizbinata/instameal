@@ -65,7 +65,7 @@ class AllRecipeModel {
   List<String> keys;
   int categId;
   int planId;
-  String items;
+  List<String> items;
   String planName;
   String categName;
 
@@ -90,11 +90,41 @@ class AllRecipeModel {
             : [],
         categId: json["categId"],
         planId: json["planId"],
-        items: json["items"],
+        items: json["items"] != null
+            ? json['items'].toString().split('***').toList()
+            : [],
         planName: json["planName"],
         categName: json["categName"],
       );
-
+  factory AllRecipeModel.fromMap(Map map) {
+    return AllRecipeModel(
+      recipeid: map["recipeid"],
+      recipeName: map["recipeName"],
+      whatYouNeed: map["whatYouNeed"] != null
+          ? map['whatYouNeed'].toString().split('***').toList()
+          : [],
+      direction: map["direction"] != null
+          ? map['direction'].toString().split('***').toList()
+          : [],
+      nutritPerServe: map["nutritPerServe"] != null
+          ? map['nutritPerServe'].toString().split('***').toList()
+          : [],
+      imagesUrl: map["imagesUrl"],
+      serving: map["serving"],
+      prepTime: map["prepTime"],
+      cookTime: map["cookTime"],
+      keys: map["keys"] != null
+          ? map['keys'].toString().split('***').toList()
+          : [],
+      categId: map["categId"],
+      planId: map["planId"],
+      items: map["items"] != null
+          ? map['items'].toString().split('***').toList()
+          : [],
+      planName: map["planName"],
+      categName: map["categName"],
+    );
+  }
   Map<String, dynamic> toJson() => {
         "recipeid": recipeid,
         "recipeName": recipeName,

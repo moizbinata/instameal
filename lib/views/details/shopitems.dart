@@ -72,25 +72,17 @@ class _ShopItemsState extends State<ShopItems> {
                       tabs: List.generate(
                         widget.itemList.items.length,
                         (index) {
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                isError = false;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text(widget.itemList.recipeName,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                                Text(
-                                  widget.itemList.items[index]
-                                      .toString()
-                                      .toUpperCase(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
+                          return Column(
+                            children: [
+                              Text(widget.itemList.recipeName,
+                                  style: Theme.of(context).textTheme.bodySmall),
+                              Text(
+                                widget.itemList.items[index]
+                                    .toString()
+                                    .toUpperCase(),
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
                           );
                         },
                       ),

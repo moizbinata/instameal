@@ -112,7 +112,34 @@ class Collection {
             ? json['items'].toString().split('***').toList()
             : [],
       );
-
+  factory Collection.fromMap(Map map) {
+    return Collection(
+      recipeid: map["recipeid"],
+      recipeName: map["recipeName"],
+      whatYouNeed: map["whatYouNeed"] != null
+          ? map['whatYouNeed'].toString().split('***').toList()
+          : [],
+      direction: map["direction"] != null
+          ? map['direction'].toString().split('***').toList()
+          : [],
+      nutritPerServe: map["nutritPerServe"] != null
+          ? map['nutritPerServe'].toString().split('***').toList()
+          : [],
+      imagesUrl: map["imagesUrl"],
+      serving: map["serving"],
+      prepTime: map["prepTime"],
+      cookTime: map["cookTime"],
+      keys: map["keys"] != null
+          ? map['keys'].toString().split('***').toList()
+          : [],
+      categName: map["categName"],
+      planName: map["planName"],
+      userid: map["userid"] == null ? null : map["userid"],
+      items: map["items"] != null
+          ? map['items'].toString().split('***').toList()
+          : [],
+    );
+  }
   Map<String, dynamic> toJson() => {
         "recipeid": recipeid,
         "recipeName": recipeName,

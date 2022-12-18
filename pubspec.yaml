@@ -58,7 +58,6 @@ dependencies:
   video_player: ^2.4.9
   fijkplayer: ^0.10.1
   youtube_player_flutter: ^8.1.1
-  # flutter_inappwebview: ^5.7.2+2
 
 dev_dependencies:
   flutter_test:

@@ -39,14 +39,14 @@ class _RecipePlayerState extends State<RecipePlayer> {
     _controller = YoutubePlayerController(
       initialVideoId: widget.latVideoData.videoUrl,
       flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: true,
-        disableDragSeek: false,
-        loop: false,
-        isLive: false,
-        forceHD: false,
-        enableCaption: true,
-      ),
+          mute: false,
+          autoPlay: false,
+          disableDragSeek: false,
+          loop: true,
+          isLive: false,
+          forceHD: false,
+          enableCaption: true,
+          showLiveFullscreenButton: false),
     )..addListener(listener);
     _idController = TextEditingController();
     _seekToController = TextEditingController();
@@ -63,7 +63,7 @@ class _RecipePlayerState extends State<RecipePlayer> {
     }
   }
 
-  bool rotateBool = false;
+  // bool rotateBool = false;
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
@@ -92,45 +92,45 @@ class _RecipePlayerState extends State<RecipePlayer> {
   }
 }
 
-class PortraitVideo extends StatelessWidget {
-  PortraitVideo({Key key, this.controller}) : super(key: key);
-  final controller;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+// class PortraitVideo extends StatelessWidget {
+//   PortraitVideo({Key key, this.controller}) : super(key: key);
+//   final controller;
+//   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: floatButton(context),
-      key: _scaffoldKey,
-      drawer: drawer(context),
-      appBar: customAppBar(action: () {
-        if (_scaffoldKey.currentState.isDrawerOpen) {
-          _scaffoldKey.currentState.openEndDrawer();
-        } else {
-          _scaffoldKey.currentState.openDrawer();
-        }
-      }, action2: () {
-        showDialog(context: context, builder: (ctx) => notifDialog(ctx));
-      }),
-      backgroundColor: CustomTheme.bgColor2,
-      body: SizedBox(
-        // height: double.infinity,
-        // width: double.infinity,
-        child: YoutubePlayer(
-          controller: controller,
-          showVideoProgressIndicator: true,
-          width: double.infinity,
-          actionsPadding: EdgeInsets.zero,
-          aspectRatio: 16 / 9,
-          onReady: () => debugPrint('ready'),
-          bottomActions: [
-            FullScreenButton(),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       floatingActionButton: floatButton(context),
+//       key: _scaffoldKey,
+//       drawer: drawer(context),
+//       appBar: customAppBar(action: () {
+//         if (_scaffoldKey.currentState.isDrawerOpen) {
+//           _scaffoldKey.currentState.openEndDrawer();
+//         } else {
+//           _scaffoldKey.currentState.openDrawer();
+//         }
+//       }, action2: () {
+//         showDialog(context: context, builder: (ctx) => notifDialog(ctx));
+//       }),
+//       backgroundColor: CustomTheme.bgColor2,
+//       body: SizedBox(
+//         // height: double.infinity,
+//         // width: double.infinity,
+//         child: YoutubePlayer(
+//           controller: controller,
+//           showVideoProgressIndicator: true,
+//           width: double.infinity,
+//           actionsPadding: EdgeInsets.zero,
+//           aspectRatio: 16 / 9,
+//           onReady: () => debugPrint('ready'),
+//           // bottomActions: [
+//           //   FullScreenButton(),
+//           // ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class MyWidget extends StatelessWidget {
   MyWidget({Key key, this.title, this.controlller, this.videoUrl})
@@ -140,32 +140,22 @@ class MyWidget extends StatelessWidget {
   final controlller;
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-        builder: (BuildContext context, Orientation orientation) {
-      if (orientation == Orientation.landscape) {
-        return Scaffold(
-          floatingActionButton: floatButton(context),
-          body: youtubeHierarchy(),
-        );
-      } else {
-        return Scaffold(
-          floatingActionButton: floatButton(context),
-          appBar: AppBar(
-            backgroundColor: CustomTheme.bgColor,
-            title: Text(title),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    launchUrl(
-                        Uri.parse("https://www.youtube.com/watch?v=$videoUrl"));
-                  },
-                  icon: FaIcon(FontAwesomeIcons.youtube))
-            ],
-          ),
-          body: youtubeHierarchy(),
-        );
-      }
-    });
+    return Scaffold(
+      floatingActionButton: floatButton(context),
+      appBar: AppBar(
+        backgroundColor: CustomTheme.bgColor,
+        title: Text(title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                launchUrl(
+                    Uri.parse("https://www.youtube.com/watch?v=$videoUrl"));
+              },
+              icon: FaIcon(FontAwesomeIcons.youtube))
+        ],
+      ),
+      body: youtubeHierarchy(),
+    );
   }
 
   youtubeHierarchy() {
@@ -176,16 +166,16 @@ class MyWidget extends StatelessWidget {
           fit: BoxFit.fill,
           child: YoutubePlayer(
             controller: controlller,
-            // bottomActions: [FullScreenButton()],
+            bottomActions: [],
           ),
         ),
       ),
     );
   }
 
-  Future<bool> _willPopCallback() async {
-    // await showDialog or Show add banners or whatever
-    // then
-    return Future.value(true);
-  }
+  // Future<bool> _willPopCallback() async {
+  //   // await showDialog or Show add banners or whatever
+  //   // then
+  //   return Future.value(true);
+  // }
 }

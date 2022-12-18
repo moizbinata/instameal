@@ -70,7 +70,7 @@ class _ChangePassState extends State<ChangePass> {
                     }
                   },
                   child: customButton(context, Colors.white,
-                      CustomTheme.bgColor, "Continue to Meal Plan")),
+                      CustomTheme.bgColor, "Change Password")),
             ],
           ),
         ),

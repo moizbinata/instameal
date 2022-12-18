@@ -121,14 +121,21 @@ class RecipeDetail extends StatelessWidget {
                                     .contains(recipeModel)) {
                                   weeklyController.listCartRecipe4
                                       .remove(recipeModel);
+                                  box.write(
+                                      'scateg',
+                                      weeklyController.listCartRecipe4
+                                          .toList());
+                                  print(box.read('scateg').toString());
                                   Fluttertoast.showToast(msg: 'Removed');
                                 } else {
                                   weeklyController.listCartRecipe4
                                       .add(recipeModel);
-                                  box.write('universal',
-                                      weeklyController.listCartRecipe4);
-                                  print(weeklyController
-                                      .listCartRecipe4.first.categName);
+                                  box.write(
+                                      'scateg',
+                                      weeklyController.listCartRecipe4
+                                          .toList());
+                                  print(box.read('scateg').toString());
+
                                   Fluttertoast.showToast(msg: 'Added');
                                 }
                               } else if (modelType == "universal") {
@@ -136,14 +143,20 @@ class RecipeDetail extends StatelessWidget {
                                     .contains(recipeModel)) {
                                   weeklyController.listCartRecipe3
                                       .remove(recipeModel);
+                                  box.write(
+                                      'universal',
+                                      weeklyController.listCartRecipe3
+                                          .toList());
+                                  print(box.read('universal').toString());
                                   Fluttertoast.showToast(msg: 'Removed');
                                 } else {
                                   weeklyController.listCartRecipe3
                                       .add(recipeModel);
-                                  box.write('universal',
-                                      weeklyController.listCartRecipe3);
-                                  print(weeklyController
-                                      .listCartRecipe3.first.categName);
+                                  box.write(
+                                      'universal',
+                                      weeklyController.listCartRecipe3
+                                          .toList());
+                                  print(box.read('universal').toString());
                                   Fluttertoast.showToast(msg: 'Added');
                                 }
                               } else if (modelType == "collection") {
@@ -151,20 +164,26 @@ class RecipeDetail extends StatelessWidget {
                                     .contains(recipeModel)) {
                                   weeklyController.listCartRecipe2
                                       .remove(recipeModel);
+                                  box.write(
+                                      'collection',
+                                      weeklyController.listCartRecipe2
+                                          .toList());
+                                  print(box.read('collection').toString());
                                   Fluttertoast.showToast(msg: 'Removed');
                                 } else {
                                   weeklyController.listCartRecipe2
                                       .add(recipeModel);
-                                  box.write('collection',
-                                      weeklyController.listCartRecipe2);
-                                  print(weeklyController
-                                      .listCartRecipe2.first.categName);
+                                  box.write(
+                                      'collection',
+                                      weeklyController.listCartRecipe2
+                                          .toList());
+                                  print(box.read('collection').toString());
+
                                   Fluttertoast.showToast(msg: 'Added');
                                 }
                               } else {
                                 var recipeToAdd;
                                 int recipeId = recipeModel.recipeid;
-
                                 if (recipeModel.categName == "Breakfast") {
                                   recipeToAdd = weeklyController
                                       .listofWeeklyBfast
@@ -190,14 +209,20 @@ class RecipeDetail extends StatelessWidget {
                                     .contains(recipeToAdd)) {
                                   weeklyController.listCartRecipe1
                                       .remove(recipeToAdd);
+                                  box.write(
+                                      'breakfast',
+                                      weeklyController.listCartRecipe1
+                                          .toList());
+                                  print(box.read('breakfast').toString());
                                   Fluttertoast.showToast(msg: 'Removed');
                                 } else {
                                   weeklyController.listCartRecipe1
                                       .add(recipeToAdd);
-                                  box.write('collection',
-                                      weeklyController.listCartRecipe1);
-                                  print(weeklyController
-                                      .listCartRecipe1.first.categName);
+                                  box.write(
+                                      'breakfast',
+                                      weeklyController.listCartRecipe1
+                                          .toList());
+                                  print(box.read('breakfast').toString());
                                   Fluttertoast.showToast(msg: 'Added');
                                 }
                                 // print(recipeToAdd.recipeid);
@@ -229,7 +254,7 @@ class RecipeDetail extends StatelessWidget {
                               ),
                             ),
                             label: Text(
-                              "Favourite",
+                              "Favorite",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall

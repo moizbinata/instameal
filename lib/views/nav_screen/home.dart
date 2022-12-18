@@ -146,7 +146,9 @@ class _HomeState extends State<Home> {
                                           imageUrl:
                                               // "http://192.168.1.113:3000/assets/airfryer-eggplant-sticks.jpg",
 
-                                              _.listcurrWeekImg[index].imageUrl,
+                                              Constants.baseImageUrl +
+                                                  _.listcurrWeekImg[index]
+                                                      .imageUrl,
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) => Center(
                                               child: Center(
@@ -261,17 +263,6 @@ class _HomeState extends State<Home> {
                                             recipeModel: _.listofFav[index],
                                           ),
                                         );
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         RecipeDetail(
-                                        //       modelType: "collection",
-                                        //       recipeModel:
-                                        //           _.listofFav[index],
-                                        //     ),
-                                        //   ),
-                                        // );
                                       },
                                       child: recipeBox2(
                                         context,
@@ -307,7 +298,7 @@ class _HomeState extends State<Home> {
                                   height: SizeConfig.heightMultiplier * 0.5,
                                 ),
                                 Text(
-                                  "   Special Occassion",
+                                  "   Holidays",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -329,17 +320,6 @@ class _HomeState extends State<Home> {
                                                 recipeModel:
                                                     _.listofFestival[index],
                                               ));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             RecipeDetail(
-                                          //               modelType:
-                                          //                   "collection",
-                                          //               recipeModel:
-                                          //                   _.listofFestival[
-                                          //                       index],
-                                          //             )));
                                         },
                                         child: recipeBox2(
                                           context,
@@ -349,99 +329,6 @@ class _HomeState extends State<Home> {
                                           _.listofFestival[index].recipeName,
                                           Colors.white,
                                         ),
-                                        //  Container(
-                                        //   margin: EdgeInsets.all(
-                                        //       SizeConfig
-                                        //           .heightMultiplier),
-                                        //   height: SizeConfig
-                                        //           .heightMultiplier *
-                                        //       20,
-                                        //   width: SizeConfig
-                                        //           .heightMultiplier *
-                                        //       20,
-                                        //   child: Column(
-                                        //     crossAxisAlignment:
-                                        //         CrossAxisAlignment.start,
-                                        //     children: [
-                                        //       Container(
-                                        //         clipBehavior:
-                                        //             Clip.hardEdge,
-                                        //         decoration: BoxDecoration(
-                                        //           borderRadius:
-                                        //               BorderRadius.only(
-                                        //             topLeft:
-                                        //                 Radius.circular(
-                                        //                     25),
-                                        //             topRight:
-                                        //                 Radius.circular(
-                                        //                     10),
-                                        //             bottomRight:
-                                        //                 Radius.circular(
-                                        //                     25),
-                                        //             bottomLeft:
-                                        //                 Radius.circular(
-                                        //                     10),
-                                        //           ),
-                                        //         ),
-                                        //         child: CachedNetworkImage(
-                                        //           height: SizeConfig
-                                        //                   .heightMultiplier *
-                                        //               20,
-                                        //           width: SizeConfig
-                                        //                   .heightMultiplier *
-                                        //               20,
-                                        //           imageUrl: Constants
-                                        //                   .baseImageUrl +
-                                        //               _
-                                        //                   .listofFestival[
-                                        //                       index]
-                                        //                   .imagesUrl,
-                                        //           fit: BoxFit.cover,
-                                        //           placeholder: (context,
-                                        //                   url) =>
-                                        //               Center(
-                                        //                   child: Center(
-                                        //                       child:
-                                        //                           CircularProgressIndicator())),
-                                        //           errorWidget: (context,
-                                        //                   url, error) =>
-                                        //               Image.asset(
-                                        //                   "assets/images/breakfast.png"),
-                                        //         ),
-                                        //       ),
-                                        //       SizedBox(
-                                        //         height: SizeConfig
-                                        //             .heightMultiplier,
-                                        //       ),
-                                        //       Text(
-                                        //         _.listofFestival[index]
-                                        //             .planName,
-                                        //         style: Theme.of(context)
-                                        //             .textTheme
-                                        //             .bodySmall,
-                                        //       ),
-                                        //       Text(
-                                        //         _.listofFestival[index]
-                                        //             .recipeName,
-                                        //         style: Theme.of(context)
-                                        //             .textTheme
-                                        //             .bodyText1
-                                        //             .copyWith(
-                                        //               fontWeight:
-                                        //                   FontWeight.bold,
-                                        //               color: Colors.white,
-                                        //             ),
-                                        //       ),
-                                        //       InkWell(
-                                        //           child: customButton2(
-                                        //               context,
-                                        //               CustomTheme
-                                        //                   .secondaryColor,
-                                        //               Colors.white,
-                                        //               "Add to List")),
-                                        //     ],
-                                        //   ),
-                                        // ),
                                       );
                                     },
                                   ),
@@ -465,7 +352,7 @@ class _HomeState extends State<Home> {
                             children: [
                               space0(),
                               Text(
-                                "   Top Collections",
+                                "   Diet Preference",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               SizedBox(

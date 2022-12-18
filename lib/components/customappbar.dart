@@ -24,21 +24,9 @@ Widget customAppBar({action, action2}) {
     actions: [
       IconButton(
           onPressed: action2,
-          icon: Stack(
-            children: [
-              FaIcon(
-                FontAwesomeIcons.bell,
-                color: CustomTheme.bgColor,
-              ),
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: FaIcon(
-                    FontAwesomeIcons.solidCircle,
-                    color: CustomTheme.red,
-                    size: SizeConfig.heightMultiplier,
-                  ))
-            ],
+          icon: FaIcon(
+            FontAwesomeIcons.bell,
+            color: CustomTheme.bgColor,
           )),
     ],
   );

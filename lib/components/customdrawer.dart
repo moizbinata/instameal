@@ -117,7 +117,7 @@ Widget drawer(context) {
                 FontAwesomeIcons.arrowTrendUp,
               ),
               title: Text(
-                "Favourite Plans",
+                "Favorite Plans",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {

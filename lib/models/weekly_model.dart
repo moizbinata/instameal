@@ -136,7 +136,50 @@ class Breakfast {
             ? json['items'].toString().split('***').toList()
             : [],
       );
-
+  factory Breakfast.fromMap(Map map) {
+    return Breakfast(
+      recipeid: map["recipeid"],
+      day: map["day"],
+      weeknumber: map["weeknumber"],
+      categoryId: map["categoryId"],
+      planId: map["planId"],
+      recipeName: map["recipeName"],
+      whatYouNeed: map["whatYouNeed"] != null
+          ? map['whatYouNeed'].toString().split('***').toList()
+          : [],
+      direction: map["direction"] != null
+          ? map['direction'].toString().split('***').toList()
+          : [],
+      nutritPerServe: map["nutritPerServe"] != null
+          ? map['nutritPerServe'].toString().split('***').toList()
+          : [],
+      imagesUrl: map["imagesUrl"],
+      serving: map["serving"],
+      prepTime: map["prepTime"],
+      cookTime: map["cookTime"],
+      keys: map["keys"] != null
+          ? map['keys'].toString().split('***').toList()
+          : [],
+      categName: map["categName"],
+      planName: map["planName"],
+      dayName: (map["day"] == 1)
+          ? "Monday"
+          : (map["day"] == 2)
+              ? "Tuesday"
+              : (map["day"] == 3)
+                  ? "Wednesday"
+                  : (map["day"] == 4)
+                      ? "Thursday"
+                      : (map["day"] == 5)
+                          ? "Friday"
+                          : (map["day"] == 6)
+                              ? "Saturday"
+                              : "Sunday",
+      items: map["items"] != null
+          ? map['items'].toString().split('***').toList()
+          : [],
+    );
+  }
   Map<String, dynamic> toJson() => {
         "recipeid": recipeid,
         "day": day,

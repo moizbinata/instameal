@@ -155,29 +155,42 @@ class _ShopItems2State extends State<ShopItems2> {
                                     children: List.generate(
                                       widget.itemList[index].items.length,
                                       (indexh) {
+                                        bool errorBool = false;
+
                                         return (martUrl == "")
                                             ? Center(
                                                 child: Text(
                                                   "Select shop first",
                                                 ),
                                               )
-                                            : SingleChildScrollView(
-                                                child: SizedBox(
-                                                    height: SizeConfig
-                                                            .screenHeight *
-                                                        0.7,
-                                                    child: WebView(
-                                                      zoomEnabled: true,
-                                                      javascriptMode:
-                                                          JavascriptMode
-                                                              .unrestricted,
-                                                      initialUrl: martUrl +
-                                                          widget.itemList[index]
-                                                              .items[indexh]
-                                                              .toString(),
-                                                    )));
-                                        // Text(widget.itemList[index]
-                                        //     .items[indexh]);
+                                            : (errorBool)
+                                                ? Center(
+                                                    child: Text(
+                                                        "This link not working"),
+                                                  )
+                                                : SingleChildScrollView(
+                                                    child: SizedBox(
+                                                        height: SizeConfig
+                                                                .screenHeight *
+                                                            0.7,
+                                                        child: WebView(
+                                                          zoomEnabled: true,
+                                                          javascriptMode:
+                                                              JavascriptMode
+                                                                  .unrestricted,
+                                                          onWebResourceError:
+                                                              (error) {
+                                                            setState(() {
+                                                              errorBool = true;
+                                                            });
+                                                          },
+                                                          initialUrl: martUrl +
+                                                              widget
+                                                                  .itemList[
+                                                                      index]
+                                                                  .items[indexh]
+                                                                  .toString(),
+                                                        ),),);
                                       },
                                     ),
                                   ),

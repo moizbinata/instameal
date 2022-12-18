@@ -36,12 +36,24 @@ class Favourite extends StatelessWidget {
         }),
         backgroundColor: CustomTheme.bgColor2,
         body: ListView(children: [
-          Text(
-            "   Favourite meals",
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(color: CustomTheme.bgColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "   Favorite meals",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: CustomTheme.bgColor),
+              ),
+              IconButton(
+                  onPressed: () {
+                    final WeeklyController weeklyController =
+                        Get.put(WeeklyController());
+                    weeklyController.getCartRecipe();
+                  },
+                  icon: FaIcon(FontAwesomeIcons.rotate))
+            ],
           ),
           space0(),
           DefaultTabController(
@@ -56,13 +68,13 @@ class Favourite extends StatelessWidget {
                         isScrollable: true,
                         indicatorColor: CustomTheme.bgColor,
                         tabs: [
-                          Text("Weekly Favourites",
+                          Text("Weekly Favorites",
                               style: Theme.of(context).textTheme.bodyLarge),
-                          Text("Other Favourites",
+                          Text("Other Favorites",
                               style: Theme.of(context).textTheme.bodyLarge),
-                          Text("Category's Favourites",
+                          Text("Category's Favorites",
                               style: Theme.of(context).textTheme.bodyLarge),
-                          Text("All Recipe Favourites",
+                          Text("All Recipe Favorites",
                               style: Theme.of(context).textTheme.bodyLarge),
                         ]),
                   ),
@@ -105,14 +117,14 @@ Widget buildFavListWeekly() {
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe1.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 100,
+                            height: SizeConfig.heightMultiplier * 40,
                           )
                         : InkWell(
                             onTap: () {
                               Constants.navigatepush(
                                   context,
                                   RecipeDetail(
-                                    modelType: "collection",
+                                    modelType: "breakfast",
                                     recipeModel: _.listCartRecipe1[index],
                                   ));
                             },
@@ -160,7 +172,9 @@ Widget buildFavListWeekly() {
                                           ),
                                           Positioned(
                                               child: CircleAvatar(
-                                            child: Text(index.toString()),
+                                            backgroundColor:
+                                                Colors.black.withOpacity(0.5),
+                                            child: Text((index + 1).toString()),
                                           ))
                                         ],
                                       )),
@@ -232,7 +246,7 @@ Widget buildFavListOther() {
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe2.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 100,
+                            height: SizeConfig.heightMultiplier * 40,
                           )
                         : InkWell(
                             onTap: () {
@@ -289,7 +303,7 @@ Widget buildFavListOther() {
                                               child: CircleAvatar(
                                             backgroundColor:
                                                 Colors.black.withOpacity(0.5),
-                                            child: Text(index.toString()),
+                                            child: Text((index + 1).toString()),
                                           ))
                                         ],
                                       )),
@@ -360,14 +374,14 @@ Widget buildAllRecipeListOther() {
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe4.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 50,
+                            height: SizeConfig.heightMultiplier * 40,
                           )
                         : InkWell(
                             onTap: () {
                               Constants.navigatepush(
                                   context,
                                   RecipeDetail(
-                                    modelType: "universal",
+                                    modelType: "scateg",
                                     recipeModel: _.listCartRecipe4[index],
                                   ));
                             },
@@ -391,22 +405,36 @@ Widget buildAllRecipeListOther() {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    flex: 3,
-                                    child: CachedNetworkImage(
-                                      height: SizeConfig.heightMultiplier * 20,
-                                      width: SizeConfig.heightMultiplier * 20,
-                                      imageUrl: Constants.baseImageUrl +
-                                          _.listCartRecipe4[index].imagesUrl,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Center(
-                                          child: Center(
-                                              child:
-                                                  CircularProgressIndicator())),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/breakfast.png"),
-                                    ),
-                                  ),
+                                      flex: 3,
+                                      child: Stack(
+                                        children: [
+                                          CachedNetworkImage(
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            imageUrl: Constants.baseImageUrl +
+                                                _.listCartRecipe4[index]
+                                                    .imagesUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator())),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                Image.asset(
+                                                    "assets/images/breakfast.png"),
+                                          ),
+                                          Positioned(
+                                              child: CircleAvatar(
+                                            backgroundColor:
+                                                Colors.black.withOpacity(0.5),
+                                            child: Text((index + 1).toString()),
+                                          ))
+                                        ],
+                                      )),
                                   SizedBox(
                                     width: SizeConfig.heightMultiplier,
                                   ),
@@ -474,14 +502,14 @@ Widget buildScategRecipeListOther() {
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe3.length)
                         ? SizedBox(
-                            height: SizeConfig.heightMultiplier * 50,
+                            height: SizeConfig.heightMultiplier * 40,
                           )
                         : InkWell(
                             onTap: () {
                               Constants.navigatepush(
                                   context,
                                   RecipeDetail(
-                                    modelType: "scateg",
+                                    modelType: "universal",
                                     recipeModel: _.listCartRecipe3[index],
                                   ));
                             },
@@ -505,22 +533,36 @@ Widget buildScategRecipeListOther() {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    flex: 3,
-                                    child: CachedNetworkImage(
-                                      height: SizeConfig.heightMultiplier * 20,
-                                      width: SizeConfig.heightMultiplier * 20,
-                                      imageUrl: Constants.baseImageUrl +
-                                          _.listCartRecipe3[index].imagesUrl,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Center(
-                                          child: Center(
-                                              child:
-                                                  CircularProgressIndicator())),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/breakfast.png"),
-                                    ),
-                                  ),
+                                      flex: 3,
+                                      child: Stack(
+                                        children: [
+                                          CachedNetworkImage(
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                            width: SizeConfig.heightMultiplier *
+                                                20,
+                                            imageUrl: Constants.baseImageUrl +
+                                                _.listCartRecipe3[index]
+                                                    .imagesUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator())),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                Image.asset(
+                                                    "assets/images/breakfast.png"),
+                                          ),
+                                          Positioned(
+                                              child: CircleAvatar(
+                                            backgroundColor:
+                                                Colors.black.withOpacity(0.5),
+                                            child: Text((index + 1).toString()),
+                                          ))
+                                        ],
+                                      )),
                                   SizedBox(
                                     width: SizeConfig.heightMultiplier,
                                   ),

@@ -10,7 +10,6 @@ import 'package:instameal/controllers/searchcategcontroller.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/splash/splash.dart';
-import 'package:flutter/material.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:native_notify/native_notify.dart';
 import 'package:instameal/utils/sizeconfig.dart';
