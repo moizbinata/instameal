@@ -154,6 +154,36 @@ Widget space0() {
   );
 }
 
+Widget arrowBox() {
+  return Container(
+      margin: EdgeInsets.only(
+          left: SizeConfig.heightMultiplier,
+          right: SizeConfig.heightMultiplier,
+          top: SizeConfig.heightMultiplier,
+          bottom: SizeConfig.heightMultiplier * 14),
+      width: SizeConfig.heightMultiplier * 18,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/arrow.gif",
+            height: SizeConfig.heightMultiplier * 10,
+          ),
+          Text(
+            "See more",
+            // style: TextStyle(
+            //     color: Colors.white),
+          ),
+          // FaIcon(
+          //   FontAwesomeIcons
+          //       .arrowRight,
+          // color: Colors.white,
+          // ),
+        ],
+      ));
+}
+
 Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color,
     {btn = false}) {
   return Container(

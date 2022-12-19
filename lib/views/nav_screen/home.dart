@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
@@ -11,6 +12,7 @@ import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/views/details/recipeplay.dart';
+import 'package:instameal/views/details/viewmore.dart';
 import '../../components/customdrawer.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
@@ -231,7 +233,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               space0(),
-              //top trending
+              //Top Trending
               GetBuilder<UniversalController>(
                 init: UniversalController(),
                 builder: (_) {
@@ -250,29 +252,39 @@ class _HomeState extends State<Home> {
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
                                 child: ListView.builder(
-                                  itemCount: _.listofFav.length,
+                                  itemCount: 6,
                                   physics: AlwaysScrollableScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Constants.navigatepush(
-                                          context,
-                                          RecipeDetail(
-                                            modelType: "collection",
-                                            recipeModel: _.listofFav[index],
-                                          ),
-                                        );
-                                      },
-                                      child: recipeBox2(
-                                        context,
-                                        _.listofFav[index].imagesUrl,
-                                        index + 1,
-                                        _.listofFav[index].planName,
-                                        _.listofFav[index].recipeName,
-                                        CustomTheme.bgColor,
-                                      ),
-                                    );
+                                    return (index == 5)
+                                        ? InkWell(
+                                            onTap: () {
+                                              Constants.navigatepush(
+                                                context,
+                                                ViewMore(),
+                                              );
+                                            },
+                                            child: arrowBox())
+                                        : InkWell(
+                                            onTap: () {
+                                              Constants.navigatepush(
+                                                context,
+                                                RecipeDetail(
+                                                  modelType: "collection",
+                                                  recipeModel:
+                                                      _.listofFav[index],
+                                                ),
+                                              );
+                                            },
+                                            child: recipeBox2(
+                                              context,
+                                              _.listofFav[index].imagesUrl,
+                                              index + 1,
+                                              _.listofFav[index].planName,
+                                              _.listofFav[index].recipeName,
+                                              CustomTheme.bgColor,
+                                            ),
+                                          );
                                   },
                                 ),
                               ),
@@ -283,7 +295,7 @@ class _HomeState extends State<Home> {
               ),
 
               space0(),
-              //special occassion
+              //Small Bites
               GetBuilder<UniversalController>(
                   init: UniversalController(),
                   builder: (_) {
@@ -298,7 +310,7 @@ class _HomeState extends State<Home> {
                                   height: SizeConfig.heightMultiplier * 0.5,
                                 ),
                                 Text(
-                                  "   Holidays",
+                                  "   Small Bites",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -307,29 +319,35 @@ class _HomeState extends State<Home> {
                                 SizedBox(
                                   height: SizeConfig.heightMultiplier * 35,
                                   child: ListView.builder(
-                                    itemCount: _.listofFestival.length,
+                                    itemCount: 6,
                                     physics: AlwaysScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Constants.navigatepush(
-                                              context,
-                                              RecipeDetail(
-                                                modelType: "collection",
-                                                recipeModel:
-                                                    _.listofFestival[index],
-                                              ));
-                                        },
-                                        child: recipeBox2(
-                                          context,
-                                          _.listofFestival[index].imagesUrl,
-                                          index + 1,
-                                          _.listofFestival[index].planName,
-                                          _.listofFestival[index].recipeName,
-                                          Colors.white,
-                                        ),
-                                      );
+                                      return (index == 5)
+                                          ? InkWell(child: arrowBox())
+                                          : InkWell(
+                                              onTap: () {
+                                                Constants.navigatepush(
+                                                    context,
+                                                    RecipeDetail(
+                                                      modelType: "collection",
+                                                      recipeModel:
+                                                          _.listofFestival[
+                                                              index],
+                                                    ));
+                                              },
+                                              child: recipeBox2(
+                                                context,
+                                                _.listofFestival[index]
+                                                    .imagesUrl,
+                                                index + 1,
+                                                _.listofFestival[index]
+                                                    .planName,
+                                                _.listofFestival[index]
+                                                    .recipeName,
+                                                Colors.white,
+                                              ),
+                                            );
                                     },
                                   ),
                                 ),
@@ -339,7 +357,7 @@ class _HomeState extends State<Home> {
                   }),
 
               space0(),
-              //colllection
+              //Desserts
               GetBuilder<UniversalController>(
                 init: UniversalController(),
                 builder: (_) {
@@ -352,46 +370,52 @@ class _HomeState extends State<Home> {
                             children: [
                               space0(),
                               Text(
-                                "   Diet Preference",
+                                "   Desserts",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               SizedBox(
                                 height: SizeConfig.heightMultiplier * 35,
                                 child: ListView.builder(
-                                  itemCount: _.listofCollection.length,
+                                  itemCount: 6,
                                   physics: AlwaysScrollableScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Constants.navigatepush(
-                                            context,
-                                            RecipeDetail(
-                                              modelType: "collection",
-                                              recipeModel:
-                                                  _.listofCollection[index],
-                                            ));
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             RecipeDetail(
-                                        //               modelType:
-                                        //                   "collection",
-                                        //               recipeModel:
-                                        //                   _.listofCollection[
-                                        //                       index],
-                                        //             )));
-                                      },
-                                      child: recipeBox2(
-                                        context,
-                                        _.listofCollection[index].imagesUrl,
-                                        index + 1,
-                                        _.listofCollection[index].planName,
-                                        _.listofCollection[index].recipeName,
-                                        CustomTheme.bgColor,
-                                      ),
-                                    );
+                                    return (index == 5)
+                                        ? InkWell(child: arrowBox())
+                                        : InkWell(
+                                            onTap: () {
+                                              Constants.navigatepush(
+                                                context,
+                                                RecipeDetail(
+                                                  modelType: "collection",
+                                                  recipeModel:
+                                                      _.listofCollection[index],
+                                                ),
+                                              );
+                                              // Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             RecipeDetail(
+                                              //               modelType:
+                                              //                   "collection",
+                                              //               recipeModel:
+                                              //                   _.listofCollection[
+                                              //                       index],
+                                              //             )));
+                                            },
+                                            child: recipeBox2(
+                                              context,
+                                              _.listofCollection[index]
+                                                  .imagesUrl,
+                                              index + 1,
+                                              _.listofCollection[index]
+                                                  .planName,
+                                              _.listofCollection[index]
+                                                  .recipeName,
+                                              CustomTheme.bgColor,
+                                            ),
+                                          );
                                   },
                                 ),
                               ),
@@ -402,7 +426,7 @@ class _HomeState extends State<Home> {
               ),
 
               space0(),
-              //desserts
+              //Weekly Top Picks
               GetBuilder<UniversalController>(
                   init: UniversalController(),
                   builder: (_) {
@@ -417,7 +441,7 @@ class _HomeState extends State<Home> {
                                   height: SizeConfig.heightMultiplier * 0.5,
                                 ),
                                 Text(
-                                  "   Special Desserts",
+                                  "   Weekly Top Picks",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -426,42 +450,47 @@ class _HomeState extends State<Home> {
                                 SizedBox(
                                   height: SizeConfig.heightMultiplier * 35,
                                   child: ListView.builder(
-                                    itemCount: _.listofDesserts.length,
+                                    itemCount: 6,
                                     physics: AlwaysScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Constants.navigatepush(
-                                            context,
-                                            RecipeDetail(
-                                              modelType: "collection",
-                                              recipeModel:
-                                                  _.listofDesserts[index],
-                                            ),
-                                          );
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) =>
-                                          //         RecipeDetail(
-                                          //       modelType: "collection",
-                                          //       recipeModel:
-                                          //           _.listofDesserts[
-                                          //               index],
-                                          //     ),
-                                          //   ),
-                                          // );
-                                        },
-                                        child: recipeBox2(
-                                          context,
-                                          _.listofDesserts[index].imagesUrl,
-                                          index + 1,
-                                          _.listofDesserts[index].planName,
-                                          _.listofDesserts[index].recipeName,
-                                          Colors.white,
-                                        ),
-                                      );
+                                      return (index == 5)
+                                          ? InkWell(child: arrowBox())
+                                          : InkWell(
+                                              onTap: () {
+                                                Constants.navigatepush(
+                                                  context,
+                                                  RecipeDetail(
+                                                    modelType: "collection",
+                                                    recipeModel:
+                                                        _.listofDesserts[index],
+                                                  ),
+                                                );
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         RecipeDetail(
+                                                //       modelType: "collection",
+                                                //       recipeModel:
+                                                //           _.listofDesserts[
+                                                //               index],
+                                                //     ),
+                                                //   ),
+                                                // );
+                                              },
+                                              child: recipeBox2(
+                                                context,
+                                                _.listofDesserts[index]
+                                                    .imagesUrl,
+                                                index + 1,
+                                                _.listofDesserts[index]
+                                                    .planName,
+                                                _.listofDesserts[index]
+                                                    .recipeName,
+                                                Colors.white,
+                                              ),
+                                            );
                                     },
                                   ),
                                 ),
@@ -469,7 +498,7 @@ class _HomeState extends State<Home> {
                             ),
                           );
                   }),
-              //colllection
+              //Latest Videos
               GetBuilder<VideoController>(
                 init: VideoController(),
                 builder: (_) {
