@@ -58,7 +58,7 @@ class UniversalController extends GetxController {
   Future<void> fetchUniversal() async {
     await Future.delayed(Duration.zero);
     listofUniversal.clear();
-
+    print("fetchUniversal");
     var universal = await UniversalService.fetchUniversal();
     if (universal != null) {
       listofUniversal.add(universal);

@@ -134,15 +134,6 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                               recipeModel: filteredList[index],
                             ),
                           );
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => RecipeDetail(
-                          //       modelType: "breakfast",
-                          //       recipeModel: filteredList[index],
-                          //     ),
-                          //   ),
-                          // );
                         },
                         child: Container(
                           child: Column(

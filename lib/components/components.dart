@@ -167,19 +167,12 @@ Widget arrowBox() {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/images/arrow.gif",
+            "assets/images/arrow.webp",
             height: SizeConfig.heightMultiplier * 10,
           ),
-          Text(
-            "See more",
-            // style: TextStyle(
-            //     color: Colors.white),
+          FaIcon(
+            FontAwesomeIcons.arrowRight,
           ),
-          // FaIcon(
-          //   FontAwesomeIcons
-          //       .arrowRight,
-          // color: Colors.white,
-          // ),
         ],
       ));
 }

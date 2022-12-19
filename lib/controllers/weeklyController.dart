@@ -31,7 +31,7 @@ class WeeklyController extends GetxController {
     getCartRecipe();
   }
 
-  getCartRecipe() {
+  Future<void> getCartRecipe() {
     if (box.read('collection') != null) {
       print(box.read('collection'));
       List abcd = box.read('collection');

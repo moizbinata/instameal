@@ -14,11 +14,13 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/views/details/recipeplay.dart';
 import 'package:instameal/views/details/viewmore.dart';
 import '../../components/customdrawer.dart';
+import '../../controllers/searchcategcontroller.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import '../details/playrecipe.dart';
 import '../details/recipe.dart';
 import '../details/weektable.dart';
+import '../searchcateg/searchcategrecipe.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -258,10 +260,18 @@ class _HomeState extends State<Home> {
                                   itemBuilder: (context, index) {
                                     return (index == 5)
                                         ? InkWell(
-                                            onTap: () {
+                                            onTap: () async {
+                                              final searchCategContr = Get.put(
+                                                  SearchCategController());
+
+                                              await searchCategContr
+                                                  .filterSCategRecipe(17);
                                               Constants.navigatepush(
                                                 context,
-                                                ViewMore(),
+                                                SearchCategRecipe(
+                                                  scategId: 17,
+                                                  scategName: "Trending",
+                                                ),
                                               );
                                             },
                                             child: arrowBox())
@@ -324,7 +334,22 @@ class _HomeState extends State<Home> {
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return (index == 5)
-                                          ? InkWell(child: arrowBox())
+                                          ? InkWell(
+                                              onTap: () async {
+                                                final searchCategContr = Get.put(
+                                                    SearchCategController());
+
+                                                await searchCategContr
+                                                    .filterSCategRecipe(9);
+                                                Constants.navigatepush(
+                                                  context,
+                                                  SearchCategRecipe(
+                                                    scategId: 9,
+                                                    scategName: "Small Bites",
+                                                  ),
+                                                );
+                                              },
+                                              child: arrowBox())
                                           : InkWell(
                                               onTap: () {
                                                 Constants.navigatepush(
@@ -381,7 +406,22 @@ class _HomeState extends State<Home> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return (index == 5)
-                                        ? InkWell(child: arrowBox())
+                                        ? InkWell(
+                                            onTap: () async {
+                                              final searchCategContr = Get.put(
+                                                  SearchCategController());
+
+                                              await searchCategContr
+                                                  .filterSCategRecipe(3);
+                                              Constants.navigatepush(
+                                                context,
+                                                SearchCategRecipe(
+                                                  scategId: 3,
+                                                  scategName: "Desserts",
+                                                ),
+                                              );
+                                            },
+                                            child: arrowBox())
                                         : InkWell(
                                             onTap: () {
                                               Constants.navigatepush(
@@ -455,7 +495,23 @@ class _HomeState extends State<Home> {
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return (index == 5)
-                                          ? InkWell(child: arrowBox())
+                                          ? InkWell(
+                                              onTap: () async {
+                                                final searchCategContr = Get.put(
+                                                    SearchCategController());
+
+                                                await searchCategContr
+                                                    .filterSCategRecipe(16);
+                                                Constants.navigatepush(
+                                                  context,
+                                                  SearchCategRecipe(
+                                                    scategId: 16,
+                                                    scategName:
+                                                        "Weekly Top Picks",
+                                                  ),
+                                                );
+                                              },
+                                              child: arrowBox())
                                           : InkWell(
                                               onTap: () {
                                                 Constants.navigatepush(
