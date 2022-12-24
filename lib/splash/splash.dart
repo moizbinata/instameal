@@ -9,6 +9,7 @@ import 'package:instameal/views/intro/intro.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/home.dart';
 import '../components/components.dart';
+import '../controllers/universalController.dart';
 import '../utils/constants.dart';
 import '../utils/sizeconfig.dart';
 import '../views/subscription/trial_screen.dart';
@@ -37,14 +38,6 @@ class SplashScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline3),
                   Image.asset('assets/images/logoCircle.png',
                       width: SizeConfig.screenWidth * 0.5),
-                  // Container(
-                  //   width: SizeConfig.screenWidth * 0.5,
-                  //   decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(100)),
-                  //   child: Image.asset('assets/images/logo.png',
-                  //       width: SizeConfig.screenWidth * 0.2),
-                  // ),
                   Image.asset(
                     "assets/images/splash.png",
                     width: SizeConfig.heightMultiplier * 20,
@@ -52,7 +45,8 @@ class SplashScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       DateTime now = DateTime.now();
-
+                      final univerContr = Get.put(UniversalController());
+                      univerContr.fetchAllRecipes();
                       if (box.read('username') == null) {
                         Constants.navigatepushreplac(context, HomeIntro());
                       } else if (box.read('subscriptionEnd') != null) {

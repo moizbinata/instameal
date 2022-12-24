@@ -40,11 +40,9 @@ class _LoginState extends State<Login> {
   String _chosenValue = "Favorite pet name";
   bool selectedGender = true;
   //login
-  TextEditingController usernameController =
-      TextEditingController(text: 'decrs@gmail.com');
+  TextEditingController usernameController = TextEditingController();
 
-  TextEditingController passwordController =
-      TextEditingController(text: 'asdf');
+  TextEditingController passwordController = TextEditingController();
 
   //signup
   TextEditingController usernameController2 = TextEditingController();
@@ -330,7 +328,7 @@ class _LoginState extends State<Login> {
                                             'assets/images/icons/icon4.png',
                                           ),
                                           inactiveThumbImage: AssetImage(
-                                              'assets/images/icons/icon5.png'),
+                                              'assets/images/icons/icon1.png'),
                                           value: selectedGender,
                                           onChanged: (value) {
                                             print(value);
@@ -371,7 +369,8 @@ class _LoginState extends State<Login> {
                                             context,
                                             Colors.white,
                                             CustomTheme.bgColor,
-                                            "Continue to Meal Plan")),
+                                            "Continue to Meal Plan"),
+                                      ),
                                 space3()
                               ],
                             ),

@@ -46,13 +46,19 @@ class Favourite extends StatelessWidget {
                     .headline6
                     .copyWith(color: CustomTheme.bgColor),
               ),
-              IconButton(
-                  onPressed: () {
-                    final WeeklyController weeklyController =
-                        Get.put(WeeklyController());
-                    weeklyController.getCartRecipe();
-                  },
-                  icon: FaIcon(FontAwesomeIcons.rotate))
+              TextButton(
+                onPressed: () {
+                  final WeeklyController weeklyController =
+                      Get.put(WeeklyController());
+                  weeklyController.getCartRecipe();
+                },
+                child: Text(
+                  "Refresh",
+                  style: Theme.of(context).textTheme.bodySmall.copyWith(
+                        color: CustomTheme.bgColor,
+                      ),
+                ),
+              )
             ],
           ),
           space0(),
@@ -113,7 +119,7 @@ Widget buildFavListWeekly() {
                 ))
               : ListView.builder(
                   itemCount: _.listCartRecipe1.length + 1,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return (index == _.listCartRecipe1.length)
                         ? SizedBox(

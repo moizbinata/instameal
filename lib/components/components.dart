@@ -59,15 +59,17 @@ Widget customButton2(context, color, bgColor, label, {bg}) {
       ));
 }
 
-Widget floatButton(context) {
+Widget floatButton(context, {color}) {
   return Container(
     decoration: BoxDecoration(
-        color: CustomTheme.bgColor,
+        color: (color != null) ? color : CustomTheme.bgColor,
         borderRadius: BorderRadius.circular(
           100,
         )),
     child: IconButton(
-      icon: Icon(Icons.chevron_left),
+      icon: Icon(
+        Icons.chevron_left,
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
@@ -343,7 +345,7 @@ Widget videoBox(context, imagesUrl, day, recipeName, dayName, color,
               top: 0,
               bottom: 0,
               child: CircleAvatar(
-                backgroundColor: Colors.black.withOpacity(0.1),
+                backgroundColor: Colors.transparent,
                 child: FaIcon(
                   FontAwesomeIcons.play,
                   size: SizeConfig.heightMultiplier * 5,

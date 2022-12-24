@@ -173,7 +173,7 @@ void launchEmailSubmission() async {
   GetStorage box = GetStorage();
   final Uri params = Uri(
     scheme: 'mailto',
-    path: 'mailto:jawad2114@gmail.com',
+    path: 'mailto:support@instamealplans.com',
     // queryParameters: {
     //   'subject': 'Instameal User ID ${box.read('userid')}',
     //   'body': ''

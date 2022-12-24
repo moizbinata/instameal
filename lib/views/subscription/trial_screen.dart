@@ -6,12 +6,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
 import '../../utils/constants.dart';
 import '../../utils/network.dart';
+import '../../utils/purchaseapi.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
@@ -209,17 +212,21 @@ class _TrialScreenState extends State<TrialScreen> {
                       space0(),
 
                       InkWell(
-                          // onTap: () async {
-                          // payLoader ? null : fetchOffers();
-                          // try {
-                          //   await Purchases.purchaseProduct('id_subs');
-                          //   setState(() {
-                          //     coins += 100;
-                          //   });
-                          // } catch (e) {
-                          //   debugPrint(e.toString());
-                          // }
-                          // },
+                          onTap: () async {
+                            launchUrl(Uri.parse(
+                                "https://buy.stripe.com/test_aEUdUPg3i2c6fAIdQQ"));
+                            // fetchOffers();
+                            // makePayment(context);
+                            // payLoader ? null : fetchOffers();
+                            // try {
+                            //   await Purchases.purchaseProduct('id_subs');
+                            //   setState(() {
+                            //     coins += 100;
+                            //   });
+                            // } catch (e) {
+                            //   debugPrint(e.toString());
+                            // }
+                          },
                           child: customButton(context, Colors.white,
                               CustomTheme.bgColor, "Continue to Meal Plan")),
                       space0(),
@@ -243,27 +250,6 @@ class _TrialScreenState extends State<TrialScreen> {
                     ]),
               )),
         ));
-  }
-
-  fetchOffers() async {
-    final offerings = await PurchaseApi.fetchOffers();
-    if (offerings.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('No plans found')));
-    } else {
-      final packages = offerings
-          .map((e) => e.availablePackages)
-          .expand((element) => element)
-          .toList();
-      Fluttertoast.showToast(
-          msg: "Upgrade your plan",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-          fontSize: 16.0);
-    }
   }
 
   Future<void> makePayment(context) async {
@@ -427,22 +413,21 @@ class _TrialScreenState extends State<TrialScreen> {
       Fluttertoast.showToast(msg: "Something went wrong");
     }
   }
-}
 
-class PurchaseApi {
-  static const _apiKey = '';
-  static Future init() async {
-    await Purchases.setDebugLogsEnabled(true);
-    await PurchasesConfiguration(_apiKey);
-  }
-
-  static Future<List<Offering>> fetchOffers() async {
-    try {
-      final offerings = await Purchases.getOfferings();
-      final current = offerings.current;
-      return current == null ? [] : [current];
-    } on PlatformException catch (e) {
-      return [];
+  Future fetchOffers() async {
+    final offerings = await PurchaseApi.fetchOffers();
+    if (offerings.isEmpty) {
+      Fluttertoast.showToast(msg: 'No package');
+      print("no package");
+    } else {
+      final packages = offerings
+          .map((offer) => offer.availablePackages)
+          .expand((element) => element)
+          .toList();
+      BottomSheet(
+        onClosing: (() {}),
+        builder: (context) => Paywall(offering: offerings),
+      );
     }
   }
 }

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../views/subscription/trial_screen.dart';
-
 class Constants {
-  // static final baseUrl = "http://192.168.18.168:3000/";
-  // static final baseImageUrl = "http://192.168.18.168:3000/assets/";
-  static final baseUrl = "https://paaocenter.com/";
-  static final baseImageUrl = "https://paaocenter.com/assets/";
-  static final baseVideoUrl = "https://paaocenter.com/assets/videos/";
+  static final baseUrl = "https://instanode.otdownloads.com/";
+  static final baseImageUrl = "https://instanode.otdownloads.com/assets/";
+  static final baseVideoUrl =
+      "https://instanode.otdownloads.com/assets/videos/";
   static final colorList = [
     Color(0xff9fd6e5),
     Color(0xfffdd47d),

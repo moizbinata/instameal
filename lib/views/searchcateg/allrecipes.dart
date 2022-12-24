@@ -32,6 +32,8 @@ class _AllRecipesState extends State<AllRecipes> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    universalController.fetchAllRecipes();
+
     allrecipeList = universalController.listofAllRecipe;
   }
 

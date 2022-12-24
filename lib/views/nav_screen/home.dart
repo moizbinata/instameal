@@ -224,7 +224,7 @@ class _HomeState extends State<Home> {
               ListTile(
                 tileColor: CustomTheme.bgColor,
                 title: Text(
-                  "Explore instameal",
+                  "Explore Instameal",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white,
                       ),

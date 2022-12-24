@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/views/searchcateg/searchcategrecipe.dart';
 
 import '../../components/components.dart';
@@ -38,6 +39,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
 
   @override
   Widget build(BuildContext context) {
+    final univerContr = Get.put(UniversalController());
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: drawer(context),
@@ -65,6 +68,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
               space0(),
               InkWell(
                 onTap: () {
+                  univerContr.fetchAllRecipes();
+
                   Fluttertoast.showToast(
                       msg: "Loading, please wait",
                       toastLength: Toast.LENGTH_SHORT,
@@ -73,6 +78,7 @@ class _SearchCategoriesState extends State<SearchCategories> {
                       backgroundColor: Colors.white,
                       textColor: Colors.black,
                       fontSize: 16.0);
+
                   Constants.navigatepush(
                     context,
                     AllRecipes(),
@@ -137,69 +143,72 @@ class _SearchCategoriesState extends State<SearchCategories> {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                       ),
-                      itemBuilder: (context, index) => InkWell(
-                            onTap: () async {
-                              final searchCategContr =
-                                  Get.put(SearchCategController());
-                              await searchCategContr.filterSCategRecipe(
-                                  filteredList[index].searchcategid);
-                              Constants.navigatepush(
-                                context,
-                                SearchCategRecipe(
-                                  scategId: filteredList[index].searchcategid,
-                                  scategName:
-                                      filteredList[index].searchcategname,
-                                ),
-                              );
-                            },
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                        color: CustomTheme.bgColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: CustomTheme.grey
-                                                .withOpacity(0.5),
-                                            blurRadius: 6,
-                                            spreadRadius: 6,
-                                            offset: Offset(0, 0),
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: CachedNetworkImage(
-                                      height: SizeConfig.heightMultiplier * 18,
-                                      width: SizeConfig.heightMultiplier * 18,
-                                      imageUrl: Constants.baseImageUrl +
-                                          filteredList[index].scategimg,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Center(
-                                          child: Center(
-                                              child:
-                                                  CircularProgressIndicator())),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/breakfast.png"),
-                                    ),
-                                  ),
-                                  space0(),
-                                  Text(
-                                    filteredList[index]
-                                        .searchcategname
-                                        .toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        .copyWith(color: CustomTheme.bgColor),
-                                  ),
-                                ],
+                      itemBuilder: (context, index) {
+                        print(Constants.baseImageUrl +
+                            filteredList[index].scategimg);
+
+                        return InkWell(
+                          onTap: () async {
+                            final searchCategContr =
+                                Get.put(SearchCategController());
+                            await searchCategContr.filterSCategRecipe(
+                                filteredList[index].searchcategid);
+                            Constants.navigatepush(
+                              context,
+                              SearchCategRecipe(
+                                scategId: filteredList[index].searchcategid,
+                                scategName: filteredList[index].searchcategname,
                               ),
+                            );
+                          },
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                      color: CustomTheme.bgColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              CustomTheme.grey.withOpacity(0.5),
+                                          blurRadius: 6,
+                                          spreadRadius: 6,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: CachedNetworkImage(
+                                    height: SizeConfig.heightMultiplier * 18,
+                                    width: SizeConfig.heightMultiplier * 18,
+                                    imageUrl: Constants.baseImageUrl +
+                                        filteredList[index].scategimg,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Center(
+                                        child: Center(
+                                            child:
+                                                CircularProgressIndicator())),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                            "assets/images/breakfast.png"),
+                                  ),
+                                ),
+                                space0(),
+                                Text(
+                                  filteredList[index]
+                                      .searchcategname
+                                      .toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      .copyWith(color: CustomTheme.bgColor),
+                                ),
+                              ],
                             ),
-                          ));
+                          ),
+                        );
+                      });
                 },
               )
             ],

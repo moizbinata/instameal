@@ -65,7 +65,7 @@ class Home_IntroState extends State<HomeIntro> {
             width: SizeConfig.screenWidth,
           ),
           Image.asset(
-            'assets/mealimg/intro3.jpg',
+            'assets/mealimg/intro3.webp',
             width: SizeConfig.screenWidth,
           ),
         ],
@@ -109,7 +109,7 @@ class Home_IntroState extends State<HomeIntro> {
                 ),
                 space1(),
                 Text(
-                  'With over 15 food styles, Instameal is sure to have the perfect fit for your lifestyle. Choose from Paleo, Quick & Healthy, Low Calorie, Budget Friendly, and so much more',
+                  'With over 15 food styles, Instameal is sure to have the perfect fit for your lifestyle. Choose from Plant-based, 5-Ingredients, 30 minutes, quick and healthy meals to hormones balance, low calories, budget friendly and so much more.',
                 ),
               ],
             ),

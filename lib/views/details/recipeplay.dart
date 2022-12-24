@@ -141,9 +141,9 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: floatButton(context),
+      floatingActionButton: floatButton(context, color: Color(0xffff0000)),
       appBar: AppBar(
-        backgroundColor: CustomTheme.bgColor,
+        backgroundColor: Color(0xffff0000),
         title: Text(title),
         actions: [
           IconButton(

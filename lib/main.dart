@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +12,8 @@ import 'package:instameal/controllers/searchcategcontroller.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/splash/splash.dart';
+import 'package:instameal/utils/purchaseapi.dart';
+import 'package:instameal/utils/store_config.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:native_notify/native_notify.dart';
 import 'package:instameal/utils/sizeconfig.dart';
@@ -20,6 +24,20 @@ import 'navigation/bottom_navigator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PurchaseApi.init();
+  if (Platform.isIOS || Platform.isMacOS) {
+    StoreConfig(
+      store: Store.appleStore,
+      apiKey: "appleApiKey",
+    );
+  } else if (Platform.isAndroid) {
+    // Run the app passing --dart-define=AMAZON=true
+    const useAmazon = bool.fromEnvironment("amazon");
+    StoreConfig(
+      store: useAmazon ? Store.amazonAppstore : Store.googlePlay,
+      apiKey: useAmazon ? "amazonApiKey" : "googleApiKey",
+    );
+  }
   NativeNotify.initialize(2213, 'OrhGvNRGIp5m6evvdmk6Fq', null, null);
   await GetStorage.init();
   Stripe.publishableKey =
@@ -58,7 +76,7 @@ class MyApp extends StatelessWidget {
             title: 'Instameal',
             theme: CustomTheme.themedata,
             home: box.read('username') == null
-                ? SplashScreen()
+                ? TrialScreen()
                 : (box.read('subscriptionEnd') != null)
                     ? (now.isAfter(DateTime.parse(
                             box.read('subscriptionEnd').toString())))
