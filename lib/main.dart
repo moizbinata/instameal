@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
             title: 'Instameal',
             theme: CustomTheme.themedata,
             home: box.read('username') == null
-                ? TrialScreen()
+                ? SplashScreen()
                 : (box.read('subscriptionEnd') != null)
                     ? (now.isAfter(DateTime.parse(
                             box.read('subscriptionEnd').toString())))

@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:intl/intl.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
 import '../../utils/constants.dart';
@@ -20,19 +17,16 @@ import '../../utils/purchaseapi.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
-import '../checkout/constants.dart';
-import '../checkout/server_stub.dart';
-import '../checkout/stripe_checkout_mobile.dart';
 import '../login.dart';
 
-class TrialScreen extends StatefulWidget {
-  TrialScreen({Key key}) : super(key: key);
+class PaymentScreen extends StatefulWidget {
+  const PaymentScreen({Key key}) : super(key: key);
 
   @override
-  State<TrialScreen> createState() => _TrialScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _TrialScreenState extends State<TrialScreen> {
+class _PaymentScreenState extends State<PaymentScreen> {
   bool payLoader = false;
   bool isSubscriberd = false;
   int coins = 0;
@@ -126,12 +120,7 @@ class _TrialScreenState extends State<TrialScreen> {
                       ),
                       bulletPoints(
                         context,
-                        label: "Keep it USD 18.99 & USD 198",
-                      ),
-                      bulletPoints(
-                        context,
-                        label:
-                            "Start your trial with 1 USD, and enjoy for 14 days",
+                        label: "Keep it USD 19.99 & USD 199",
                       ),
                       space0(),
 
@@ -146,7 +135,7 @@ class _TrialScreenState extends State<TrialScreen> {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("18.99 USD",
+                            title: Text("19.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -188,7 +177,7 @@ class _TrialScreenState extends State<TrialScreen> {
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("198 USD",
+                              title: Text("199 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -266,11 +255,8 @@ class _TrialScreenState extends State<TrialScreen> {
                             //   debugPrint(e.toString());
                             // }
                           },
-                          child: customButton(
-                              context,
-                              Colors.white,
-                              CustomTheme.bgColor,
-                              "Continue trial with 1 USD")),
+                          child: customButton(context, Colors.white,
+                              CustomTheme.bgColor, "Continue to Meal Plan")),
                       space0(),
                       // Text(
                       //   "Your iTunes account will be charged within 24 hours of the end of your trial period ending and within 24 hours of the end of the current term for each renewal, cancellation must happen at least 24 hours before the end of the period. Subscriptions may be managed and auto-renewal turned off by going to your iTunes Account Settings after purchase. Any unused portion of a free trial period will be forfeited if you purchase a subscription prior to that trial period ending",
@@ -304,13 +290,16 @@ class _TrialScreenState extends State<TrialScreen> {
     //     Uri.parse('https://buy.stripe.com/test_9AQ5ojaIYbMG1JScMN'));
     print(buttonController.selectedPlan.value.toString());
     try {
-      paymentIntentMonthly = await createPaymentIntent('1', 'USD');
+      paymentIntentMonthly = await createPaymentIntent('20', 'USD');
+      paymentIntentYearly = await createPaymentIntent('198', 'USD');
       // paymentIntentYearly = await createPaymentIntent('198', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentMonthly['client_secret'],
+          paymentIntentClientSecret: (buttonController.selectedPlan.value == 0)
+              ? paymentIntentMonthly['client_secret']
+              : paymentIntentYearly['client_secret'],
           allowsDelayedPaymentMethods: true,
           // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
           // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
@@ -424,11 +413,23 @@ class _TrialScreenState extends State<TrialScreen> {
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 13));
+      DateTime subend = DateTime.now().add(Duration(days: 44));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
-          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Trial/Trial/${formatTrial.toString()}/PayStatus/Unpaid/Uid/${box.read('userid').toString()}";
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Monthly/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+      response = await Network.put(url: url).catchError(
+        () {
+          Fluttertoast.showToast(msg: "Server is not responding");
+        },
+      );
+    } else if (buttonController.selectedPlan.value == 1) {
+      DateTime subend = DateTime.now().add(Duration(days: 379));
+      DateTime formatSubEnd =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
+      url =
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Yearly/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+
       response = await Network.put(url: url).catchError(
         () {
           Fluttertoast.showToast(msg: "Server is not responding");
@@ -460,19 +461,5 @@ class _TrialScreenState extends State<TrialScreen> {
         builder: (context) => Paywall(offering: offerings),
       );
     }
-  }
-}
-
-class SuccessPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Success',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-      ),
-    );
   }
 }

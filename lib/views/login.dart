@@ -11,6 +11,7 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/changepassword.dart';
 import 'package:instameal/views/details/securityques.dart';
+import 'package:instameal/views/subscription/payment_screen.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -390,6 +391,9 @@ class _LoginState extends State<Login> {
   }
 
   postSignup(context) async {
+    var formatDate =
+        DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: 1)));
+    // DateTime formattedDate = DateTime.parse(formatDate);
     String formatNow = DateFormat('yyyy-MM-dd').format(now);
     print("formattedd");
     print(formatNow.toString());
@@ -405,7 +409,7 @@ class _LoginState extends State<Login> {
       "password": password1Controller.text.toString(),
       "email": emailController.text.toString(),
       "subscriptionstart": formatNow,
-      "subscriptionend": formatNow,
+      "subscriptionend": formatDate,
       "membershiptype": "Daily",
       "trialstatus": formatNow,
       "paymentstatus": "Unpaid",
@@ -498,8 +502,14 @@ class _LoginState extends State<Login> {
                 .isAfter(formattedDate) &&
             loginModel.data[0].paymentStatus == "Paid")
           Constants.navigatepushreplac(context, BottomNavigator());
-        else
+        else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
+                .isAfter(formattedDate) &&
+            loginModel.data[0].paymentStatus == "Unpaid" &&
+            loginModel.data[0].membershipType == "Trial")
           Constants.navigatepushreplac(context, TrialScreen());
+        else if (loginModel.data[0].paymentStatus == "Paid" &&
+            loginModel.data[0].membershipType == "Daily")
+          Constants.navigatepushreplac(context, PaymentScreen());
       } else {
         setState(() {
           loginLoader = false;
