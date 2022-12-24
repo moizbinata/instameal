@@ -28,7 +28,7 @@ Future<void> initPlatformState() async {
 
   PurchasesConfiguration configuration;
   if (Platform.isAndroid) {
-    configuration = PurchasesConfiguration("goog_AopBypgqYAtKTJIReHJVmcGNcWw");
+    configuration = PurchasesConfiguration("sk_bGLnfkkqBmQIZVCUaJQoxWbCsbFCz");
     // if (buildingForAmazon) {
     //   // use your preferred way to determine if this build is for Amazon store
     //   // checkout our MagicWeather sample for a suggestion

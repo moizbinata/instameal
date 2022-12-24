@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -18,6 +20,9 @@ import '../../utils/purchaseapi.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
+import '../checkout/constants.dart';
+import '../checkout/server_stub.dart';
+import '../checkout/stripe_checkout_mobile.dart';
 import '../login.dart';
 
 class TrialScreen extends StatefulWidget {
@@ -213,9 +218,36 @@ class _TrialScreenState extends State<TrialScreen> {
 
                       InkWell(
                           onTap: () async {
-                            launchUrl(Uri.parse(
-                                "https://buy.stripe.com/test_aEUdUPg3i2c6fAIdQQ"));
-                            // fetchOffers();
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (_) => CheckoutPage(),
+                            // ));
+                            // redirectToCheckout(context);
+                            // redirectToCheckout(context);
+                            // if (buttonController.selectedPlan.value == 0) {
+                            //   launchUrl(Uri.parse(
+                            //           "https://buy.stripe.com/test_aEUdUPg3i2c6fAIdQQ"))
+                            //       .whenComplete(() {
+                            //     box.erase();
+                            //     // Fluttertoast.showToast(
+                            //     //     msg: 'Successfully Logout');
+                            //     Get.offAll(Login());
+                            //   });
+                            // } else {
+                            //   launchUrl(Uri.parse(
+                            //           "https://billing.stripe.com/p/login/test_cN2dSrf2ndLZ4YUeUU"))
+                            //       .whenComplete(() {
+                            //     box.erase();
+                            //     // Fluttertoast.showToast(
+                            //     //     msg: 'Successfully Logout');
+                            //     Get.offAll(Login());
+                            //   });
+                            // }
+
+                            //     .then((value) {
+                            //   print("mioz");
+                            //   print(value);
+                            // }).whenComplete(() => print("moiaata"));
+                            fetchOffers();
                             // makePayment(context);
                             // payLoader ? null : fetchOffers();
                             // try {
@@ -429,5 +461,19 @@ class _TrialScreenState extends State<TrialScreen> {
         builder: (context) => Paywall(offering: offerings),
       );
     }
+  }
+}
+
+class SuccessPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Success',
+          style: Theme.of(context).textTheme.headline1,
+        ),
+      ),
+    );
   }
 }

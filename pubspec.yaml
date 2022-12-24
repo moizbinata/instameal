@@ -58,6 +58,7 @@ dependencies:
   video_player: ^2.4.9
   fijkplayer: ^0.10.1
   youtube_player_flutter: ^8.1.1
+  dio: ^4.0.6
   # stripe_payment: ^1.1.4
 
 dev_dependencies:
