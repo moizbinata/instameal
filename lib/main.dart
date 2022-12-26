@@ -75,14 +75,16 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Instameal',
             theme: CustomTheme.themedata,
-            home: box.read('username') == null
-                ? SplashScreen()
-                : (box.read('subscriptionEnd') != null)
-                    ? (now.isAfter(DateTime.parse(
-                            box.read('subscriptionEnd').toString())))
-                        ? TrialScreen()
-                        : BottomNavigator() //BottomNavigator
-                    : SplashScreen());
+            home: SplashScreen()
+            // box.read('username') == null
+            //     ? SplashScreen()
+            //     : (box.read('subscriptionEnd') != null)
+            //         ? (now.isAfter(DateTime.parse(
+            //                 box.read('subscriptionEnd').toString())))
+            //             ? TrialScreen()
+            //             : BottomNavigator() //BottomNavigator
+            //         : SplashScreen()
+            );
       });
     });
   }

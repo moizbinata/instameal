@@ -135,8 +135,8 @@ class WeeklyController extends GetxController {
       listofWeeklyImages.assign(weekly);
       listcurrWeekImg.assignAll(
         {
-          listofWeeklyImages.first.data[currentWeek - 1],
-          listofWeeklyImages.first.data[currentWeek]
+          listofWeeklyImages.first.data[currentWeek - 2],
+          listofWeeklyImages.first.data[currentWeek - 1]
         },
       );
     } else {

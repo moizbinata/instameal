@@ -428,7 +428,7 @@ class _TrialScreenState extends State<TrialScreen> {
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
-          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Trial/Trial/${formatTrial.toString()}/PayStatus/Unpaid/Uid/${box.read('userid').toString()}";
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Trial/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
       response = await Network.put(url: url).catchError(
         () {
           Fluttertoast.showToast(msg: "Server is not responding");

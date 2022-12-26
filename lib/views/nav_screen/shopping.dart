@@ -104,10 +104,9 @@ class Shopping extends StatelessWidget {
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
           space1(),
-          Text(
-              "Key Ingredients:",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+          Text("   Key Ingredients:",
+              style: Theme.of(context).textTheme.headline6),
+          space0(),
           Row(
             children: [
               //GF

@@ -480,7 +480,6 @@ class _LoginState extends State<Login> {
       var jsonString = jsonDecode(response.toString());
       var loginModel = LoginModel.fromJson(jsonString);
       if (loginModel != null && loginModel.data.isNotEmpty) {
-        Fluttertoast.showToast(msg: "Login Successfully");
         {
           box.write('userid', loginModel.data[0].userid);
           box.write('username', loginModel.data[0].username);
@@ -499,6 +498,8 @@ class _LoginState extends State<Login> {
           loginLoader = false;
         });
         print("userid" + loginModel.data[0].userid.toString());
+        // Get.offAll(BottomNavigator());
+
         if (DateTime.parse(loginModel.data[0].subscriptionEnd)
                 .isAfter(formattedDate) &&
             loginModel.data[0].paymentStatus == "Paid")
