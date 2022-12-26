@@ -42,6 +42,24 @@ Widget iconBox(bgColor, iconColor, icon) {
   );
 }
 
+Widget iconBox2(bgColor, iconColor, label, context) {
+  return Container(
+    width: SizeConfig.heightMultiplier * 5,
+    height: SizeConfig.heightMultiplier * 5,
+    decoration: BoxDecoration(
+      color: bgColor,
+      borderRadius: BorderRadius.circular(
+        10,
+      ),
+    ),
+    child: Center(
+        child: Text(
+      label,
+      style: Theme.of(context).textTheme.bodySmall..copyWith(color: iconColor),
+    )),
+  );
+}
+
 Widget customButton2(context, color, bgColor, label, {bg}) {
   return Container(
       margin: EdgeInsets.only(

@@ -135,7 +135,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("19.99 USD",
+                            title: Text("18.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -177,7 +177,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("199 USD",
+                              title: Text("198 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -290,7 +290,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     //     Uri.parse('https://buy.stripe.com/test_9AQ5ojaIYbMG1JScMN'));
     print(buttonController.selectedPlan.value.toString());
     try {
-      paymentIntentMonthly = await createPaymentIntent('20', 'USD');
+      paymentIntentMonthly = await createPaymentIntent('18', 'USD');
       paymentIntentYearly = await createPaymentIntent('198', 'USD');
       // paymentIntentYearly = await createPaymentIntent('198', 'USD');
       //Payment Sheet
@@ -413,7 +413,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 44));
+      DateTime subend = DateTime.now().add(Duration(days: 30));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
@@ -424,7 +424,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         },
       );
     } else if (buttonController.selectedPlan.value == 1) {
-      DateTime subend = DateTime.now().add(Duration(days: 379));
+      DateTime subend = DateTime.now().add(Duration(days: 365));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =

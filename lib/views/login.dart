@@ -410,9 +410,9 @@ class _LoginState extends State<Login> {
       "email": emailController.text.toString(),
       "subscriptionstart": formatNow,
       "subscriptionend": formatDate,
-      "membershiptype": "Daily",
+      "membershiptype": "Trial",
       "trialstatus": formatNow,
-      "paymentstatus": "Unpaid",
+      "paymentstatus": "Trial",
       "question": _chosenValue.toString(),
       "answer": answerController.text.toString(),
       "gender": selectedGender ? "Male" : "Female"
@@ -448,8 +448,7 @@ class _LoginState extends State<Login> {
   Future<void> loginService(context) async {
     print("now");
     print(now.toString());
-    var formatDate =
-        DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: 1)));
+    var formatDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime formattedDate = DateTime.parse(formatDate);
     print(formatDate);
     final UniversalController universalController =
@@ -482,16 +481,18 @@ class _LoginState extends State<Login> {
       var loginModel = LoginModel.fromJson(jsonString);
       if (loginModel != null && loginModel.data.isNotEmpty) {
         Fluttertoast.showToast(msg: "Login Successfully");
-        box.write('userid', loginModel.data[0].userid);
-        box.write('username', loginModel.data[0].username);
-        box.write('email', loginModel.data[0].email);
-        box.write('subscriptionStart', loginModel.data[0].subscriptionStart);
-        box.write('subscriptionEnd', loginModel.data[0].subscriptionEnd);
-        box.write('membershipType', loginModel.data[0].membershipType);
-        box.write('trialStatus', loginModel.data[0].trialStatus);
-        box.write('paymentStatus', loginModel.data[0].paymentStatus);
-        box.write('gender', loginModel.data[0].gender);
-        box.write('firsttime', 'yes');
+        {
+          box.write('userid', loginModel.data[0].userid);
+          box.write('username', loginModel.data[0].username);
+          box.write('email', loginModel.data[0].email);
+          box.write('subscriptionStart', loginModel.data[0].subscriptionStart);
+          box.write('subscriptionEnd', loginModel.data[0].subscriptionEnd);
+          box.write('membershipType', loginModel.data[0].membershipType);
+          box.write('trialStatus', loginModel.data[0].trialStatus);
+          box.write('paymentStatus', loginModel.data[0].paymentStatus);
+          box.write('gender', loginModel.data[0].gender);
+          box.write('firsttime', 'yes');
+        }
         final notifContr = Get.put(NotifController());
         notifContr.fetchSearchCategRecipeController();
         setState(() {
@@ -501,15 +502,19 @@ class _LoginState extends State<Login> {
         if (DateTime.parse(loginModel.data[0].subscriptionEnd)
                 .isAfter(formattedDate) &&
             loginModel.data[0].paymentStatus == "Paid")
-          Constants.navigatepushreplac(context, BottomNavigator());
-        else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
-                .isAfter(formattedDate) &&
-            loginModel.data[0].paymentStatus == "Unpaid" &&
+          Get.offAll(BottomNavigator());
+        else if (loginModel.data[0].paymentStatus == "Trial" &&
             loginModel.data[0].membershipType == "Trial")
-          Constants.navigatepushreplac(context, TrialScreen());
-        else if (loginModel.data[0].paymentStatus == "Paid" &&
-            loginModel.data[0].membershipType == "Daily")
-          Constants.navigatepushreplac(context, PaymentScreen());
+          Get.offAll(TrialScreen());
+        else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
+            .isBefore(formattedDate))
+          Get.offAll(PaymentScreen());
+        else {
+          print(loginModel.data[0].subscriptionEnd);
+          print(formattedDate);
+          print(loginModel.data[0].paymentStatus);
+          print(loginModel.data[0].membershipType);
+        }
       } else {
         setState(() {
           loginLoader = false;

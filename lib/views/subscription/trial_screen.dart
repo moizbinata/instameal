@@ -424,7 +424,7 @@ class _TrialScreenState extends State<TrialScreen> {
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 13));
+      DateTime subend = DateTime.now().add(Duration(days: 14));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =

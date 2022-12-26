@@ -103,6 +103,131 @@ class Shopping extends StatelessWidget {
             ),
             trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
+          space1(),
+          Text(
+              "Key Ingredients:",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          Row(
+            children: [
+              //GF
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xffe0f3fb), Color(0xff9fd6e5), "GF", context),
+                  title: Text(
+                    "Gluten Free",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+              //Dairy free
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(Color.fromARGB(64, 104, 173, 194),
+                      Color.fromARGB(255, 104, 173, 194), "DF", context),
+                  title: Text(
+                    "Dairy Free",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              //Low carb
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xfff6e3bc), Color(0xffde9b12), "LC", context),
+                  title: Text(
+                    "Low Carb (20g-serve)",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+              //meal prep
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xffc9c4ed), Color(0xff8b82d0), "MP", context),
+                  title: Text(
+                    "Meal Prep/Freezer Friendly",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              //high protein
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xfffdeade), Color(0xfffdd47d), "HP", context),
+                  title: Text(
+                    "High Protein",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xfff6e3bc), Color(0xffde9b12), "N", context),
+                  title: Text(
+                    "Contain Nuts",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              //vegeterian
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xffe0f3fb), Color(0xff9fd6e5), "V", context),
+                  title: Text(
+                    "Vegeterian",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+
+              //quick
+              Expanded(
+                flex: 1,
+                child: ListTile(
+                  tileColor: Colors.white,
+                  leading: iconBox2(
+                      Color(0xffe0f3fb), Color(0xff9fd6e5), "Q", context),
+                  title: Text(
+                    "Quick (under 30 mins)",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
