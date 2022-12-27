@@ -12,6 +12,7 @@ import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../checkout/constants.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
 import '../../utils/constants.dart';
@@ -20,9 +21,6 @@ import '../../utils/purchaseapi.dart';
 import '../../utils/sizeconfig.dart';
 import '../../utils/theme.dart';
 import 'package:http/http.dart' as http;
-import '../checkout/constants.dart';
-import '../checkout/server_stub.dart';
-import '../checkout/stripe_checkout_mobile.dart';
 import '../login.dart';
 
 class TrialScreen extends StatefulWidget {
@@ -319,12 +317,11 @@ class _TrialScreenState extends State<TrialScreen> {
         ),
       )
           .then((value) {
-        print("moiz");
         // print(Stripe.instance.isApplePaySupported);
       });
+      displayPaymentSheet(context);
 
       ///now finally display payment sheeet
-      displayPaymentSheet(context);
     } catch (e, s) {
       print('exception:$e$s');
     }
