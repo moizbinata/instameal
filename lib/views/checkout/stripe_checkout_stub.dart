@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-void redirectToCheckout(BuildContext context) =>
-    throw UnsupportedError('Its neither mobile nor web');
+// void redirectToCheckout(BuildContext context) =>
+//     throw UnsupportedError('Its neither mobile nor web');

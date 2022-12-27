@@ -8,6 +8,7 @@ import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/intro/intro.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/home.dart';
+import 'package:instameal/views/subscription/payment_screen.dart';
 import '../components/components.dart';
 import '../controllers/universalController.dart';
 import '../utils/constants.dart';
@@ -45,16 +46,31 @@ class SplashScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       DateTime now = DateTime.now();
+                      print("now" + now.toString());
+                      print(
+                          "mem type " + box.read('membershipType').toString());
+                      print("paymentStatus " +
+                          box.read('paymentStatus').toString());
                       final univerContr = Get.put(UniversalController());
                       univerContr.fetchAllRecipes();
                       if (box.read('username') == null) {
+                        print("nav to home intro");
                         Constants.navigatepushreplac(context, HomeIntro());
                       } else if (box.read('subscriptionEnd') != null) {
                         DateTime subsEnd = DateTime.parse(
                             box.read('subscriptionEnd').toString());
+                        var payStatus =
+                            box.read('paymentStatus').toString() ?? "";
+                        var memType =
+                            box.read('membershipType').toString() ?? "";
                         if (now.isAfter(subsEnd)) {
-                          Constants.navigatepushreplac(context, TrialScreen());
+                          print("nav to pay screenn");
+
+                          Constants.navigatepushreplac(
+                              context, PaymentScreen());
                         } else {
+                          print("nav to home");
+
                           Constants.navigatepushreplac(
                               context, BottomNavigator());
                         }

@@ -390,8 +390,7 @@ class _TrialScreenState extends State<TrialScreen> {
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization':
-              'Bearer sk_test_51M5RsSAWiGvBL24rh6iQCT9UiPDQi4QSbAYRSrgPSZCGS5O5SQivNZmD7BlmJtR3tmaaODMhogmvVYiSlMErL1GO00LE6F5ubi',
+          'Authorization': auth,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,
@@ -414,21 +413,26 @@ class _TrialScreenState extends State<TrialScreen> {
     print("user id");
     print(box.read('userid').toString());
     DateTime now = DateTime.now();
-    DateTime formatNow = DateTime.parse(DateFormat('yyyy-MM-dd').format(now));
-    DateTime trialDate = DateTime.now().add(Duration(days: 14));
-    DateTime formatTrial =
-        DateTime.parse(DateFormat('yyyy-MM-dd').format(trialDate));
+    var formatNow = DateFormat('yyyy-MM-dd').format(now);
+    // DateTime formatNow = DateTime.parse(DateFormat('yyyy-MM-dd').format(now));
+    // DateTime trialDate = DateTime.now().add(Duration(days: 14));
+    // DateTime formatTrial =
+    //     DateTime.parse(DateFormat('yyyy-MM-dd').format(trialDate));
+    var formatTrial =
+        DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 14)));
 
     final buttonController = Get.put(ButtonController());
     String url;
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 14));
-      DateTime formatSubEnd =
-          DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
+      var formatSubEnd =
+          DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 14)));
+      // DateTime subend = DateTime.now().add(Duration(days: 14));
+      // DateTime formatSubEnd =
+      //     DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
-          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/${formatSubEnd.toString()}/Membership/Trial/Trial/${formatTrial.toString()}/PayStatus/Paid/Uid/${box.read('userid').toString()}";
+          "${Constants.baseUrl}payment/SubStart/$formatNow/Subend/$formatSubEnd/Membership/Trial/Trial/$formatTrial/PayStatus/Paid/Uid/${box.read('userid').toString()}";
       response = await Network.put(url: url).catchError(
         () {
           Fluttertoast.showToast(msg: "Server is not responding");

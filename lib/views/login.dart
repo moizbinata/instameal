@@ -508,7 +508,9 @@ class _LoginState extends State<Login> {
             loginModel.data[0].membershipType == "Trial")
           Get.offAll(TrialScreen());
         else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
-            .isBefore(formattedDate))
+                .isBefore(formattedDate) &&
+            loginModel.data[0].paymentStatus == "Paid" &&
+            loginModel.data[0].membershipType == "Trial")
           Get.offAll(PaymentScreen());
         else {
           print(loginModel.data[0].subscriptionEnd);
