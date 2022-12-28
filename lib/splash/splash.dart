@@ -45,7 +45,13 @@ class SplashScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      DateTime now = DateTime.now();
+                      final UniversalController universalController =
+                          Get.put(UniversalController());
+                      print(universalController.currentDate.toString());
+
+                      DateTime now = DateTime.parse(
+                          universalController.currentDate.toString());
+                      // DateTime now = DateTime.now();
                       print("now" + now.toString());
                       print(
                           "mem type " + box.read('membershipType').toString());
@@ -53,26 +59,49 @@ class SplashScreen extends StatelessWidget {
                           box.read('paymentStatus').toString());
                       final univerContr = Get.put(UniversalController());
                       univerContr.fetchAllRecipes();
-                      if (box.read('username') == null) {
-                        print("nav to home intro");
-                        Constants.navigatepushreplac(context, HomeIntro());
-                      } else if (box.read('subscriptionEnd') != null) {
-                        DateTime subsEnd = DateTime.parse(
-                            box.read('subscriptionEnd').toString());
-                        var payStatus =
-                            box.read('paymentStatus').toString() ?? "";
-                        var memType =
-                            box.read('membershipType').toString() ?? "";
-                        if (now.isAfter(subsEnd)) {
-                          print("nav to pay screenn");
-
-                          Constants.navigatepushreplac(
-                              context, PaymentScreen());
-                        } else {
-                          print("nav to home");
-
-                          Constants.navigatepushreplac(
-                              context, BottomNavigator());
+                      if (now.toString().length > 2) {
+                        if (box.read('username') == null) {
+                          print("nav to home intro");
+                          Constants.navigatepushreplac(context, HomeIntro());
+                        } else if (box.read('subscriptionEnd') != null) {
+                          var payStatus =
+                              box.read('paymentStatus').toString() ?? "";
+                          var memType =
+                              box.read('membershipType').toString() ?? "";
+                          DateTime subsEnd = DateTime.parse(
+                              box.read('subscriptionEnd').toString());
+                          print("now" + subsEnd.toString());
+                          if (DateTime.parse(
+                                      box.read('subscriptionEnd').toString())
+                                  .isAfter(now) &&
+                              payStatus == "Paid")
+                            Get.offAll(BottomNavigator());
+                          else if (payStatus == "Trial" && memType == "Trial")
+                            Get.offAll(TrialScreen());
+                          else if (DateTime.parse(
+                                      box.read('subscriptionEnd').toString())
+                                  .isBefore(now) &&
+                              payStatus == "Paid" &&
+                              memType == "Trial")
+                            Get.offAll(PaymentScreen());
+                          else {
+                            print(payStatus);
+                            print(now);
+                            print(memType);
+                            print(subsEnd);
+                          }
+                          // if (now.isAfter(subsEnd)) {
+                          //   print("nav to pay screenn");
+                          //   Constants.navigatepushreplac(
+                          //       context, PaymentScreen());
+                          // } else if (payStatus == "Trial" && memType == "Trial") {
+                          //   print("nav to trial screenn");
+                          //   Constants.navigatepushreplac(context, TrialScreen());
+                          // } else {
+                          //   print("nav to home");
+                          //   Constants.navigatepushreplac(
+                          //       context, BottomNavigator());
+                          // }
                         }
                       }
                     },

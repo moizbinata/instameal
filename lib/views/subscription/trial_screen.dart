@@ -15,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../checkout/constants.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
+import '../../controllers/universalController.dart';
 import '../../utils/constants.dart';
 import '../../utils/network.dart';
 import '../../utils/purchaseapi.dart';
@@ -331,6 +332,7 @@ class _TrialScreenState extends State<TrialScreen> {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (_) => AlertDialog(
                   content: Column(
@@ -347,15 +349,16 @@ class _TrialScreenState extends State<TrialScreen> {
                       ),
                       TextButton(
                           onPressed: () {
+                            updatePayment(context);
+
                             Navigator.pop(context);
                           },
-                          child: Text("Enjoy",
+                          child: Text("Confirm",
                               style: Theme.of(context).textTheme.headline6))
                     ],
                   ),
                 ));
         print("succesful");
-        updatePayment(context);
         paymentIntentMonthly = null;
         paymentIntentYearly = null;
       }).onError((error, stackTrace) {
@@ -409,7 +412,11 @@ class _TrialScreenState extends State<TrialScreen> {
   updatePayment(context) async {
     print("user id");
     print(box.read('userid').toString());
-    DateTime now = DateTime.now();
+    // DateTime now = DateTime.now();
+    final UniversalController universalController =
+        Get.put(UniversalController());
+    DateTime now =
+        DateTime.parse(universalController.currentDate.value.toString());
     var formatNow = DateFormat('yyyy-MM-dd').format(now);
     // DateTime formatNow = DateTime.parse(DateFormat('yyyy-MM-dd').format(now));
     // DateTime trialDate = DateTime.now().add(Duration(days: 14));

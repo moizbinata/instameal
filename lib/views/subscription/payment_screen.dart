@@ -9,8 +9,10 @@ import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../checkout/constants.dart';
 import '../../components/components.dart';
 import '../../controllers/buttonController.dart';
+import '../../controllers/universalController.dart';
 import '../../utils/constants.dart';
 import '../../utils/network.dart';
 import '../../utils/purchaseapi.dart';
@@ -323,6 +325,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (_) => AlertDialog(
                   content: Column(
@@ -337,8 +340,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           Text("Payment Successfull"),
                         ],
                       ),
-                      TextButton(
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomTheme.bgColor),
                           onPressed: () {
+                            updatePayment(context);
+
                             Navigator.pop(context);
                           },
                           child: Text("Enjoy",
@@ -347,7 +354,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ));
         print("succesful");
-        updatePayment(context);
         paymentIntentMonthly = null;
         paymentIntentYearly = null;
       }).onError((error, stackTrace) {
@@ -379,8 +385,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization':
-              'Bearer sk_test_51M5RsSAWiGvBL24rh6iQCT9UiPDQi4QSbAYRSrgPSZCGS5O5SQivNZmD7BlmJtR3tmaaODMhogmvVYiSlMErL1GO00LE6F5ubi',
+          'Authorization': auth,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,
@@ -402,9 +407,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
   updatePayment(context) async {
     print("user id");
     print(box.read('userid').toString());
-    DateTime now = DateTime.now();
+    // DateTime now = DateTime.now();
+    final UniversalController universalController =
+        Get.put(UniversalController());
+    DateTime now =
+        DateTime.parse(universalController.currentDate.value.toString());
     DateTime formatNow = DateTime.parse(DateFormat('yyyy-MM-dd').format(now));
-    DateTime trialDate = DateTime.now().add(Duration(days: 14));
+    DateTime trialDate = now.add(Duration(days: 14));
     DateTime formatTrial =
         DateTime.parse(DateFormat('yyyy-MM-dd').format(trialDate));
 
@@ -413,7 +422,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     // var payload;
     var response;
     if (buttonController.selectedPlan.value == 0) {
-      DateTime subend = DateTime.now().add(Duration(days: 30));
+      DateTime subend = now.add(Duration(days: 30));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =
@@ -424,7 +433,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         },
       );
     } else if (buttonController.selectedPlan.value == 1) {
-      DateTime subend = DateTime.now().add(Duration(days: 365));
+      DateTime subend = now.add(Duration(days: 365));
       DateTime formatSubEnd =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(subend));
       url =

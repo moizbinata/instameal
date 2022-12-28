@@ -16,6 +16,7 @@ class UniversalModel {
     this.festival,
     this.collection,
     this.dessert,
+    this.date,
     this.error,
   });
 
@@ -24,6 +25,7 @@ class UniversalModel {
   List<List<Collection>> festival;
   List<List<Collection>> collection;
   List<List<Collection>> dessert;
+  String date;
   String error;
 
   factory UniversalModel.fromJson(Map<String, dynamic> json) => UniversalModel(
@@ -36,6 +38,7 @@ class UniversalModel {
             List<Collection>.from(x.map((x) => Collection.fromJson(x))))),
         dessert: List<List<Collection>>.from(json["dessert"].map((x) =>
             List<Collection>.from(x.map((x) => Collection.fromJson(x))))),
+        date: json["date"],
         error: json["error"],
       );
 
@@ -49,6 +52,7 @@ class UniversalModel {
             .map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
         "dessert": List<dynamic>.from(
             dessert.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+        "date": date,
         "error": error,
       };
 }

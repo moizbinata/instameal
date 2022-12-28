@@ -54,11 +54,9 @@ class _LoginState extends State<Login> {
   TextEditingController password1Controller = TextEditingController();
 
   TextEditingController password2Controller = TextEditingController();
-  DateTime now = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
-    final universalController = Get.put(UniversalController());
-
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
       body: SafeArea(
@@ -391,6 +389,11 @@ class _LoginState extends State<Login> {
   }
 
   postSignup(context) async {
+    print("now");
+    final UniversalController universalController =
+        Get.put(UniversalController());
+    DateTime now =
+        DateTime.parse(universalController.currentDate.value.toString());
     var formatDate =
         DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: 1)));
     // DateTime formattedDate = DateTime.parse(formatDate);
@@ -447,12 +450,13 @@ class _LoginState extends State<Login> {
 
   Future<void> loginService(context) async {
     print("now");
-    print(now.toString());
+    final UniversalController universalController =
+        Get.put(UniversalController());
+    DateTime now =
+        DateTime.parse(universalController.currentDate.value.toString());
     var formatDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime formattedDate = DateTime.parse(formatDate);
     print(formatDate);
-    final UniversalController universalController =
-        Get.put(UniversalController());
     GetStorage box = GetStorage();
     box.write('plantype', "Plant-Based");
     box.write('planid', "3");

@@ -17,6 +17,7 @@ class UniversalController extends GetxController {
   RxList<Collection> listofCollection = <Collection>[].obs;
   RxList<Collection> listofDesserts = <Collection>[].obs;
   RxString mart = "".obs;
+  RxString currentDate = "".obs;
   RxString plan = "".obs;
   RxInt planid = 0.obs;
   RxInt currentPage = 0.obs;
@@ -63,6 +64,7 @@ class UniversalController extends GetxController {
     if (universal != null) {
       listofUniversal.add(universal);
       if (listofUniversal.length > 0) {
+        currentDate.value = listofUniversal.first.date;
         //favourite
         if (listofUniversal.first.fav != null ||
             listofUniversal.first.fav.length > 0) {
