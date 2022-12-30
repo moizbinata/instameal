@@ -4,8 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instameal/models/notifmodel.dart';
 import 'package:instameal/models/videomodel.dart';
 
-import '../utils/constants.dart';
-import '../utils/network.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/network.dart';
 
 class NotifService {
   static Future<NotifModel> fetchNotif(id) async {

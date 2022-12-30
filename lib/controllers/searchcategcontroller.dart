@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:instameal/services/scrservices.dart';
 
-import '../models/searchcategmodel.dart';
-import '../models/searchcategrecipemodel.dart';
+import 'package:instameal/models/searchcategmodel.dart';
+import 'package:instameal/models/searchcategrecipemodel.dart';
 
 class SearchCategController extends GetxController {
   RxList<SCRecipeModel> listofSCRecipe = <SCRecipeModel>[].obs;

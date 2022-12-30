@@ -5,21 +5,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:instameal/views/login.dart';
 import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../checkout/constants.dart';
-import '../../components/components.dart';
-import '../../controllers/buttonController.dart';
-import '../../controllers/universalController.dart';
-import '../../utils/constants.dart';
-import '../../utils/network.dart';
-import '../../utils/purchaseapi.dart';
-import '../../utils/sizeconfig.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/checkout/constants.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/controllers/buttonController.dart';
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/network.dart';
+import 'package:instameal/utils/purchaseapi.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/utils/theme.dart';
 import 'package:http/http.dart' as http;
-import '../login.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key key}) : super(key: key);

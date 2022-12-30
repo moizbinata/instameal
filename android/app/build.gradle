@@ -77,7 +77,7 @@ android {
 }
 
 flutter {
-    source '../..'
+    source 'package:instameal/..'
 }
 
 dependencies {

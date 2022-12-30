@@ -11,9 +11,9 @@ import 'package:instameal/views/nav_screen/favourite.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../utils/constants.dart';
-import '../views/login.dart';
-import '../views/nav_screen/home.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/views/login.dart';
+import 'package:instameal/views/nav_screen/home.dart';
 
 Widget drawer(context) {
   GetStorage box = GetStorage();

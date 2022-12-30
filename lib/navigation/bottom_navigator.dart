@@ -8,12 +8,12 @@ import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
 
-import '../components/components.dart';
-import '../controllers/universalController.dart';
-import '../utils/constants.dart';
-import '../utils/sizeconfig.dart';
-import '../views/details/shopitems.dart';
-import '../views/nav_screen/home.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/views/details/shopitems.dart';
+import 'package:instameal/views/nav_screen/home.dart';
 
 class BottomNavigator extends StatefulWidget {
   @override

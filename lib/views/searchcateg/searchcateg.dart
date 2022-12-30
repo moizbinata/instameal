@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/views/searchcateg/searchcategrecipe.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../controllers/searchcategcontroller.dart';
-import '../../models/searchcategmodel.dart';
-import '../../utils/constants.dart';
-import '../../utils/sizeconfig.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/controllers/searchcategcontroller.dart';
+import 'package:instameal/models/searchcategmodel.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/utils/theme.dart';
 import 'allrecipes.dart';
 
 class SearchCategories extends StatefulWidget {

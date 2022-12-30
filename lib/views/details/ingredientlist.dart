@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/utils/theme.dart';
 
 class IngredientList extends StatelessWidget {
   IngredientList({Key key, this.recipeModel}) : super(key: key);

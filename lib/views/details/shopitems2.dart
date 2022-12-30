@@ -5,11 +5,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/utils/theme.dart';
 
 class ShopItems2 extends StatefulWidget {
   ShopItems2({Key key, this.itemList, this.itemLength}) : super(key: key);
@@ -170,27 +170,28 @@ class _ShopItems2State extends State<ShopItems2> {
                                                   )
                                                 : SingleChildScrollView(
                                                     child: SizedBox(
-                                                        height: SizeConfig
-                                                                .screenHeight *
-                                                            0.7,
-                                                        child: WebView(
-                                                          zoomEnabled: true,
-                                                          javascriptMode:
-                                                              JavascriptMode
-                                                                  .unrestricted,
-                                                          onWebResourceError:
-                                                              (error) {
-                                                            setState(() {
-                                                              errorBool = true;
-                                                            });
-                                                          },
-                                                          initialUrl: martUrl +
-                                                              widget
-                                                                  .itemList[
-                                                                      index]
-                                                                  .items[indexh]
-                                                                  .toString(),
-                                                        ),),);
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.7,
+                                                      child: WebView(
+                                                        zoomEnabled: true,
+                                                        javascriptMode:
+                                                            JavascriptMode
+                                                                .unrestricted,
+                                                        onWebResourceError:
+                                                            (error) {
+                                                          setState(() {
+                                                            errorBool = true;
+                                                          });
+                                                        },
+                                                        initialUrl: martUrl +
+                                                            widget
+                                                                .itemList[index]
+                                                                .items[indexh]
+                                                                .toString(),
+                                                      ),
+                                                    ),
+                                                  );
                                       },
                                     ),
                                   ),

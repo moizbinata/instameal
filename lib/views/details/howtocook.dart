@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'dart:math' as math;
-import '../../utils/theme.dart';
+import 'package:instameal/utils/theme.dart';
 
 class HowtoCook extends StatelessWidget {
   const HowtoCook({Key key, this.directionsList}) : super(key: key);

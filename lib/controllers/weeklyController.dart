@@ -4,9 +4,9 @@ import 'package:instameal/models/images_model.dart';
 import 'package:instameal/models/universal_model.dart';
 import 'package:instameal/models/weekly_model.dart';
 import 'package:intl/intl.dart';
-import '../models/allrecipemodel.dart';
-import '../models/searchcategrecipemodel.dart';
-import '../services/weeklyservices.dart';
+import 'package:instameal/models/allrecipemodel.dart';
+import 'package:instameal/models/searchcategrecipemodel.dart';
+import 'package:instameal/services/weeklyservices.dart';
 
 class WeeklyController extends GetxController {
   RxList<ImagesModel> listofWeeklyImages = <ImagesModel>[].obs;

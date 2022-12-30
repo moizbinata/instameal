@@ -4,8 +4,8 @@ import 'package:instameal/components/components.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 
-import '../../utils/constants.dart';
-import '../login.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/views/login.dart';
 
 class HomeIntro extends StatefulWidget {
   const HomeIntro({Key key}) : super(key: key);

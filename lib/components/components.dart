@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 
-import '../utils/constants.dart';
-import '../utils/theme.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/theme.dart';
 
 BoxDecoration bottomBarShadow(index, currentIndex) {
   return BoxDecoration(

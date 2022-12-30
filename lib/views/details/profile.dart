@@ -3,12 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/views/details/changepassword.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/constants.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/theme.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key key}) : super(key: key);

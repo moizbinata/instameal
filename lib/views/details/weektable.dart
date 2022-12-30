@@ -5,11 +5,11 @@ import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/recipe.dart';
-import '../../components/components.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../controllers/universalController.dart';
-import '../../utils/sizeconfig.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/components/customappbar.dart';
 
 class WeekTable extends StatefulWidget {

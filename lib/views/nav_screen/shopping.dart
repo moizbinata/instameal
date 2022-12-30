@@ -6,16 +6,15 @@ import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/views/details/cartrecipes.dart';
 import 'package:instameal/views/details/weekingredients.dart';
 
-import '../../components/components.dart';
-import '../../components/customDialogue.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../controllers/universalController.dart';
-import '../../controllers/weeklyController.dart';
-import '../../utils/constants.dart';
-import '../../utils/theme.dart';
-import '../details/weektable.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customDialogue.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/controllers/weeklyController.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/theme.dart';
 
 class Shopping extends StatelessWidget {
   Shopping({Key key}) : super(key: key);

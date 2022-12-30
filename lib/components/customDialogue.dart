@@ -4,9 +4,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 
-import '../models/planmodel.dart';
-import '../utils/sizeconfig.dart';
-import '../utils/theme.dart';
+import 'package:instameal/models/planmodel.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/utils/theme.dart';
 import 'components.dart';
 
 void customDialogue(context) {

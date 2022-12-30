@@ -11,16 +11,15 @@ import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
+import 'package:instameal/views/details/recipe.dart';
 import 'package:instameal/views/details/recipeplay.dart';
 import 'package:instameal/views/details/viewmore.dart';
-import '../../components/customdrawer.dart';
-import '../../controllers/searchcategcontroller.dart';
-import '../../utils/sizeconfig.dart';
-import '../../utils/theme.dart';
-import '../details/playrecipe.dart';
-import '../details/recipe.dart';
-import '../details/weektable.dart';
-import '../searchcateg/searchcategrecipe.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/controllers/searchcategcontroller.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/weektable.dart';
+import 'package:instameal/views/searchcateg/searchcategrecipe.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);

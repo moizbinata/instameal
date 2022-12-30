@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/constants.dart';
-import '../../utils/sizeconfig.dart';
-import '../../utils/theme.dart';
-import '../details/recipe.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/sizeconfig.dart';
+import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/details/recipe.dart';
 
 class CartRecipes extends StatelessWidget {
   CartRecipes({Key key, this.cartType}) : super(key: key);

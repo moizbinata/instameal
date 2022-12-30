@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instameal/components/components.dart';
-import 'package:instameal/utils/sizeconfig.dart';
-import 'package:instameal/utils/theme.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'dart:math' as math;
-
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
 
 class RecipePlayer extends StatefulWidget {
   RecipePlayer({Key key, this.latVideoData}) : super(key: key);

@@ -4,9 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/models/images_model.dart';
 
-import '../models/weekly_model.dart';
-import '../utils/constants.dart';
-import '../utils/network.dart';
+import 'package:instameal/models/weekly_model.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/network.dart';
 
 class WeeklyService {
   // static var client = http.Client();

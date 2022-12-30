@@ -5,8 +5,8 @@ import 'package:instameal/models/allrecipemodel.dart';
 import 'package:instameal/models/planmodel.dart';
 import 'package:instameal/services/universalservices.dart';
 
-import '../models/universal_model.dart';
-import '../services/weeklyservices.dart';
+import 'package:instameal/models/universal_model.dart';
+import 'package:instameal/services/weeklyservices.dart';
 
 class UniversalController extends GetxController {
   RxList<AllRecipeModel> listofAllRecipe = <AllRecipeModel>[].obs;

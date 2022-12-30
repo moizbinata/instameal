@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:http/http.dart' as http;
-import '../../components/components.dart';
-import '../../utils/constants.dart';
-import '../../utils/theme.dart';
-import '../login.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/theme.dart';
+import 'package:instameal/views/login.dart';
 
 class ChangePass extends StatefulWidget {
   ChangePass({Key key}) : super(key: key);

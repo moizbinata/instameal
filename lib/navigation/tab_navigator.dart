@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
 import 'package:instameal/views/nav_screen/favourite.dart';
 
-import '../views/nav_screen/home.dart';
-import '../views/searchcateg/searchcateg.dart';
+import 'package:instameal/views/nav_screen/home.dart';
+import 'package:instameal/views/searchcateg/searchcateg.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';

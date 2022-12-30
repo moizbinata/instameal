@@ -15,12 +15,12 @@ import 'package:instameal/views/subscription/payment_screen.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:intl/intl.dart';
 
-import '../components/components.dart';
-import '../components/customdrawer.dart';
-import '../controllers/universalController.dart';
-import '../models/loginmodel.dart';
-import '../utils/network.dart';
-import '../utils/sizeconfig.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/controllers/universalController.dart';
+import 'package:instameal/models/loginmodel.dart';
+import 'package:instameal/utils/network.dart';
+import 'package:instameal/utils/sizeconfig.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);

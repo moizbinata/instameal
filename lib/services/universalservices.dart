@@ -6,10 +6,10 @@ import 'package:instameal/models/allrecipemodel.dart';
 import 'package:instameal/models/images_model.dart';
 import 'package:instameal/models/planmodel.dart';
 
-import '../models/universal_model.dart';
-import '../models/weekly_model.dart';
-import '../utils/constants.dart';
-import '../utils/network.dart';
+import 'package:instameal/models/universal_model.dart';
+import 'package:instameal/models/weekly_model.dart';
+import 'package:instameal/utils/constants.dart';
+import 'package:instameal/utils/network.dart';
 
 class UniversalService {
   static Future<UniversalModel> fetchUniversal() async {

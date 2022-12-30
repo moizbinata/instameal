@@ -5,11 +5,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../components/components.dart';
-import '../../components/customappbar.dart';
-import '../../components/customdrawer.dart';
-import '../../components/notifdialog.dart';
-import '../../utils/theme.dart';
+import 'package:instameal/components/components.dart';
+import 'package:instameal/components/customappbar.dart';
+import 'package:instameal/components/customdrawer.dart';
+import 'package:instameal/components/notifdialog.dart';
+import 'package:instameal/utils/theme.dart';
 
 class ShopItems extends StatefulWidget {
   ShopItems({Key key, this.itemList}) : super(key: key);
