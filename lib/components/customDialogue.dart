@@ -50,13 +50,13 @@ void customDialogue(context) {
                             value: value,
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: SizeConfig.heightMultiplier * 0.5,
-                                  horizontal: SizeConfig.heightMultiplier),
+                                vertical: SizeConfig.heightMultiplier * 0.5,
+                              ),
                               child: Container(
                                 child: Image.asset(
                                   'assets/images/shop/$value.png',
-                                  height: SizeConfig.heightMultiplier * 5,
-                                  fit: BoxFit.fitHeight,
+                                  height: SizeConfig.heightMultiplier * 4,
+                                  fit: BoxFit.fitWidth,
                                 ),
                               ),
                             ),

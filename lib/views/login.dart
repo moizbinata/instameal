@@ -464,7 +464,7 @@ class _LoginState extends State<Login> {
     universalController.mart.value = 'walmart';
     universalController.plan.value = "Plant-Based";
     universalController.planid.value = 3;
-    box.write('mart', 'amazonfresh');
+    box.write('mart', 'walmart');
     box.write('amazonfresh', 'https://www.amazon.com/s?k=');
     box.write('walmart', 'https://www.walmart.com/search?q=');
     box.write('instacart', 'https://www.instacart.com/store/s?k=');

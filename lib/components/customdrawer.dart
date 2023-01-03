@@ -52,9 +52,17 @@ Widget drawer(context) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("    My Account",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("    My Account",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall),
+                Text("1.0.0+5",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
             ListTile(
               selected: true,
               selectedColor: CustomTheme.bgColor,

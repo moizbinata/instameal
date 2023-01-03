@@ -125,7 +125,7 @@ class WeeklyController extends GetxController {
 
   Future<void> fetchWeeklyImage() async {
     await Future.delayed(Duration.zero);
-    int currentWeek = weekNumber(DateTime.now());
+    int currentWeek = await weekNumber(DateTime.now());
     currentRxWeek.value = currentWeek;
     print(currentWeek.toString());
     listofWeeklyImages.clear();
@@ -133,12 +133,27 @@ class WeeklyController extends GetxController {
     var weekly = await WeeklyService.fetchWeeklyImages();
     if (weekly != null) {
       listofWeeklyImages.assign(weekly);
-      listcurrWeekImg.assignAll(
-        {
-          listofWeeklyImages.first.data[currentWeek - 2],
-          listofWeeklyImages.first.data[currentWeek - 1]
-        },
-      );
+      print("currentweek");
+      print(currentWeek);
+      if (currentWeek == 1) {
+        listcurrWeekImg.assignAll(
+          {listofWeeklyImages.first.data[51], listofWeeklyImages.first.data[0]},
+        );
+      } else if (currentWeek == 52) {
+        listcurrWeekImg.assignAll(
+          {
+            listofWeeklyImages.first.data[50],
+            listofWeeklyImages.first.data[51]
+          },
+        );
+      } else {
+        listcurrWeekImg.assignAll(
+          {
+            listofWeeklyImages.first.data[currentWeek - 1],
+            listofWeeklyImages.first.data[currentWeek]
+          },
+        );
+      }
     } else {
       listofWeeklyImages.length = 0;
     }

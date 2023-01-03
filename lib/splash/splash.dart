@@ -47,6 +47,8 @@ class SplashScreen extends StatelessWidget {
                     onTap: () {
                       final UniversalController universalController =
                           Get.put(UniversalController());
+                      universalController.fetchUniversal();
+
                       print(universalController.currentDate.toString());
 
                       DateTime now = DateTime.parse(

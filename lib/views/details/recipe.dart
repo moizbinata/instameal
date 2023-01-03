@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:instameal/navigation/bottom_navigator.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
@@ -15,6 +18,8 @@ import 'package:instameal/components/components.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/weeklyController.dart';
 import 'package:instameal/utils/constants.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RecipeDetail extends StatelessWidget {
   RecipeDetail({Key key, this.recipeModel, this.modelType}) : super(key: key);
@@ -291,28 +296,23 @@ class RecipeDetail extends StatelessWidget {
                             ),
                           ),
                           TextButton.icon(
-                            onPressed: () {
-                              // final UniversalController universalController =
-                              //     Get.put(UniversalController());
-                              // universalController.currentPage.value = 1;
+                            onPressed: () async {
+                              const storeUrl =
+                                  "https://play.google.com/store/apps/details?id=com.insta.instameal";
+                              final imgUrl = Uri.parse(Constants.baseImageUrl +
+                                  recipeModel.imagesUrl);
+                              final response = await http.get(imgUrl);
+                              final bytes = response.bodyBytes;
+                              final temp = await getTemporaryDirectory();
+                              final path =
+                                  "${temp.path}/${recipeModel.imagesUrl}";
+                              File(path).writeAsBytesSync(bytes);
 
-                              // universalController
-                              //     .navigatorKeys["Shopping List"].currentState
-                              //     .popUntil((route) => route.isFirst);
-                              // universalController.currentPage.value = 1;
-
-                              Clipboard.setData(ClipboardData(
-                                  text: recipeModel.recipeName +
-                                      '\n' +
-                                      recipeModel.whatYouNeed.toString()));
-                              Fluttertoast.showToast(
-                                  msg: "Recipe Copied.",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.white,
-                                  textColor: Colors.black,
-                                  fontSize: 16.0);
+                              await Share.shareFiles(
+                                [path],
+                                text:
+                                    "Checkout this recipe on Instameal App💜.\n\n $storeUrl \n\nRecipe Name: ${recipeModel.recipeName}",
+                              );
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.share,
@@ -387,7 +387,7 @@ class RecipeDetail extends StatelessWidget {
                         //ingredients
                         ConstrainedBox(
                           constraints:
-                              BoxConstraints(maxHeight: 500, minHeight: 56.0),
+                              BoxConstraints(maxHeight: 2000, minHeight: 56.0),
                           child: ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
@@ -462,7 +462,7 @@ class RecipeDetail extends StatelessWidget {
                         //directions
                         ConstrainedBox(
                           constraints:
-                              BoxConstraints(maxHeight: 300, minHeight: 56.0),
+                              BoxConstraints(maxHeight: 2000, minHeight: 56.0),
                           child: ListView.builder(
                             padding: EdgeInsets.zero,
                             physics: NeverScrollableScrollPhysics(),
