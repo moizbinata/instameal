@@ -113,10 +113,22 @@ class _HomeState extends State<Home> {
                                       backgroundColor: Colors.white,
                                       textColor: Colors.black,
                                       fontSize: 16.0);
-                                  int week = _.currentRxWeek.value;
-                                  await weeklyController.fetchWeekly(
-                                      box.read('planid').toString(),
-                                      (index == 0) ? week - 1 : week);
+                                  int week = (_.currentRxWeek.value);
+                                  print(week);
+                                  if (week == 1) {
+                                    await weeklyController.fetchWeekly(
+                                        box.read('planid').toString(),
+                                        (index == 0) ? 51 : 1);
+                                  } else if (week == 52) {
+                                    await weeklyController.fetchWeekly(
+                                        box.read('planid').toString(),
+                                        (index == 0) ? 50 : 51);
+                                  } else {
+                                    await weeklyController.fetchWeekly(
+                                        box.read('planid').toString(),
+                                        (index == 0) ? week - 1 : week);
+                                  }
+
                                   Constants.navigatepush(context, WeekTable());
                                 },
                                 child: Container(

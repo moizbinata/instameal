@@ -58,7 +58,7 @@ Widget drawer(context) {
                 Text("    My Account",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall),
-                Text("1.0.0+5",
+                Text("1.0.0+6",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall),
               ],
