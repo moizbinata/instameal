@@ -22,6 +22,9 @@ class ShopItems2 extends StatefulWidget {
 class _ShopItems2State extends State<ShopItems2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String selectedItem = "";
+  WebViewController _webViewController;
+  final _cookieManager = CookieManager();
+  var cookie = "";
   String martUrl = "";
   GetStorage box = GetStorage();
   @override
@@ -71,8 +74,6 @@ class _ShopItems2State extends State<ShopItems2> {
                         widget.itemList.length,
                         (index) {
                           return Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.heightMultiplier),
                             padding: EdgeInsets.symmetric(
                                 horizontal: SizeConfig.heightMultiplier),
                             decoration: BoxDecoration(
@@ -118,11 +119,13 @@ class _ShopItems2State extends State<ShopItems2> {
                                         widget.itemList[index].items.length,
                                         (indexj) {
                                       return Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal:
-                                                SizeConfig.heightMultiplier),
+                                        // margin: EdgeInsets.symmetric(
+                                        //     horizontal:
+                                        //         SizeConfig.heightMultiplier),
                                         padding: EdgeInsets.symmetric(
                                             horizontal:
+                                                SizeConfig.heightMultiplier * 2,
+                                            vertical:
                                                 SizeConfig.heightMultiplier),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
@@ -174,6 +177,18 @@ class _ShopItems2State extends State<ShopItems2> {
                                                               .screenHeight *
                                                           0.7,
                                                       child: WebView(
+                                                        onWebViewCreated:
+                                                            (WebViewController
+                                                                webViewController) async {
+                                                          _webViewController =
+                                                              webViewController;
+                                                          cookie =
+                                                              await _webViewController
+                                                                  .runJavascriptReturningResult(
+                                                            'document.cookie',
+                                                          );
+                                                          print(cookie);
+                                                        },
                                                         zoomEnabled: true,
                                                         javascriptMode:
                                                             JavascriptMode

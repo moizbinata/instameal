@@ -21,6 +21,7 @@ import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/models/loginmodel.dart';
 import 'package:instameal/utils/network.dart';
 import 'package:instameal/utils/sizeconfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -54,7 +55,7 @@ class _LoginState extends State<Login> {
   TextEditingController password1Controller = TextEditingController();
 
   TextEditingController password2Controller = TextEditingController();
-
+  bool value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -340,7 +341,51 @@ class _LoginState extends State<Login> {
                                     ),
                                   ],
                                 ),
-                                space2(),
+                                space0(),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: this.value,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          this.value = value;
+                                        });
+                                      },
+                                    ),
+                                    Text("Accept "),
+                                    InkWell(
+                                      onTap: (() {
+                                        launchUrl(Uri.parse(
+                                          "https://instamealplans.com/terms-conditions/",
+                                        ));
+                                      }),
+                                      child: Text(
+                                        "Terms & Conditions",
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: SizeConfig.heightMultiplier * 4,
+                                    ),
+                                    Text(" & "),
+                                    InkWell(
+                                      onTap: (() {
+                                        launchUrl(Uri.parse(
+                                          "https://instamealplans.com/privacy-policy/",
+                                        ));
+                                      }),
+                                      child: Text(
+                                        "Privacy Policy",
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                space1(),
                                 (signupLoader)
                                     ? CustomTheme.loader()
                                     : InkWell(
@@ -353,7 +398,8 @@ class _LoginState extends State<Login> {
                                           if (_signupey.currentState
                                                   .validate() &&
                                               password1Controller.text ==
-                                                  password2Controller.text) {
+                                                  password2Controller.text &&
+                                              value == true) {
                                             postSignup(context);
                                           } else {
                                             setState(() {
@@ -361,7 +407,7 @@ class _LoginState extends State<Login> {
                                             });
                                             Fluttertoast.showToast(
                                                 msg:
-                                                    'Validation error or Password not matched');
+                                                    'Validation or Password error or Check the box');
                                           }
                                         },
                                         child: customButton(

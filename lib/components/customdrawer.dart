@@ -53,12 +53,14 @@ Widget drawer(context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text("    My Account",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall),
-                Text("1.0.0+6",
+                SizedBox(),
+                SizedBox(),
+                Text("1.0.0+8",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall),
               ],
@@ -181,7 +183,7 @@ void launchEmailSubmission() async {
   GetStorage box = GetStorage();
   final Uri params = Uri(
     scheme: 'mailto',
-    path: 'mailto:support@instamealplans.com',
+    path: 'support@instamealplans.com',
     // queryParameters: {
     //   'subject': 'Instameal User ID ${box.read('userid')}',
     //   'body': ''

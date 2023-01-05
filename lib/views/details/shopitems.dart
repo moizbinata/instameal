@@ -24,6 +24,7 @@ class _ShopItemsState extends State<ShopItems> {
   String martUrl = "";
   GetStorage box = GetStorage();
   bool isError = false;
+  WebViewController _webViewController;
   @override
   void initState() {
     super.initState();
@@ -114,6 +115,11 @@ class _ShopItemsState extends State<ShopItems> {
                                       child: SizedBox(
                                         height: SizeConfig.screenHeight * 0.7,
                                         child: WebView(
+                                          onWebViewCreated: (WebViewController
+                                              webViewController) {
+                                            _webViewController =
+                                                webViewController;
+                                          },
                                           zoomEnabled: true,
                                           onWebResourceError: (error) =>
                                               setState(() {

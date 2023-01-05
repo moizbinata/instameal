@@ -213,12 +213,11 @@ class RecipeDetail extends StatelessWidget {
                                 if (weeklyController.listCartRecipe1
                                     .contains(recipeToAdd)) {
                                   weeklyController.listCartRecipe1
-                                      .remove(recipeToAdd);
+                                      .removeWhere(recipeToAdd);
                                   box.write(
                                       'breakfast',
                                       weeklyController.listCartRecipe1
                                           .toList());
-                                  print(box.read('breakfast').toString());
                                   Fluttertoast.showToast(msg: 'Removed');
                                 } else {
                                   weeklyController.listCartRecipe1
@@ -230,8 +229,10 @@ class RecipeDetail extends StatelessWidget {
                                   print(box.read('breakfast').toString());
                                   Fluttertoast.showToast(msg: 'Added');
                                 }
-                                // print(recipeToAdd.recipeid);
-                                print(weeklyController.listCartRecipe1.length);
+                                print("moiuz");
+                                print(recipeModel.recipeName);
+                                print(weeklyController
+                                    .listCartRecipe1.first.recipeName);
                               }
                             },
                             icon: GetX<WeeklyController>(
@@ -274,14 +275,6 @@ class RecipeDetail extends StatelessWidget {
                                   directionsList: recipeModel.direction,
                                 ),
                               );
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => HowtoCook(
-                              //       directionsList: recipeModel.direction,
-                              //     ),
-                              //   ),
-                              // );
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.kitchenSet,
