@@ -123,6 +123,35 @@ Widget customButton(context, color, bgColor, label) {
   );
 }
 
+Widget customButton3(context, color, bgColor, label) {
+  return Container(
+    padding: EdgeInsets.symmetric(vertical: 15),
+    width: SizeConfig.screenWidth * 0.8,
+    decoration: BoxDecoration(
+      border: Border.all(
+          color: CustomTheme.bgColor, width: SizeConfig.heightMultiplier * 0.2),
+      boxShadow: [
+        BoxShadow(
+          color: CustomTheme.shadowColor.withOpacity(0.1),
+          blurRadius: 10.0,
+          offset: Offset(0, 2),
+        ),
+      ],
+      borderRadius: BorderRadius.circular(50),
+      color: bgColor,
+    ),
+    child: Center(
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodyLarge.copyWith(
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+      ),
+    ),
+  );
+}
+
 Widget customField(textController, labelText,
     {icon, bgcolor, iconColor, eye = false}) {
   return TextFormField(

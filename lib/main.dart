@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -12,13 +11,14 @@ import 'package:instameal/controllers/searchcategcontroller.dart';
 import 'package:instameal/controllers/universalController.dart';
 import 'package:instameal/controllers/videocontroller.dart';
 import 'package:instameal/splash/splash.dart';
+import 'package:instameal/src/app.dart';
+import 'package:instameal/src/constant.dart';
+import 'package:instameal/src/store_config.dart';
 import 'package:instameal/utils/purchaseapi.dart';
-import 'package:instameal/utils/store_config.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:native_notify/native_notify.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
-
 import 'controllers/weeklyController.dart';
 import 'navigation/bottom_navigator.dart';
 
@@ -28,14 +28,15 @@ Future<void> main() async {
   if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
       store: Store.appleStore,
-      apiKey: "appleApiKey",
+      apiKey: appleApiKey,
     );
   } else if (Platform.isAndroid) {
     // Run the app passing --dart-define=AMAZON=true
-    const useAmazon = bool.fromEnvironment("amazon");
+    // const useAmazon = bool.fromEnvironment("amazon");
     StoreConfig(
-      store: useAmazon ? Store.amazonAppstore : Store.googlePlay,
-      apiKey: useAmazon ? "amazonApiKey" : "googleApiKey",
+      store: Store
+          .googlePlay, // useAmazon ? Store.amazonAppstore : Store.googlePlay,
+      apiKey: googleApiKey, // useAmazon ? amazonApiKey : googleApiKey,
     );
   }
   NativeNotify.initialize(2213, 'OrhGvNRGIp5m6evvdmk6Fq', null, null);
@@ -69,22 +70,25 @@ class MyApp extends StatelessWidget {
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
         ]);
-        AutoOrientation.portraitAutoMode();
+        // AutoOrientation.portraitAutoMode();
         SizeConfig().init(constraints, orientation);
 
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Instameal',
             theme: CustomTheme.themedata,
-            home: SplashScreen()
-            // box.read('username') == null
-            //     ? SplashScreen()
-            //     : (box.read('subscriptionEnd') != null)
-            //         ? (now.isAfter(DateTime.parse(
-            //                 box.read('subscriptionEnd').toString())))
-            //             ? TrialScreen()
-            //             : BottomNavigator() //BottomNavigator
-            //         : SplashScreen()
+            home:
+                // MagicWeatherFlutter()
+                box.read('username') == null
+                    ? SplashScreen()
+                    // : (box.read('subscriptionEnd') != null)
+                    // ?
+                    // (now.isAfter(DateTime.parse(
+                    //         box.read('subscriptionEnd').toString())))
+                    //     ?
+                    //      TrialScreen()
+                    : BottomNavigator() //BottomNavigator
+            // : SplashScreen()
             );
       });
     });

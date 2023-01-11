@@ -559,14 +559,10 @@ class _LoginState extends State<Login> {
           Get.offAll(TrialScreen());
         else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
                 .isBefore(formattedDate) &&
-            loginModel.data[0].paymentStatus == "Paid" &&
-            loginModel.data[0].membershipType == "Trial")
+            loginModel.data[0].paymentStatus == "Paid")
           Get.offAll(PaymentScreen());
         else {
-          print(loginModel.data[0].subscriptionEnd);
-          print(formattedDate);
-          print(loginModel.data[0].paymentStatus);
-          print(loginModel.data[0].membershipType);
+          Fluttertoast.showToast(msg: 'Contact support');
         }
       } else {
         setState(() {

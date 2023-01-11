@@ -125,7 +125,7 @@ class _TrialScreenState extends State<TrialScreen> {
                       ),
                       bulletPoints(
                         context,
-                        label: "Keep it USD 18.99 & USD 198",
+                        label: "Keep it USD 9.99 & USD 99",
                       ),
                       bulletPoints(
                         context,
@@ -145,7 +145,7 @@ class _TrialScreenState extends State<TrialScreen> {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("18.99 USD",
+                            title: Text("9.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -187,7 +187,7 @@ class _TrialScreenState extends State<TrialScreen> {
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("198 USD",
+                              title: Text("99 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -218,6 +218,7 @@ class _TrialScreenState extends State<TrialScreen> {
                               ),
                             )),
                       ),
+
                       space0(),
 
                       InkWell(
@@ -304,7 +305,6 @@ class _TrialScreenState extends State<TrialScreen> {
     print(buttonController.selectedPlan.value.toString());
     try {
       paymentIntentMonthly = await createPaymentIntent('1', 'USD');
-      // paymentIntentYearly = await createPaymentIntent('198', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(

@@ -122,7 +122,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                       bulletPoints(
                         context,
-                        label: "Keep it USD 19.99 & USD 199",
+                        label: "Keep it USD 9.99 & USD 99",
                       ),
                       space0(),
 
@@ -137,7 +137,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             leading: const FaIcon(
                               FontAwesomeIcons.bookmark,
                             ),
-                            title: Text("18.99 USD",
+                            title: Text("9.99 USD",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -179,7 +179,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               leading: const FaIcon(
                                 FontAwesomeIcons.bookmark,
                               ),
-                              title: Text("198 USD",
+                              title: Text("99 USD",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -292,9 +292,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     //     Uri.parse('https://buy.stripe.com/test_9AQ5ojaIYbMG1JScMN'));
     print(buttonController.selectedPlan.value.toString());
     try {
-      paymentIntentMonthly = await createPaymentIntent('18', 'USD');
-      paymentIntentYearly = await createPaymentIntent('198', 'USD');
-      // paymentIntentYearly = await createPaymentIntent('198', 'USD');
+      paymentIntentMonthly = await createPaymentIntent('9.99', 'USD');
+      paymentIntentYearly = await createPaymentIntent('99', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(

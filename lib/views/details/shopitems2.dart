@@ -203,7 +203,10 @@ class _ShopItems2State extends State<ShopItems2> {
                                                             widget
                                                                 .itemList[index]
                                                                 .items[indexh]
-                                                                .toString(),
+                                                                .toString()
+                                                                .replaceAll(
+                                                                    " ", "+")
+                                                                .trim(),
                                                       ),
                                                     ),
                                                   );

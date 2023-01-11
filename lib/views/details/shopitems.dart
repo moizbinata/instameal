@@ -129,7 +129,9 @@ class _ShopItemsState extends State<ShopItems> {
                                               JavascriptMode.unrestricted,
                                           initialUrl: martUrl +
                                               widget.itemList.items[index]
-                                                  .toString(),
+                                                  .toString()
+                                                  .replaceAll(" ", "+")
+                                                  .trim(),
                                         ),
                                       ),
                                     );

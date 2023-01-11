@@ -20,7 +20,7 @@ class Home_IntroState extends State<HomeIntro> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: OnBoardingSlider(
-        finishButtonText: 'Start your Free 14-Day Trial',
+        finishButtonText: 'Start Your 14-Day Trial In Just 1 \$',
         onFinish: () {
           Constants.navigatepushreplac(context, Login());
           // Navigator.pushReplacement(
