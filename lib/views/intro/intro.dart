@@ -20,7 +20,7 @@ class Home_IntroState extends State<HomeIntro> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: OnBoardingSlider(
-        finishButtonText: 'Start Cooking with Patricia',
+        finishButtonText: 'Start Cooking with Instameal',
         onFinish: () {
           Constants.navigatepushreplac(context, Login());
           // Navigator.pushReplacement(
