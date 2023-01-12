@@ -9,6 +9,39 @@ import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 import 'components.dart';
 
+void customDialogue2(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: SizeConfig.heightMultiplier * 30,
+                    minHeight: 56.0),
+                // height: 200,
+                child: Padding(
+                    padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "You have already subscribed with our plan",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: customButton(context, Colors.white,
+                                CustomTheme.bgColor, "Login"),
+                          ),
+                        ]))));
+      });
+}
+
 void customDialogue(context) {
   GetStorage box = GetStorage();
   String _chosenValue = "instacart";

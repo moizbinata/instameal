@@ -42,33 +42,19 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            // padding:
-            //     EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.1),
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,
             child: SafeArea(
               child: Column(
-                // mainAxisAlignment: MAinA,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Text("Food for Everyone",
-                  //     textAlign: TextAlign.center,
-                  //     style: Theme.of(context).textTheme.headline3),
                   Image.asset('assets/images/logoCircle.png',
                       width: SizeConfig.screenWidth * 0.5),
                   Image.asset(
                     "assets/images/splash.png",
                     width: SizeConfig.screenWidth,
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Constants.navigatepush(context, PayScreen());
-                  //   },
-                  //   child: Text(
-                  //     "abc",
-                  //   ),
-                  // ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.screenWidth * 0.1),
@@ -77,19 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         final UniversalController universalController =
                             Get.put(UniversalController());
                         universalController.fetchUniversal();
-
-                        // print(universalController.currentDate.toString());
-
-                        DateTime now = DateTime.parse(
-                            universalController.currentDate.toString());
-                        // DateTime now = DateTime.now();
-                        print("now" + now.toString());
-                        print("mem type " +
-                            box.read('membershipType').toString());
-                        print("paymentStatus " +
-                            box.read('paymentStatus').toString());
-                        final univerContr = Get.put(UniversalController());
-                        univerContr.fetchAllRecipes();
+                        universalController.fetchAllRecipes();
                         if (box.read('username') == null) {
                           Constants.navigatepushreplac(context, HomeIntro());
                         } else {
