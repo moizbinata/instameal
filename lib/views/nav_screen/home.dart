@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                                       textColor: Colors.black,
                                       fontSize: 16.0);
                                   int week = (_.currentRxWeek.value);
-                                  print(week);
+                                  // print(week);
                                   if (week == 1) {
                                     await weeklyController.fetchWeekly(
                                         box.read('planid').toString(),

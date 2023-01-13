@@ -146,8 +146,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
                         mainAxisSpacing: 0,
                       ),
                       itemBuilder: (context, index) {
-                        print(Constants.baseImageUrl +
-                            filteredList[index].scategimg);
+                        // print(Constants.baseImageUrl +
+                        //     filteredList[index].scategimg);
 
                         return InkWell(
                           onTap: () async {

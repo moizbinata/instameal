@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,12 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/views/details/shopitems.dart';
 import 'package:instameal/views/nav_screen/home.dart';
+import 'package:purchases_flutter/object_wrappers.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../components/customdrawer.dart';
+import '../src/constant.dart';
+import '../src/model/singletons_data.dart';
 
 class BottomNavigator extends StatefulWidget {
   @override
@@ -104,11 +109,40 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   }
 
   checkExpiry() async {
-    NotifService notifService = NotifService();
-    bool validSub = await notifService.checkExpiry();
-    setState(() {
-      validSubscription = validSub;
-    });
+    // NotifService notifService = NotifService();
+    // bool validSub = await notifService.checkExpiry();
+    // setState(() {
+    //   validSubscription = validSub;
+    // });
+    print("checking expiry");
+    try {
+      CustomerInfo purchaserInfo = await Purchases.getCustomerInfo();
+      print(purchaserInfo.originalAppUserId);
+      print("checking expiry true");
+
+      if (purchaserInfo.entitlements.all[entitlementID] != null) {
+        // access latest purchaserInfo
+        if (purchaserInfo.entitlements.all[entitlementID].isActive) {
+          appData.entitlementIsActive =
+              purchaserInfo.entitlements.all[entitlementID].isActive;
+          // Grant user "pro" access
+          setState(() {
+            validSubscription = appData.entitlementIsActive;
+          });
+        }
+      } else {
+        setState(() {
+          validSubscription = false;
+        });
+      }
+    } on PlatformException catch (e) {
+      setState(() {
+        validSubscription = false;
+      });
+      print(e.message);
+      print("checking expiry false");
+      // Error fetching purchaser info
+    }
   }
 
   @override
@@ -120,7 +154,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           onWillPop: () => onWilPop(false),
           child: Scaffold(
             body: Stack(
-              children: validSubscription
+              children: !validSubscription
                   ? <Widget>[
                       ExpiryScreen(),
                       ExpiryScreen(),

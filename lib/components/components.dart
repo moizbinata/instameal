@@ -326,7 +326,7 @@ Widget recipeBox2(context, imagesUrl, day, recipeName, dayName, color,
 
 Widget videoBox(context, imagesUrl, day, recipeName, dayName, color,
     {btn = false}) {
-  print(Constants.baseImageUrl + imagesUrl);
+  // print(Constants.baseImageUrl + imagesUrl);
   return Container(
     margin: EdgeInsets.all(SizeConfig.heightMultiplier),
     height: SizeConfig.heightMultiplier * 20,
