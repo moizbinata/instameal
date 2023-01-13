@@ -19,6 +19,7 @@ class _PaywallState extends State<Paywall> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       child: SafeArea(
         child: Wrap(
           children: <Widget>[

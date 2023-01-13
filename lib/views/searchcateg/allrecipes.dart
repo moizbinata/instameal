@@ -58,6 +58,8 @@ class _AllRecipesState extends State<AllRecipes> {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             children: [
               Text(

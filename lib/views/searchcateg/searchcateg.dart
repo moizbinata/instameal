@@ -58,6 +58,8 @@ class _SearchCategoriesState extends State<SearchCategories> {
         height: SizeConfig.screenHeight,
         width: double.infinity,
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             children: [
               Text("Special Categories",

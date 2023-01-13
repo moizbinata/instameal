@@ -62,6 +62,8 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier),
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             children: [
               Text(
@@ -153,8 +155,8 @@ class _SearchCategRecipeState extends State<SearchCategRecipe> {
                                     ],
                                     borderRadius: BorderRadius.circular(10)),
                                 child: CachedNetworkImage(
-                                  height: SizeConfig.heightMultiplier * 17,
-                                  width: SizeConfig.heightMultiplier * 17,
+                                  height: SizeConfig.heightMultiplier * 15,
+                                  width: SizeConfig.heightMultiplier * 15,
                                   imageUrl: Constants.baseImageUrl +
                                       filteredList[index].imagesUrl,
                                   fit: BoxFit.cover,

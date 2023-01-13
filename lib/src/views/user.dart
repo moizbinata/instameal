@@ -67,6 +67,8 @@ class _UserScreenState extends State<UserScreen> {
           body: ModalProgressHUD(
             inAsyncCall: _isLoading,
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/tab_navigator.dart';
+import 'package:instameal/services/notifsercice.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
@@ -14,6 +15,8 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/views/details/shopitems.dart';
 import 'package:instameal/views/nav_screen/home.dart';
+
+import '../components/customdrawer.dart';
 
 class BottomNavigator extends StatefulWidget {
   @override
@@ -35,7 +38,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   //   "Favourite": GlobalKey<NavigatorState>(),
   //   "Search": GlobalKey<NavigatorState>(),
   // };
-
+  bool validSubscription = false;
   _selectTab(String tabItem, int index) {
     final UniversalController universalController =
         Get.put(UniversalController());
@@ -82,7 +85,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   }
 
   @override
-  void initState() {
+  Future<void> initState() {
     // TODO: implement initState
     super.initState();
     if (box.read('firsttime').toString() == "yes") {
@@ -97,6 +100,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       }
       box.write('firsttime', 'no');
     }
+    checkExpiry();
+  }
+
+  checkExpiry() async {
+    NotifService notifService = NotifService();
+    bool validSub = await notifService.checkExpiry();
+    setState(() {
+      validSubscription = validSub;
+    });
   }
 
   @override
@@ -108,12 +120,19 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           onWillPop: () => onWilPop(false),
           child: Scaffold(
             body: Stack(
-              children: <Widget>[
-                _buildOffstageNavigator("Meal Plans"),
-                _buildOffstageNavigator("Shopping List"),
-                _buildOffstageNavigator("Favourite"),
-                _buildOffstageNavigator("Search"),
-              ],
+              children: validSubscription
+                  ? <Widget>[
+                      ExpiryScreen(),
+                      ExpiryScreen(),
+                      ExpiryScreen(),
+                      ExpiryScreen()
+                    ]
+                  : <Widget>[
+                      _buildOffstageNavigator("Meal Plans"),
+                      _buildOffstageNavigator("Shopping List"),
+                      _buildOffstageNavigator("Favourite"),
+                      _buildOffstageNavigator("Search"),
+                    ],
             ),
             bottomNavigationBar: BottomAppBar(
               color: CustomTheme.bgColor2,
@@ -232,6 +251,64 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           tabItem: tabItem,
           onBack: toHome,
           loginBack: toLoginBack),
+    );
+  }
+}
+
+class ExpiryScreen extends StatelessWidget {
+  ExpiryScreen({Key key}) : super(key: key);
+  GetStorage box = GetStorage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier * 3),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FaIcon(
+              FontAwesomeIcons.warning,
+              color: CustomTheme.bgColor,
+              size: SizeConfig.heightMultiplier * 10,
+            ),
+            space1(),
+            Text(
+              "Your Subscription has been expired. Contact Customer Support to activate your subscription",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            space1(),
+            InkWell(
+              onTap: (() {
+                var email = box.read('email');
+                String message =
+                    "My email id $email has been deactivated. I want to reactivate my subscription.";
+                launchEmailSubmission(body: message);
+              }),
+              child: customButton(
+                  context, Colors.white, CustomTheme.bgColor, "Reactivate"),
+            ),
+            space0(),
+            InkWell(
+              onTap: (() {
+                GetStorage box = GetStorage();
+                box.erase();
+                Fluttertoast.showToast(msg: 'Successfully Logout');
+                Get.offAll(Login(
+                  type: 1,
+                ));
+              }),
+              child: customButton(
+                  context, CustomTheme.bgColor, Colors.white, "Logout"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

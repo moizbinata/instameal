@@ -46,6 +46,8 @@ class _WeeklyIngredState extends State<WeeklyIngred> {
         height: SizeConfig.screenHeight,
         width: double.infinity,
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

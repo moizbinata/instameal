@@ -46,6 +46,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
               height: SizeConfig.screenHeight,
               padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

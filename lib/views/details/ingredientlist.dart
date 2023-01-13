@@ -33,6 +33,8 @@ class IngredientList extends StatelessWidget {
         padding:
             EdgeInsets.symmetric(horizontal: SizeConfig.heightMultiplier * 2),
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(

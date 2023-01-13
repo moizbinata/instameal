@@ -49,6 +49,8 @@ class _TrialScreenState extends State<TrialScreen> {
               height: SizeConfig.screenHeight,
               padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

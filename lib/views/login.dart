@@ -476,6 +476,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+              space0(),
               space3()
             ],
           ),
@@ -600,6 +601,14 @@ class _LoginState extends State<Login> {
     if (response != null) {
       var jsonString = jsonDecode(response.toString());
       var loginModel = LoginModel.fromJson(jsonString);
+
+      final notifContr = Get.put(NotifController());
+      notifContr.fetchSearchCategRecipeController();
+      setState(() {
+        loginLoader = false;
+      });
+      print("userid" + loginModel.data[0].userid.toString());
+      // Get.offAll(BottomNavigator());
       if (loginModel != null && loginModel.data.isNotEmpty) {
         {
           box.write('userid', loginModel.data[0].userid);
@@ -612,28 +621,11 @@ class _LoginState extends State<Login> {
           box.write('paymentStatus', loginModel.data[0].paymentStatus);
           box.write('gender', loginModel.data[0].gender);
           box.write('firsttime', 'yes');
-        }
-        final notifContr = Get.put(NotifController());
-        notifContr.fetchSearchCategRecipeController();
-        setState(() {
-          loginLoader = false;
-        });
-        print("userid" + loginModel.data[0].userid.toString());
-        // Get.offAll(BottomNavigator());
-
-        if (DateTime.parse(loginModel.data[0].subscriptionEnd)
-                .isAfter(formattedDate) &&
-            loginModel.data[0].paymentStatus == "Paid")
+          // if (loginModel.data[0].subscriptionStart != "NOID") {
           Get.offAll(BottomNavigator());
-        else if (loginModel.data[0].paymentStatus == "Trial" &&
-            loginModel.data[0].membershipType == "Trial")
-          Get.offAll(TrialScreen());
-        else if (DateTime.parse(loginModel.data[0].subscriptionEnd)
-                .isBefore(formattedDate) &&
-            loginModel.data[0].paymentStatus == "Paid")
-          Get.offAll(PaymentScreen());
-        else {
-          Fluttertoast.showToast(msg: 'Contact support');
+          // } else {
+          //   Fluttertoast.showToast(msg: "Subscription Expired");
+          // }
         }
       } else {
         setState(() {
@@ -702,6 +694,8 @@ class _LoginState extends State<Login> {
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
               return SingleChildScrollView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 child: SafeArea(
                   child: Wrap(
                     children: <Widget>[

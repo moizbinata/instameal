@@ -27,6 +27,7 @@ class _ChangePassState extends State<ChangePass> {
       floatingActionButton: floatButton(context),
       backgroundColor: CustomTheme.bgColor2,
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Container(
           height: SizeConfig.screenHeight,
           padding:

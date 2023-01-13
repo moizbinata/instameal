@@ -112,6 +112,9 @@ class _ShopItemsState extends State<ShopItems> {
                                       style: TextStyle(color: Colors.black),
                                     )
                                   : SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(
+                                          parent:
+                                              AlwaysScrollableScrollPhysics()),
                                       child: SizedBox(
                                         height: SizeConfig.screenHeight * 0.7,
                                         child: WebView(

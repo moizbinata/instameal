@@ -172,6 +172,9 @@ class _ShopItems2State extends State<ShopItems2> {
                                                         "This link not working"),
                                                   )
                                                 : SingleChildScrollView(
+                                                    physics: BouncingScrollPhysics(
+                                                        parent:
+                                                            AlwaysScrollableScrollPhysics()),
                                                     child: SizedBox(
                                                       height: SizeConfig
                                                               .screenHeight *

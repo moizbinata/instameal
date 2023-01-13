@@ -41,11 +41,11 @@ Future<void> main() async {
   }
   NativeNotify.initialize(2213, 'OrhGvNRGIp5m6evvdmk6Fq', null, null);
   await GetStorage.init();
-  Stripe.publishableKey =
-      "pk_live_51M7321LSFiN9ploqMkmJHF7xSAP3I4cZsASxIklMwh0b8thHHEbXInMlLa1zLNd7KlG8kvUaXpJpw5aAF5o0SZmX00hez8LBjp";
+  // Stripe.publishableKey =
+  //     "pk_live_51M7321LSFiN9ploqMkmJHF7xSAP3I4cZsASxIklMwh0b8thHHEbXInMlLa1zLNd7KlG8kvUaXpJpw5aAF5o0SZmX00hez8LBjp";
   // "pk_test_51M5RsSAWiGvBL24r3ciLB2N7cawdGDI3W7noy5fRvyqA8KQcO8c92uKE1Xpp2RloqJkgTafnuK4qN8oRsAozkNY400tVMtqji8";
   // pk_live_51M7321LSFiN9ploqMkmJHF7xSAP3I4cZsASxIklMwh0b8thHHEbXInMlLa1zLNd7KlG8kvUaXpJpw5aAF5o0SZmX00hez8LBjp
-  await Stripe.instance.applySettings();
+  // await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 

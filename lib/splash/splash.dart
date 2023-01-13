@@ -26,14 +26,9 @@ import '../src/constant.dart';
 import '../src/model/weather_data.dart';
 import '../views/subscription/paywallwidget.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   SplashScreen({Key key}) : super(key: key);
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   GetStorage box = GetStorage();
 
   @override
@@ -41,6 +36,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Container(
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,

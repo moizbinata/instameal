@@ -55,14 +55,18 @@ Widget drawer(context) {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text("    My Account",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  "    My Account",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 SizedBox(),
                 SizedBox(),
-                Text("1.0.0+11",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  "1.0.0+11",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
             ListTile(
@@ -169,7 +173,9 @@ Widget drawer(context) {
                 GetStorage box = GetStorage();
                 box.erase();
                 Fluttertoast.showToast(msg: 'Successfully Logout');
-                Get.offAll(Login());
+                Get.offAll(Login(
+                  type: 1,
+                ));
               },
             ),
           ],
@@ -179,16 +185,12 @@ Widget drawer(context) {
   );
 }
 
-void launchEmailSubmission() async {
+void launchEmailSubmission({body}) async {
   GetStorage box = GetStorage();
   final Uri params = Uri(
-    scheme: 'mailto',
-    path: 'support@instamealplans.com',
-    // queryParameters: {
-    //   'subject': 'Instameal User ID ${box.read('userid')}',
-    //   'body': ''
-    // }
-  );
+      scheme: 'mailto',
+      path: 'support@instamealplans.com',
+      query: 'subject=Activate my subscription&body=${body ?? ""}');
   String url = params.toString();
   await launchUrl(Uri.parse(url));
 }

@@ -56,6 +56,8 @@ class _WeekTableState extends State<WeekTable> {
         height: SizeConfig.screenHeight,
         width: double.infinity,
         child: SingleChildScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
