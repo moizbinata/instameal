@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,9 +24,11 @@ import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../src/components/native_dialog.dart';
 import '../../src/model/weather_data.dart';
+import '../../utils/network.dart';
 
 // import '../src/components/native_dialog.dart';
 // import '../src/constant.dart';
@@ -54,106 +57,59 @@ class SubscribePlansState extends State<SubscribePlans> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomTheme.bgColor2,
-      body: SafeArea(
-        child: Container(
-          height: SizeConfig.screenHeight,
-          padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
-          child: SingleChildScrollView(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Constants.navigatepushreplac(context, Login());
-                      },
-                      icon: FaIcon(
-                        FontAwesomeIcons.rightToBracket,
-                        color: CustomTheme.bgColor,
-                      ),
-                    ),
-                  ],
-                ),
-                // Icon(isSubscriberd ? Icons.paid : Icons.lock),
-                // Text(coins.toString()),
-                Text(
-                  "Sign up for Free 14 days Trial",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(color: CustomTheme.bgColor),
-                ),
-                space0(),
-                bulletPoints(context, label: "More Than Just a Meal Plan."),
-                bulletPoints(
-                  context,
-                  label:
-                      "With a InstaMeals subscription, it`s like getting a personal chef and dietitian all in one.",
-                ),
-                bulletPoints(context, label: "The easiest way to eat healthy."),
-                bulletPoints(
-                  context,
-                  label:
-                      "Good for your groceries, simple recipes, recommended just for you.",
-                ),
+      body: Container(
+        height: SizeConfig.screenHeight,
+        padding: EdgeInsets.all(SizeConfig.heightMultiplier * 2),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     IconButton(
+            //       onPressed: () {
+            //         Constants.navigatepushreplac(context, Login());
+            //       },
+            //       icon: FaIcon(
+            //         FontAwesomeIcons.rightToBracket,
+            //         color: CustomTheme.bgColor,
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-                bulletPoints(
-                  context,
-                  label: "Youre always in control.",
-                ),
-                bulletPoints(
-                  context,
-                  label: "Take our suggestions or choose exactly what you want",
-                ),
-                bulletPoints(
-                  context,
-                  label: "Calorie & Portion Controlled",
-                ),
-                bulletPoints(
-                  context,
-                  label: "Nutritionally Balanced",
-                ),
-                bulletPoints(
-                  context,
-                  label:
-                      "Printable weekly shopping list/send shopping list to instacart",
-                ),
-                bulletPoints(
-                  context,
-                  label:
-                      "Access to 5000 breakfast, lunch, snacks, dinner, dessert and holidays recipes",
-                ),
-
-                bulletPoints(
-                  context,
-                  label: "Hit Pause Anytime",
-                ),
-                bulletPoints(
-                  context,
-                  label: "Keep it USD 9.99 & USD 99",
-                ),
-                bulletPoints(
-                  context,
-                  label: "Start your trial with 1 USD, and enjoy for 14 days",
-                ),
-                space0(),
-                InkWell(
-                  onTap: (() {
-                    perfomMagic();
-                  }),
-                  child: customButton(
-                      context,
-                      Colors.white,
-                      CustomTheme.bgColor,
-                      "Continue and Enjoy 14 days free trial"),
-                )
-              ],
+            // Icon(isSubscriberd ? Icons.paid : Icons.lock),
+            // Text(coins.toString()),
+            Text(
+              "Activate Account",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .copyWith(color: CustomTheme.bgColor),
             ),
-          ),
+            space0(),
+
+            InkWell(
+              onTap: (() {
+                perfomMagic(context);
+              }),
+              child: customButton(
+                  context, Colors.white, CustomTheme.bgColor, "Activate"),
+            ),
+            space0(),
+            InkWell(
+              onTap: (() {
+                GetStorage box = GetStorage();
+                box.erase();
+                Fluttertoast.showToast(msg: 'Successfully Logout');
+                Get.offAll(Login(
+                  type: 1,
+                ));
+              }),
+              child: customButton(
+                  context, CustomTheme.bgColor, Colors.white, "Logout"),
+            ),
+          ],
         ),
       ),
     );
@@ -163,37 +119,40 @@ class SubscribePlansState extends State<SubscribePlans> {
     We should check if we can magically change the weather 
     (subscription active) and if not, display the paywall.
   */
-  void perfomMagic() async {
-    setState(() {
-      _isLoading = true;
-    });
-
+  void perfomMagic(ctx) async {
+    // setState(() {
+    //   signupLoader = true;
+    // });
+    print("perfomMagic");
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
         customerInfo.entitlements.all[entitlementID].isActive == true) {
       appData.currentData = WeatherData.generateData();
-
-      setState(() {
-        _isLoading = false;
-      });
+      print("checking if");
     } else {
+      print("checking else");
+
       Offerings offerings;
       try {
+        print("checking getoffering try");
         offerings = await Purchases.getOfferings();
       } on PlatformException catch (e) {
-        await showDialog(
-            context: context,
-            builder: (BuildContext context) => ShowDialogToDismiss(
-                title: "Error", content: e.message, buttonText: 'OK'));
-      }
+        print("checking getoffering catch");
 
-      setState(() {
-        _isLoading = false;
-      });
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) => ShowDialogToDismiss(
+            title: "Error",
+            content: e.message,
+            buttonText: 'OK',
+          ),
+        );
+      }
 
       if (offerings == null || offerings.current == null) {
         // offerings are empty, show a message to your user
+        print("offerings null");
       } else {
         // current offering is available, show paywall
         await showModalBottomSheet(
@@ -208,13 +167,124 @@ class SubscribePlansState extends State<SubscribePlans> {
           builder: (BuildContext context) {
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
-              return Paywall(
-                offering: offerings.current,
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                child: SafeArea(
+                  child: Wrap(
+                    children: <Widget>[
+                      Container(
+                        height: 70.0,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                            color: CustomTheme.bgColor,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25.0))),
+                        child: const Center(
+                            child: Text('✨ Instameal Plans Premium')),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                            top: 32, bottom: 16, left: 16.0, right: 16.0),
+                        child: SizedBox(
+                          child: Text(
+                            'Instameal Plans we are offering: ',
+                          ),
+                          width: double.infinity,
+                        ),
+                      ),
+                      ListView.builder(
+                        itemCount: offerings.current.availablePackages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var myProductList =
+                              offerings.current.availablePackages;
+                          return Card(
+                            color: Colors.white,
+                            child: ListTile(
+                                onTap: () async {
+                                  try {
+                                    CustomerInfo customerInfo =
+                                        await Purchases.purchasePackage(
+                                            myProductList[index]);
+                                    if (customerInfo.entitlements
+                                        .all[entitlementID].isActive) {
+                                      print("MOIZ IS PAID");
+                                      // await postSignup(ctx);
+                                      updateSubscription(ctx);
+                                    } else {
+                                      print("MOIZ IS NOT PAID");
+                                    }
+
+                                    // appData.entitlementIsActive = customerInfo
+                                    //     .entitlements.all[entitlementID].isActive;
+                                  } catch (e) {
+                                    print(e);
+                                    print("payment  error");
+                                  }
+
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                title: Text(
+                                  myProductList[index].storeProduct.title,
+                                ),
+                                subtitle: Text(
+                                  myProductList[index].storeProduct.description,
+                                ),
+                                trailing: Text(
+                                  myProductList[index].storeProduct.priceString,
+                                )),
+                          );
+                        },
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                      ),
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            launchUrl(Uri.parse(
+                                "https://instamealplans.com/terms-conditions/"));
+                          },
+                          child: Text(
+                            "By continuing, I agree to Terms and Conditions",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                .copyWith(
+                                    color: CustomTheme.primaryColor,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             });
           },
         );
       }
+    }
+  }
+
+  updateSubscription(context) async {
+    var username = box.read('username');
+    String url =
+        "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/${appData.entitlementIsActive}";
+    var response = await Network.put(url: url).catchError(
+      () {
+        Fluttertoast.showToast(msg: "Server is not responding");
+      },
+    );
+    if (response != null && response.contains("true")) {
+      Fluttertoast.showToast(msg: "Successfully Subscribed");
+      Constants.navigatepushreplac(
+          context,
+          Login(
+            type: 1,
+          ));
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong");
     }
   }
 

@@ -13,6 +13,7 @@ import 'package:instameal/src/store_config.dart';
 import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/securityques.dart';
+import 'package:instameal/views/subscription/instamealplans.dart';
 import 'package:instameal/views/subscription/payment_screen.dart';
 import 'package:instameal/views/subscription/paywallwidget.dart';
 import 'package:instameal/views/subscription/trial_screen.dart';
@@ -55,19 +56,18 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   //signup
-  TextEditingController usernameController2 = TextEditingController(text: 'tt');
+  TextEditingController usernameController2 = TextEditingController();
 
-  TextEditingController emailController =
-      TextEditingController(text: 'tt@ds.com');
-  TextEditingController answerController = TextEditingController(text: 'tt');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController answerController = TextEditingController();
 
-  TextEditingController password1Controller = TextEditingController(text: 'tt');
-
-  TextEditingController password2Controller = TextEditingController(text: 'tt');
+  TextEditingController password1Controller = TextEditingController();
+  GetStorage box = GetStorage();
+  TextEditingController password2Controller = TextEditingController();
   bool value = false;
   @override
   void initState() {
-    initPlatformState();
+    // initPlatformState();
     if (widget.type == 1) {
       setState(() {
         loader2 = true;
@@ -485,25 +485,25 @@ class _LoginState extends State<Login> {
     );
   }
 
-  updateSubscription(context, username) async {
-    String url =
-        "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/${appData.entitlementIsActive}";
-    var response = await Network.put(url: url).catchError(
-      () {
-        Fluttertoast.showToast(msg: "Server is not responding");
-      },
-    );
-    if (response != null && response.contains("true")) {
-      Fluttertoast.showToast(msg: "Successfully Subscribed");
-      Constants.navigatepushreplac(
-          context,
-          Login(
-            type: 1,
-          ));
-    } else {
-      Fluttertoast.showToast(msg: "Something went wrong");
-    }
-  }
+  // updateSubscription(context, username) async {
+  //   String url =
+  //       "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/${appData.entitlementIsActive}";
+  //   var response = await Network.put(url: url).catchError(
+  //     () {
+  //       Fluttertoast.showToast(msg: "Server is not responding");
+  //     },
+  //   );
+  //   if (response != null && response.contains("true")) {
+  //     Fluttertoast.showToast(msg: "Successfully Subscribed");
+  //     Constants.navigatepushreplac(
+  //         context,
+  //         Login(
+  //           type: 1,
+  //         ));
+  //   } else {
+  //     Fluttertoast.showToast(msg: "Something went wrong");
+  //   }
+  // }
 
   postSignup(context) async {
     print("now");
@@ -552,7 +552,10 @@ class _LoginState extends State<Login> {
       //   signupLoader = false;
       // });
       // Constants.navigatepushreplac(context, Login());
-      perfomMagic(context, usernameController2.text.toString());
+      box.write('username', usernameController2.text.toString());
+      Constants.navigatepush(context, SubscribePlans());
+
+      // perfomMagic(context, usernameController2.text.toString());
     } else if (response == "Username or Email already exist") {
       Fluttertoast.showToast(msg: "Username already exist");
       // setState(() {
@@ -641,191 +644,192 @@ class _LoginState extends State<Login> {
     }
   }
 
-  /*
-    We should check if we can magically change the weather 
-    (subscription active) and if not, display the paywall.
-  */
-  void perfomMagic(ctx, username) async {
-    // setState(() {
-    //   signupLoader = true;
-    // });
-    print("perfomMagic");
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+  // /*
+  //   We should check if we can magically change the weather
+  //   (subscription active) and if not, display the paywall.
+  // */
+  // void perfomMagic(ctx, username) async {
+  //   // setState(() {
+  //   //   signupLoader = true;
+  //   // });
+  //   print("perfomMagic");
+  //   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
-    if (customerInfo.entitlements.all[entitlementID] != null &&
-        customerInfo.entitlements.all[entitlementID].isActive == true) {
-      appData.currentData = WeatherData.generateData();
-      print("checking if");
-    } else {
-      print("checking else");
+  //   if (customerInfo.entitlements.all[entitlementID] != null &&
+  //       customerInfo.entitlements.all[entitlementID].isActive == true) {
+  //     appData.currentData = WeatherData.generateData();
+  //     print("checking if");
+  //   } else {
+  //     print("checking else");
 
-      Offerings offerings;
-      try {
-        print("checking getoffering try");
-        offerings = await Purchases.getOfferings();
-      } on PlatformException catch (e) {
-        print("checking getoffering catch");
+  //     Offerings offerings;
+  //     try {
+  //       print("checking getoffering try");
+  //       offerings = await Purchases.getOfferings();
+  //     } on PlatformException catch (e) {
+  //       print("checking getoffering catch");
 
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) => ShowDialogToDismiss(
-            title: "Error",
-            content: e.message,
-            buttonText: 'OK',
-          ),
-        );
-      }
+  //       await showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) => ShowDialogToDismiss(
+  //           title: "Error",
+  //           content: e.message,
+  //           buttonText: 'OK',
+  //         ),
+  //       );
+  //     }
 
-      if (offerings == null || offerings.current == null) {
-        // offerings are empty, show a message to your user
-        print("offerings null");
-      } else {
-        // current offering is available, show paywall
-        await showModalBottomSheet(
-          useRootNavigator: true,
-          isDismissible: true,
-          isScrollControlled: true,
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setModalState) {
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                child: SafeArea(
-                  child: Wrap(
-                    children: <Widget>[
-                      Container(
-                        height: 70.0,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: CustomTheme.bgColor,
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(25.0))),
-                        child: const Center(
-                            child: Text('✨ Instameal Plans Premium')),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            top: 32, bottom: 16, left: 16.0, right: 16.0),
-                        child: SizedBox(
-                          child: Text(
-                            'Instameal Plans we are offering: ',
-                          ),
-                          width: double.infinity,
-                        ),
-                      ),
-                      ListView.builder(
-                        itemCount: offerings.current.availablePackages.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var myProductList =
-                              offerings.current.availablePackages;
-                          return Card(
-                            color: Colors.white,
-                            child: ListTile(
-                                onTap: () async {
-                                  try {
-                                    CustomerInfo customerInfo =
-                                        await Purchases.purchasePackage(
-                                            myProductList[index]);
-                                    if (customerInfo.entitlements
-                                        .all[entitlementID].isActive) {
-                                      print("MOIZ IS PAID");
-                                      // await postSignup(ctx);
-                                      updateSubscription(ctx, username);
-                                    } else {
-                                      print("MOIZ IS NOT PAID");
-                                    }
+  //     if (offerings == null || offerings.current == null) {
+  //       // offerings are empty, show a message to your user
+  //       print("offerings null");
+  //     } else {
+  //       // current offering is available, show paywall
+  //       await showModalBottomSheet(
+  //         useRootNavigator: true,
+  //         isDismissible: true,
+  //         isScrollControlled: true,
+  //         backgroundColor: Colors.white,
+  //         shape: const RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+  //         ),
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return StatefulBuilder(
+  //               builder: (BuildContext context, StateSetter setModalState) {
+  //             return SingleChildScrollView(
+  //               physics: BouncingScrollPhysics(
+  //                   parent: AlwaysScrollableScrollPhysics()),
+  //               child: SafeArea(
+  //                 child: Wrap(
+  //                   children: <Widget>[
+  //                     Container(
+  //                       height: 70.0,
+  //                       width: double.infinity,
+  //                       decoration: const BoxDecoration(
+  //                           color: CustomTheme.bgColor,
+  //                           borderRadius: BorderRadius.vertical(
+  //                               top: Radius.circular(25.0))),
+  //                       child: const Center(
+  //                           child: Text('✨ Instameal Plans Premium')),
+  //                     ),
+  //                     const Padding(
+  //                       padding: EdgeInsets.only(
+  //                           top: 32, bottom: 16, left: 16.0, right: 16.0),
+  //                       child: SizedBox(
+  //                         child: Text(
+  //                           'Instameal Plans we are offering: ',
+  //                         ),
+  //                         width: double.infinity,
+  //                       ),
+  //                     ),
+  //                     ListView.builder(
+  //                       itemCount: offerings.current.availablePackages.length,
+  //                       itemBuilder: (BuildContext context, int index) {
+  //                         var myProductList =
+  //                             offerings.current.availablePackages;
+  //                         return Card(
+  //                           color: Colors.white,
+  //                           child: ListTile(
+  //                               onTap: () async {
+  //                                 try {
+  //                                   CustomerInfo customerInfo =
+  //                                       await Purchases.purchasePackage(
+  //                                           myProductList[index]);
+  //                                   if (customerInfo.entitlements
+  //                                       .all[entitlementID].isActive) {
+  //                                     print("MOIZ IS PAID");
+  //                                     // await postSignup(ctx);
+  //                                     updateSubscription(ctx, username);
+  //                                   } else {
+  //                                     print("MOIZ IS NOT PAID");
+  //                                   }
 
-                                    // appData.entitlementIsActive = customerInfo
-                                    //     .entitlements.all[entitlementID].isActive;
-                                  } catch (e) {
-                                    print(e);
-                                    print("payment  error");
-                                  }
+  //                                   // appData.entitlementIsActive = customerInfo
+  //                                   //     .entitlements.all[entitlementID].isActive;
+  //                                 } catch (e) {
+  //                                   print(e);
+  //                                   print("payment  error");
+  //                                 }
 
-                                  setState(() {});
-                                  Navigator.pop(context);
-                                },
-                                title: Text(
-                                  myProductList[index].storeProduct.title,
-                                ),
-                                subtitle: Text(
-                                  myProductList[index].storeProduct.description,
-                                ),
-                                trailing: Text(
-                                  myProductList[index].storeProduct.priceString,
-                                )),
-                          );
-                        },
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                      ),
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            launchUrl(Uri.parse(
-                                "https://instamealplans.com/terms-conditions/"));
-                          },
-                          child: Text(
-                            "By continuing, I agree to Terms and Conditions",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                .copyWith(
-                                    color: CustomTheme.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
-          },
-        );
-      }
-    }
-  }
+  //                                 setState(() {});
+  //                                 Navigator.pop(context);
+  //                               },
+  //                               title: Text(
+  //                                 myProductList[index].storeProduct.title,
+  //                               ),
+  //                               subtitle: Text(
+  //                                 myProductList[index].storeProduct.description,
+  //                               ),
+  //                               trailing: Text(
+  //                                 myProductList[index].storeProduct.priceString,
+  //                               )),
+  //                         );
+  //                       },
+  //                       shrinkWrap: true,
+  //                       physics: const ClampingScrollPhysics(),
+  //                     ),
+  //                     Center(
+  //                       child: InkWell(
+  //                         onTap: () {
+  //                           launchUrl(Uri.parse(
+  //                               "https://instamealplans.com/terms-conditions/"));
+  //                         },
+  //                         child: Text(
+  //                           "By continuing, I agree to Terms and Conditions",
+  //                           style: Theme.of(context)
+  //                               .textTheme
+  //                               .bodySmall
+  //                               .copyWith(
+  //                                   color: CustomTheme.primaryColor,
+  //                                   fontWeight: FontWeight.bold),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           });
+  //         },
+  //       );
+  //     }
+  //   }
+  // }
 
-  Future<void> initPlatformState() async {
-    // Enable debug logs before calling `configure`.
-    await Purchases.setDebugLogsEnabled(true);
+  // Future<void> initPlatformState() async {
+  //   // Enable debug logs before calling `configure`.
+  //   await Purchases.setDebugLogsEnabled(true);
 
-    /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+  //   /*
+  //   - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
 
-    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
-    */
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    }
-    await Purchases.configure(configuration);
+  //   - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
+  //   */
+  //   PurchasesConfiguration configuration;
+  //   if (StoreConfig.isForAmazonAppstore()) {
+  //     configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+  //       ..appUserID = null
+  //       ..observerMode = false;
+  //   } else {
+  //     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+  //       ..appUserID = null
+  //       ..observerMode = false;
+  //   }
+  //   await Purchases.configure(configuration);
 
-    appData.appUserID = await Purchases.appUserID;
+  //   appData.appUserID = await Purchases.appUserID;
 
-    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-      appData.appUserID = await Purchases.appUserID;
+  //   Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+  //     appData.appUserID = await Purchases.appUserID;
 
-      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-      (customerInfo.entitlements.all[entitlementID] != null &&
-              customerInfo.entitlements.all[entitlementID].isActive)
-          ? appData.entitlementIsActive = true
-          : appData.entitlementIsActive = false;
+  //     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+  //     (customerInfo.entitlements.all[entitlementID] != null &&
+  //             customerInfo.entitlements.all[entitlementID].isActive)
+  //         ? appData.entitlementIsActive = true
+  //         : appData.entitlementIsActive = false;
 
-      setState(() {});
-    });
-  }
+  //     setState(() {});
+  //   });
+  // }
+
 }

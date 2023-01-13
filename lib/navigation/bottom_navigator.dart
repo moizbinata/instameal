@@ -16,6 +16,7 @@ import 'package:instameal/utils/constants.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/views/details/shopitems.dart';
 import 'package:instameal/views/nav_screen/home.dart';
+import 'package:instameal/views/subscription/instamealplans.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -319,10 +320,11 @@ class ExpiryScreen extends StatelessWidget {
             space1(),
             InkWell(
               onTap: (() {
-                var email = box.read('email');
-                String message =
-                    "My email id $email has been deactivated. I want to reactivate my subscription.";
-                launchEmailSubmission(body: message);
+                // var email = box.read('email');
+                // String message =
+                //     "My email id $email has been deactivated. I want to reactivate my subscription.";
+                // launchEmailSubmission(body: message);
+                Get.offAll(SubscribePlans());
               }),
               child: customButton(
                   context, Colors.white, CustomTheme.bgColor, "Reactivate"),

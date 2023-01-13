@@ -63,7 +63,7 @@ Widget drawer(context) {
                 SizedBox(),
                 SizedBox(),
                 Text(
-                  "1.0.0+11",
+                  "1.0.0+12",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
