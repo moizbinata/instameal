@@ -14,7 +14,7 @@ import 'package:instameal/splash/splash.dart';
 import 'package:instameal/src/constant.dart';
 import 'package:instameal/src/store_config.dart';
 import 'package:instameal/utils/purchaseapi.dart';
-import 'package:native_notify/native_notify.dart';
+// import 'package:native_notify/native_notify.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 import 'controllers/weeklyController.dart';
@@ -37,7 +37,7 @@ Future<void> main() async {
       apiKey: googleApiKey, // useAmazon ? amazonApiKey : googleApiKey,
     );
   }
-  NativeNotify.initialize(2213, 'OrhGvNRGIp5m6evvdmk6Fq', null, null);
+  // NativeNotify.initialize(2213, 'OrhGvNRGIp5m6evvdmk6Fq', null, null);
   await GetStorage.init();
   // Stripe.publishableKey =
   //     "pk_live_51M7321LSFiN9ploqMkmJHF7xSAP3I4cZsASxIklMwh0b8thHHEbXInMlLa1zLNd7KlG8kvUaXpJpw5aAF5o0SZmX00hez8LBjp";

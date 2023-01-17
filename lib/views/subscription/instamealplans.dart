@@ -47,11 +47,11 @@ class SubscribePlansState extends State<SubscribePlans> {
   bool _isLoading = false;
   int currentIndex = 0;
 
-  @override
-  void initState() {
-    initPlatformState();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // initPlatformState();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,10 @@ class SubscribePlansState extends State<SubscribePlans> {
     // setState(() {
     //   signupLoader = true;
     // });
+
     print("perfomMagic");
+    appData.appUserID = "";
+    // appData.currentData
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
@@ -208,6 +211,8 @@ class SubscribePlansState extends State<SubscribePlans> {
                                             myProductList[index]);
                                     if (customerInfo.entitlements
                                         .all[entitlementID].isActive) {
+                                      appData.appUserID =
+                                          await Purchases.appUserID;
                                       print("MOIZ IS PAID");
                                       // await postSignup(ctx);
                                       updateSubscription(ctx);
@@ -288,39 +293,40 @@ class SubscribePlansState extends State<SubscribePlans> {
     }
   }
 
-  Future<void> initPlatformState() async {
-    // Enable debug logs before calling `configure`.
-    await Purchases.setDebugLogsEnabled(true);
+  // Future<void> initPlatformState() async {
+  //   // Enable debug logs before calling `configure`.
+  //   await Purchases.setDebugLogsEnabled(true);
 
-    /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+  //   /*
+  //   - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
 
-    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
-    */
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    }
-    await Purchases.configure(configuration);
+  //   - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
+  //   */
+  //   PurchasesConfiguration configuration;
+  //   if (StoreConfig.isForAmazonAppstore()) {
+  //     configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+  //       ..appUserID = null
+  //       ..observerMode = false;
+  //   } else {
+  //     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+  //       ..appUserID = null
+  //       ..observerMode = false;
+  //   }
+  //   await Purchases.configure(configuration);
 
-    appData.appUserID = await Purchases.appUserID;
+  //   appData.appUserID = await Purchases.appUserID;
 
-    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-      appData.appUserID = await Purchases.appUserID;
+  //   Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+  //     appData.appUserID = await Purchases.appUserID;
 
-      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-      (customerInfo.entitlements.all[entitlementID] != null &&
-              customerInfo.entitlements.all[entitlementID].isActive)
-          ? appData.entitlementIsActive = true
-          : appData.entitlementIsActive = false;
+  //     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+  //     (customerInfo.entitlements.all[entitlementID] != null &&
+  //             customerInfo.entitlements.all[entitlementID].isActive)
+  //         ? appData.entitlementIsActive = true
+  //         : appData.entitlementIsActive = false;
 
-      setState(() {});
-    });
-  }
+  //     // setState(() {});
+  //   });
+  // }
+
 }

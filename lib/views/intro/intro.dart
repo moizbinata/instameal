@@ -22,7 +22,11 @@ class Home_IntroState extends State<HomeIntro> {
       body: OnBoardingSlider(
         finishButtonText: 'Start Cooking with Instameal',
         onFinish: () {
-          Constants.navigatepushreplac(context, Login());
+          Constants.navigatepushreplac(
+              context,
+              Login(
+                type: 1,
+              ));
           // Navigator.pushReplacement(
           //     context, MaterialPageRoute(builder: (context) => Login()));
         },
@@ -47,7 +51,11 @@ class Home_IntroState extends State<HomeIntro> {
           ),
         ),
         trailingFunction: () {
-          Constants.navigatepushreplac(context, Login());
+          Constants.navigatepushreplac(
+              context,
+              Login(
+                type: 1,
+              ));
           // Navigator.pushReplacement(
           //     context, MaterialPageRoute(builder: (context) => Login()));
         },

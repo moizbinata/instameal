@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/navigation/tab_navigator.dart';
 import 'package:instameal/services/notifsercice.dart';
+import 'package:instameal/src/store_config.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/login.dart';
 import 'package:instameal/views/nav_screen/shopping.dart';
@@ -44,7 +45,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   //   "Favourite": GlobalKey<NavigatorState>(),
   //   "Search": GlobalKey<NavigatorState>(),
   // };
-  bool validSubscription = false;
+
+  // bool validSubscription;
   _selectTab(String tabItem, int index) {
     final UniversalController universalController =
         Get.put(UniversalController());
@@ -94,6 +96,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Future<void> initState() {
     // TODO: implement initState
     super.initState();
+    initPlatformState();
     if (box.read('firsttime').toString() == "yes") {
       final UniversalController universalController =
           Get.put(UniversalController());
@@ -106,7 +109,53 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       }
       box.write('firsttime', 'no');
     }
-    checkExpiry();
+  }
+
+  Future<void> initPlatformState() async {
+    // Enable debug logs before calling `configure`.
+    await Purchases.setDebugLogsEnabled(true);
+    appData.appUserID = box.read('subscriptionStart').toString() == "NOID"
+        ? null
+        : box.read('subscriptionStart').toString();
+
+    final UniversalController universalController =
+        Get.put(UniversalController());
+    /*
+    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+
+    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
+    */
+    PurchasesConfiguration configuration;
+    if (StoreConfig.isForAmazonAppstore()) {
+      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+        ..appUserID = appData.appUserID
+        ..observerMode = false;
+    } else {
+      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+        ..appUserID = appData.appUserID
+        ..observerMode = false;
+    }
+    await Purchases.configure(configuration);
+
+    appData.appUserID = await Purchases.appUserID;
+
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      print("moizata");
+      appData.appUserID = await Purchases.appUserID;
+      print("userid active status1 " + appData.entitlementIsActive.toString());
+
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      (customerInfo.entitlements.all[entitlementID] != null &&
+              customerInfo.entitlements.all[entitlementID].isActive)
+          ? appData.entitlementIsActive = true
+          : appData.entitlementIsActive = false;
+      print("userid active status " + appData.entitlementIsActive.toString());
+      // setState(() {});
+      // setState(() {
+      universalController.expiryBool.value = appData.entitlementIsActive;
+      // validSubscription = appData.entitlementIsActive;
+      // });
+    });
   }
 
   checkExpiry() async {
@@ -116,6 +165,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     //   validSubscription = validSub;
     // });
     print("checking expiry");
+    final UniversalController universalController =
+        Get.put(UniversalController());
     try {
       CustomerInfo purchaserInfo = await Purchases.getCustomerInfo();
       print(purchaserInfo.originalAppUserId);
@@ -127,18 +178,18 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           appData.entitlementIsActive =
               purchaserInfo.entitlements.all[entitlementID].isActive;
           // Grant user "pro" access
-          setState(() {
-            validSubscription = appData.entitlementIsActive;
-          });
+          // setState(() {
+          universalController.expiryBool.value = appData.entitlementIsActive;
+          // });
         }
       } else {
         setState(() {
-          validSubscription = false;
+          universalController.expiryBool.value = false;
         });
       }
     } on PlatformException catch (e) {
       setState(() {
-        validSubscription = false;
+        universalController.expiryBool.value = false;
       });
       print(e.message);
       print("checking expiry false");
@@ -155,7 +206,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           onWillPop: () => onWilPop(false),
           child: Scaffold(
             body: Stack(
-              children: !validSubscription
+              children: !universalController.expiryBool.value
                   ? <Widget>[
                       ExpiryScreen(),
                       ExpiryScreen(),
@@ -311,7 +362,7 @@ class ExpiryScreen extends StatelessWidget {
             ),
             space1(),
             Text(
-              "Your Subscription has been expired. Contact Customer Support to activate your subscription",
+              "Your Subscription has been expired or not activated. Contact Customer Support to activate your subscription",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,

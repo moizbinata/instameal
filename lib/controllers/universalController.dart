@@ -21,6 +21,7 @@ class UniversalController extends GetxController {
   RxString plan = "".obs;
   RxInt planid = 0.obs;
   RxInt currentPage = 0.obs;
+  RxBool expiryBool = false.obs;
   RxMap<String, GlobalKey<NavigatorState>> navigatorKeys = {
     "Meal Plans": GlobalKey<NavigatorState>(),
     "Shopping List": GlobalKey<NavigatorState>(),

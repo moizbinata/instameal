@@ -61,7 +61,8 @@ class SplashScreen extends StatelessWidget {
                             Get.put(UniversalController());
                         universalController.fetchUniversal();
                         universalController.fetchAllRecipes();
-                        if (box.read('username') == null) {
+                        if (box.read('username') == null &&
+                            box.read('subscriptionStart') == null) {
                           Constants.navigatepushreplac(context, HomeIntro());
                         } else {
                           Get.offAll(BottomNavigator());

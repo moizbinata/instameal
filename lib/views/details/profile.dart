@@ -79,36 +79,36 @@ class Profile extends StatelessWidget {
               box.read('subscriptionStart') ?? "",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            subtitle: Text("Subscription start from"),
+            subtitle: Text("Subscription ID"),
           ),
-          ListTile(
-            selected: true,
-            selectedColor: CustomTheme.bgColor,
-            leading: iconBox(
-              Color(0xfff6e3bc),
-              Color(0xffde9b12),
-              FontAwesomeIcons.subscript,
-            ),
-            title: Text(
-              box.read('subscriptionEnd') ?? "",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            subtitle: Text("Subscription end to"),
-          ),
-          ListTile(
-            selected: true,
-            selectedColor: CustomTheme.bgColor,
-            leading: iconBox(
-              Color(0xffc9c4ed),
-              Color(0xff8b82d0),
-              FontAwesomeIcons.subscript,
-            ),
-            title: Text(
-              box.read('membershipType') ?? "",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            subtitle: Text("Membership Type"),
-          ),
+          // ListTile(
+          //   selected: true,
+          //   selectedColor: CustomTheme.bgColor,
+          //   leading: iconBox(
+          //     Color(0xfff6e3bc),
+          //     Color(0xffde9b12),
+          //     FontAwesomeIcons.subscript,
+          //   ),
+          //   title: Text(
+          //     box.read('subscriptionEnd') ?? "",
+          //     style: Theme.of(context).textTheme.bodyLarge,
+          //   ),
+          //   subtitle: Text("Subscription Status"),
+          // ),
+          // ListTile(
+          //   selected: true,
+          //   selectedColor: CustomTheme.bgColor,
+          //   leading: iconBox(
+          //     Color(0xffc9c4ed),
+          //     Color(0xff8b82d0),
+          //     FontAwesomeIcons.subscript,
+          //   ),
+          //   title: Text(
+          //     box.read('membershipType') ?? "",
+          //     style: Theme.of(context).textTheme.bodyLarge,
+          //   ),
+          //   subtitle: Text("Membership Type"),
+          // ),
           ListTile(
             selected: true,
             selectedColor: CustomTheme.bgColor,

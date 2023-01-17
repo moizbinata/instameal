@@ -443,12 +443,12 @@ class _LoginState extends State<Login> {
                             password1Controller.text ==
                                 password2Controller.text &&
                             value == true) {
-                          if (!appData.entitlementIsActive)
-                            // perfomMagic(context);
-                            postSignup(context);
-                          else {
-                            customDialogue2(context);
-                          }
+                          // if (!appData.entitlementIsActive)
+                          // perfomMagic(context);
+                          postSignup(context);
+                          // else {
+                          //   customDialogue2(context);
+                          // }
                         } else {
                           setState(() {
                             signupLoader = false;
@@ -614,6 +614,10 @@ class _LoginState extends State<Login> {
       // Get.offAll(BottomNavigator());
       if (loginModel != null && loginModel.data.isNotEmpty) {
         {
+          appData.appUserID = loginModel.data[0].subscriptionStart == "NOID"
+              ? null
+              : loginModel.data[0].subscriptionStart;
+          // print("moiz appuserid" + appData.appUserID ?? "");
           box.write('userid', loginModel.data[0].userid);
           box.write('username', loginModel.data[0].username);
           box.write('email', loginModel.data[0].email);

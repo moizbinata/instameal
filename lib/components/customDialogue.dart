@@ -28,9 +28,11 @@ void customDialogue2(context) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "You have already subscribed with our plan",
+                            "You have already subscribed with our plan, Please login",
                             style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
                           ),
+                          space0(),
                           InkWell(
                             onTap: () {
                               Navigator.pop(context);
