@@ -93,7 +93,9 @@ class _ChangePassState extends State<ChangePass> {
     print(response.body);
     if (response.body != null && response.statusCode == 200) {
       Fluttertoast.showToast(msg: 'Successfully updated');
-      Get.offAll(Login());
+      Get.offAll(Login(
+        type: 1,
+      ));
     } else {
       Fluttertoast.showToast(msg: "Something went wrong");
     }

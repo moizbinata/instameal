@@ -115,7 +115,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     // Enable debug logs before calling `configure`.
     await Purchases.setDebugLogsEnabled(true);
     appData.appUserID = box.read('subscriptionStart').toString() == "NOID"
-        ? null
+        ? "nulll"
         : box.read('subscriptionStart').toString();
 
     final UniversalController universalController =
@@ -137,10 +137,10 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     }
     await Purchases.configure(configuration);
 
-    appData.appUserID = await Purchases.appUserID;
+    // appData.appUserID = await Purchases.appUserID;
 
     Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-      print("moizata");
+      print("moizata${appData.appUserID}");
       appData.appUserID = await Purchases.appUserID;
       print("userid active status1 " + appData.entitlementIsActive.toString());
 
@@ -152,7 +152,13 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       print("userid active status " + appData.entitlementIsActive.toString());
       // setState(() {});
       // setState(() {
-      universalController.expiryBool.value = appData.entitlementIsActive;
+      if (customerInfo.entitlements.all[entitlementID] != null &&
+          customerInfo.entitlements.all[entitlementID].isActive &&
+          appData.appUserID != null)
+        universalController.expiryBool.value = appData.entitlementIsActive;
+      else
+        universalController.expiryBool.value = false;
+
       // validSubscription = appData.entitlementIsActive;
       // });
     });

@@ -615,7 +615,7 @@ class _LoginState extends State<Login> {
       if (loginModel != null && loginModel.data.isNotEmpty) {
         {
           appData.appUserID = loginModel.data[0].subscriptionStart == "NOID"
-              ? null
+              ? "nulll"
               : loginModel.data[0].subscriptionStart;
           // print("moiz appuserid" + appData.appUserID ?? "");
           box.write('userid', loginModel.data[0].userid);

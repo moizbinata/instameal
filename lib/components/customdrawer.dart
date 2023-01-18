@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:instameal/components/components.dart';
+import 'package:instameal/src/model/singletons_data.dart';
 import 'package:instameal/utils/sizeconfig.dart';
 import 'package:instameal/utils/theme.dart';
 import 'package:instameal/views/details/profile.dart';
@@ -63,7 +64,7 @@ Widget drawer(context) {
                 SizedBox(),
                 SizedBox(),
                 Text(
-                  "1.0.0+15",
+                  "1.0.0+16",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
@@ -172,6 +173,7 @@ Widget drawer(context) {
               onTap: () {
                 GetStorage box = GetStorage();
                 box.erase();
+                appData.appUserID = "null";
                 Fluttertoast.showToast(msg: 'Successfully Logout');
                 Get.offAll(Login(
                   type: 1,
