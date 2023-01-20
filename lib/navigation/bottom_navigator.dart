@@ -114,9 +114,10 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Future<void> initPlatformState() async {
     // Enable debug logs before calling `configure`.
     await Purchases.setDebugLogsEnabled(true);
-    appData.appUserID = box.read('subscriptionStart').toString() == "NOID"
-        ? null
-        : box.read('subscriptionStart').toString();
+    appData.appUserID = box.read('email').toString();
+    // == "NOID"
+    //     ? null
+    //     : box.read('subscriptionStart').toString();
 
     final UniversalController universalController =
         Get.put(UniversalController());
