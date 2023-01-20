@@ -125,7 +125,7 @@ class SubscribePlansState extends State<SubscribePlans> {
     // });
 
     print("perfomMagic");
-    appData.appUserID = "";
+    appData.appUserID = null;
     // appData.currentData
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
@@ -208,14 +208,25 @@ class SubscribePlansState extends State<SubscribePlans> {
                                   try {
                                     CustomerInfo customerInfo =
                                         await Purchases.purchasePackage(
-                                            myProductList[index]);
+                                                myProductList[index])
+                                            // ignore: missing_return
+                                            .then((value) {
+                                      Fluttertoast.showToast(msg: 'Updated 1');
+
+                                      updateSubscription(ctx, 2);
+                                    });
+                                    appData.appUserID =
+                                        await Purchases.appUserID;
+                                    await updateSubscription(ctx, 2);
+                                    Fluttertoast.showToast(msg: 'Updated 2');
+
                                     if (customerInfo.entitlements
-                                        .all[entitlementID].isActive) {
-                                      appData.appUserID =
-                                          await Purchases.appUserID;
+                                            .all[entitlementID].isActive &&
+                                        appData.appUserID != null) {
+                                      Fluttertoast.showToast(msg: 'Updated 3');
                                       print("MOIZ IS PAID");
                                       // await postSignup(ctx);
-                                      updateSubscription(ctx);
+                                      await updateSubscription(ctx, 1);
                                     } else {
                                       print("MOIZ IS NOT PAID");
                                     }
@@ -272,10 +283,17 @@ class SubscribePlansState extends State<SubscribePlans> {
     }
   }
 
-  updateSubscription(context) async {
+  updateSubscription(context, type) async {
+    appData.appUserID = await Purchases.appUserID;
     var username = box.read('username');
-    String url =
-        "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/${appData.entitlementIsActive}";
+    String url = "";
+    if (type == 1)
+      url =
+          "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/Done";
+    else
+      url =
+          "${Constants.baseUrl}updatesubscription/Username/$username/SubStart/${appData.appUserID}/SubEnd/Processing";
+
     var response = await Network.put(url: url).catchError(
       () {
         Fluttertoast.showToast(msg: "Server is not responding");

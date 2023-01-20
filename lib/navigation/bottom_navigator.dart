@@ -115,7 +115,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     // Enable debug logs before calling `configure`.
     await Purchases.setDebugLogsEnabled(true);
     appData.appUserID = box.read('subscriptionStart').toString() == "NOID"
-        ? "nulll"
+        ? null
         : box.read('subscriptionStart').toString();
 
     final UniversalController universalController =
@@ -152,8 +152,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       print("userid active status " + appData.entitlementIsActive.toString());
       // setState(() {});
       // setState(() {
-      if (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID].isActive &&
+      if (customerInfo.entitlements.all[entitlementID] != null ||
+          customerInfo.entitlements.all[entitlementID].isActive ||
           appData.appUserID != null)
         universalController.expiryBool.value = appData.entitlementIsActive;
       else
