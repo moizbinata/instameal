@@ -120,12 +120,8 @@ class SubscribePlansState extends State<SubscribePlans> {
     (subscription active) and if not, display the paywall.
   */
   void perfomMagic(ctx) async {
-    // setState(() {
-    //   signupLoader = true;
-    // });
-
     print("perfomMagic");
-    appData.appUserID = null;
+    appData.appUserID = box.read('email').toString();
     // appData.currentData
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
@@ -208,7 +204,8 @@ class SubscribePlansState extends State<SubscribePlans> {
                                   try {
                                     CustomerInfo customerInfo =
                                         await Purchases.purchasePackage(
-                                                myProductList[index])
+                                      myProductList[index],
+                                    )
                                             // ignore: missing_return
                                             .then((value) {
                                       Fluttertoast.showToast(msg: 'Updated 1');
