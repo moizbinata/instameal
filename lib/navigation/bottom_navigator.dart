@@ -143,6 +143,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     Purchases.addCustomerInfoUpdateListener((customerInfo) async {
       print("moizata${appData.appUserID}");
       appData.appUserID = await Purchases.appUserID;
+      print("moizata2${appData.appUserID}");
       print("userid active status1 " + appData.entitlementIsActive.toString());
 
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
@@ -154,7 +155,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       // setState(() {});
       // setState(() {
       if (customerInfo.entitlements.all[entitlementID] != null ||
-          customerInfo.entitlements.all[entitlementID].isActive ||
+          // customerInfo.entitlements.all[entitlementID].isActive ||
           appData.appUserID != null)
         universalController.expiryBool.value = appData.entitlementIsActive;
       else
